@@ -17,7 +17,7 @@ La aplicación de estrategias de Deep Learning (DL) está mostrando gran potenci
 # Objetivos:
 Aprendizaje de los fundamentos de las redes neuronales convolucionales (CNNs) y su aplicación mediante la librería TensorFlow de Python. Revisión del estado del arte, diseño e implementación de CNN en el problema de experimentación planteado. Análisis y evaluación de resultados.
 
-# Requisitos previos
+# Requisitos previos:
 - Python: v3.8
 - TensorFlow: v2.8 (Hemos usado la versión GPU)
 - Repositorio [CameraTraps](https://github.com/microsoft/CameraTraps) de Microsoft, que hemos incluido en la carpeta [repos](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/repos) de nuestro repositorio
