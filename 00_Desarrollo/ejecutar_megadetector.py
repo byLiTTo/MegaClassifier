@@ -1,6 +1,14 @@
 #%% Constantes, importaciones
 
 import argparse
+import os
+import time
+import warnings
+import sys
+import json
+
+import humanfriendly
+from tqdm import tqdm
 
 #%% Importacion de TENSORFLOW
 
@@ -62,7 +70,87 @@ def main():
         action='store_true',
         help='Salida de nombres de archivos relativos, solo tiene importancia si ruta_entrada apunta a un directorio'
     )
-    
+    parser.add_argument(
+        '--umbral',
+        type=float,
+        default=TFDetector.DEFAULT_OUTPUT_CONFIDENCE_THRESHOLD,
+        help="Umbral de confianza entre 0.0 y 1.0. (No incluye valores por debajo de este umbral). Por defecto es 0.1."
+    )
+
+    if len(sys.argv[1:]) == 0:
+        parser.print_help()
+        parser.exit()
+
+    args = parser.parse_args()
+
+    assert os.path.exists(args.ruta_modelo), 'La ruta_modelo especificada no existe'
+
+    assert 0.0 < args.umbral <= 1.0, 'El umbral de confianza debe estar entre 0 y 1'  # Python chained comparison
+
+    assert args.ruta_salida.endswith('.json'), 'El archivo de salida especificado debe terminar con .json'
+
+    if args.output_relative_filenames:
+        assert os.path.isdir(args.image_file), 'image_file debe ser un directorio cuando se establece --output_relative_filenames'
+
+    if os.path.exists(args.ruta_salida):
+        print('Warning: ruta_salida {} ya existe y será sobrescrito.'.format(args.ruta_salida))
+
+    resultados = []
+
+    if os.path.isdir(args.ruta_entrada):
+        image_file_names = ImagePathUtils.find_images(args.ruta_entrada, args.recursive)
+        print('{} archivos de imagen encontrados en el directorio de entrada'.format(len(image_file_names)))
+    elif os.path.isfile(args.ruta_entrada) and args.ruta_entrada.endswith('.json'):
+        with open(args.ruta_entrada) as f:
+            image_file_names = json.load(f)
+        print('{} archivos de imagen encontrados en la lista json'.format(len(image_file_names)))
+    elif os.path.isfile(args.ruta_entrada) and ImagePathUtils.is_image_file(args.ruta_entrada):
+        image_file_names = [args.ruta_entrada]
+        print('Una sola imagen en {} es el archivo de entrada'.format(args.ruta_entrada))
+    else:
+        raise ValueError('image_file especificado no es un directorio, una lista json o un archivo de imagen, '
+                         '(o no tiene extensiones reconocibles).')
+
+    assert len(image_file_names) > 0, 'El archivo de imagen especificado no apunta a archivos de imagen válidos'
+
+    assert os.path.exists(image_file_names[0]), 'La primera imagen a puntuar no existe en {}'.format(image_file_names[0])
+
+    output_dir = os.path.dirname(args.ruta_salida)
+
+    if len(output_dir) > 0:
+        os.makedirs(output_dir,exist_ok=True)
+        
+    assert not os.path.isdir(args.ruta_salida), 'El archivo de salida especificado es un directorio'
+
+    checkpoint_path = None
+
+    start_time = time.time()
+
+    results = load_and_run_detector_batch(model_file=args.ruta_modelo,
+                                          image_file_names=image_file_names,
+                                          checkpoint_path=None,
+                                          confidence_threshold=args.umbral,
+                                          checkpoint_frequency=-1,
+                                          results=results,
+                                          n_cores=0,
+                                          use_image_queue=False)
+
+    elapsed = time.time() - start_time
+    print('Inferencia terminada en {}'.format(humanfriendly.format_timespan(elapsed)))
+
+    relative_path_base = None
+    if args.output_relative_filenames:
+        relative_path_base = args.ruta_entrada
+    write_results_to_file(results, args.ruta_salida, relative_path_base=relative_path_base)
+
+
+    print('Hecho!')
+
+
+if __name__ == '__main__':
+    main()
+
+
     
 
 
