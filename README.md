@@ -19,7 +19,9 @@ Aprendizaje de los fundamentos de las redes neuronales convolucionales (CNNs) y 
 
 # Requisitos previos:
 - Python: v3.8
-- TensorFlow: v2.8 (Hemos usado la versión GPU)
+- TensorFlow: v2.3 GPU (En nuestro entorno Windows)
+- TensorFlow: v2.4 GPU (En nuestro entorno Linux)
+- TensorFlow: v2.8 GPU (En nuestro entorno macOS)
 - Repositorio [CameraTraps](https://github.com/microsoft/CameraTraps) de Microsoft, que hemos incluido en la carpeta [repos](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/repos) de nuestro repositorio
 - Repositorio [ai4eutils](https://github.com/microsoft/ai4eutils) de Microsoft, que hemos incluido en la carpeta [repos](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/repos) de nuestro repositorio
 - Modelo MegaDetector: [megadetector_v4_1_0.pb](https://lilablobssc.blob.core.windows.net/models/camera_traps/megadetector/md_v4.1.0/md_v4.1.0.pb)
