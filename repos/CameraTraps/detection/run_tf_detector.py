@@ -1,4 +1,4 @@
-r"""
+"""
 Module to run a TensorFlow animal detection model on images.
 
 The class TFDetector contains functions to load a TensorFlow detection model and
