@@ -15,25 +15,35 @@ cambiar la variable: DEFAULT_OUTPUT_CONFIDENCE_THRESHOLD
 """
 
 ###################################################################################################
-#%% CONSTANTES IMPORTACIONES Y ENTORNO
+# IMPORTACIONES, CONSTANTES Y ENTORNO
 
-import enum
-import os
-import glob
-import numpy as np
-import time
-import humanfriendly
-import statistics
-import visualization.visualization_utils as viz_utils
+import traceback
+
 import argparse
+import glob
+from logging import raiseExceptions
+import os
+import statistics
 import sys
+import time
+import warnings
+
+import humanfriendly
+import numpy as np
+from tqdm import tqdm
 
 from ct_utils import truncate_float
+import visualization.visualization_utils as viz_utils
+
+from data_management.annotations.annotation_constants import (
+    detector_bbox_category_id_to_name)  # here id is int
+
+# print(detector_bbox_category_id_to_name)
+# raise Exception("a")
 
 
 # IMPORTACION TENSORFLOW --------------------------------------------------------------------------
-
-
+# Useful hack to force CPU inference
 # os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 import tensorflow.compat.v1 as tf
@@ -42,8 +52,9 @@ print('TensorFlow version:', tf.__version__)
 print('Is GPU available? tf.test.is_gpu_available:', tf.test.is_gpu_available())
 
 
+
 ###################################################################################################
-#%% CLASES
+# CLASSES
 
 #--------------------------------------------------------------------------------------------------
 class ImagePathUtils:
@@ -81,50 +92,46 @@ class ImagePathUtils:
         if recursive:
             strings = glob.glob(os.path.join(dir_name, '**', '*.*'), recursive=True)
         else:
-            strings = glob.glob(os.path.join(dir_name, ' *.*'))
-        
+            strings = glob.glob(os.path.join(dir_name, '*.*'))
+
         image_strings = ImagePathUtils.find_image_files(strings)
 
         return image_strings
 
-#--------------------------------------------------------------------------------------------------
+
 class TFDetector:
     """
-    Cargamos un modelo de detección en la inicialización.
-    Está pensado para usar con MegaDetector (TF).
-    El batch inference size se establece en 1. Para soportar tamaños superiores debe 
-    ser modificado.
+    A detector model loaded at the time of initialization. It is intended to be used with
+    the MegaDetector (TF). The inference batch size is set to 1; code needs to be modified
+    to support larger batch sizes, including resizing appropriately.
     """
 
-    # Número de decimales a redondear para el umbral de confianza y las coordenadas del bounding box
+    # Number of decimal places to round to for confidence and bbox coordinates
     CONF_DIGITS = 3
     COORD_DIGITS = 4
 
-    # MegaDetector fue entrenado con batch size de 1 y la función de redimensionado es una parte del gráfico de inferencia.
+    # MegaDetector was trained with batch size of 1, and the resizing function is a part
+    # of the inference graph
     BATCH_SIZE = 1
 
-    # Lista de algunas causas de fallos
+    # An enumeration of failure reasons
     FAILURE_TF_INFER = 'Failure TF inference'
     FAILURE_IMAGE_OPEN = 'Failure image access'
 
-    DEFAULT_RENDERING_CONFIDENCE_THRESHOLD = 0.85 # Umbral de renderizado de BBoxes
-    DEFAULT_OUTPUT_CONFIDENCE_THRESHOLD = 0.1  # Umbral para incluir en fichero de salida
+    DEFAULT_RENDERING_CONFIDENCE_THRESHOLD = 0.85  # to render bounding boxes
+    DEFAULT_OUTPUT_CONFIDENCE_THRESHOLD = 0.1  # to include in the output json file
 
-    # Tipos de detecciones disponibles en MegaDetector v4+
     DEFAULT_DETECTOR_LABEL_MAP = {
         '1': 'animal',
         '2': 'person',
-        '3': 'vehicle'
+        '3': 'vehicle'  # available in megadetector v4+
     }
 
-    # animal, persona, grupo, vehículo - Para la asignación de color
-    NUM_DETECTOR_CATEGORIES = 4
+    NUM_DETECTOR_CATEGORIES = 4  # animal, person, group, vehicle - for color assignment
 
     def __init__(self, model_path):
-        """
-        Carga un modelo a partir de una ruta y comienza una tf.Session con gráficos.
-        Obtiene tensor handles de entrada y salida.
-        """
+        """Loads model from model_path and starts a tf.Session with this graph. Obtains
+        input and output tensor handles."""
         detection_graph = TFDetector.__load_model(model_path)
         self.tf_session = tf.Session(graph=detection_graph)
 
@@ -139,37 +146,33 @@ class TFDetector:
 
     @staticmethod
     def __convert_coords(tf_coords):
-        """
-        Convierte las coordenadas de la salida del modelo del formato [y1, x1, y2, x2]
-        al formato usado por la API y MegaDB: [x1, y1, width, height]. Todas las 
-        coordenadas están normalizadas entre [0, 1].
+        """Converts coordinates from the model's output format [y1, x1, y2, x2] to the
+        format used by our API and MegaDB: [x1, y1, width, height]. All coordinates
+        (including model outputs) are normalized in the range [0, 1].
 
         Args:
-            - tf_coords: np.array con las coordenadas de los BBoxes de las predicciones 
-            del TF detector con el formato [y1, x1, y2, x2].
+            tf_coords: np.array of predicted bounding box coordinates from the TF detector,
+                has format [y1, x1, y2, x2]
 
-        Returns: Lista de float con las coordenadas de los BBoxes de las predicciones 
-            en el formato [x1, y1, width, height].
+        Returns: list of Python float, predicted bounding box coordinates [x1, y1, width, height]
         """
-        # Cambia de [y1, x1, y2, x2] a [x1, y1, width, height]
+        # change from [y1, x1, y2, x2] to [x1, y1, width, height]
         width = tf_coords[3] - tf_coords[1]
         height = tf_coords[2] - tf_coords[0]
 
-        new = [tf_coords[1], tf_coords[0], width, height]  # debe ser una lista en vez de np.array
+        new = [tf_coords[1], tf_coords[0], width, height]  # must be a list instead of np.array
 
-        # convertir numpy floats a Python floats
+        # convert numpy floats to Python floats
         for i, d in enumerate(new):
             new[i] = TFDetector.round_and_make_float(d, precision=TFDetector.COORD_DIGITS)
         return new
 
     @staticmethod
     def convert_to_tf_coords(array):
-        """
-        De [x1, y1, width, height] a [y1, x1, y2, x2], donde x1 is x_min, x2 is x_max
+        """From [x1, y1, width, height] to [y1, x1, y2, x2], where x1 is x_min, x2 is x_max
 
-        Este es un paso superfluo como resultado del modelo [y1, x1, y2, x2]. pero lo 
-        hemos convertido al formato de salida de la API - Solo para mantener la 
-        interfaz de sincronización.
+        This is an extraneous step as the model outputs [y1, x1, y2, x2] but were converted to the API
+        output format - only to keep the interface of the sync API.
         """
         x1 = array[0]
         y1 = array[1]
@@ -181,23 +184,22 @@ class TFDetector:
 
     @staticmethod
     def __load_model(model_path):
-        """
-        Carga un modelo de detección (i.e., create a graph) de un fichero .pb.
+        """Loads a detection model (i.e., create a graph) from a .pb file.
 
         Args:
-            - model_path: .pb del fichero del modelo.
+            model_path: .pb file of the model.
 
-        Returns: gráfico generado.
+        Returns: the loaded graph.
         """
-        print('TFDetector: Cargando gráfico...')
+        print('TFDetector: Loading graph...')
         detection_graph = tf.Graph()
         with detection_graph.as_default():
             od_graph_def = tf.GraphDef()
-            with tf.gfile.GFile(model_path, ' rb') as fid:
+            with tf.gfile.GFile(model_path, 'rb') as fid:
                 serialized_graph = fid.read()
                 od_graph_def.ParseFromString(serialized_graph)
                 tf.import_graph_def(od_graph_def, name='')
-        print('TFDetector: Gráfico de detecciones cargado.')
+        print('TFDetector: Detection graph loaded.')
 
         return detection_graph
 
@@ -209,23 +211,21 @@ class TFDetector:
         # np_images = [np.asarray(image, np.uint8) for image in images]
         # images_stacked = np.stack(np_images, axis=0) if len(images) > 1 else np.expand_dims(np_images[0], axis=0)
 
-        # Realiza inferencia
+        # performs inference
         (box_tensor_out, score_tensor_out, class_tensor_out) = self.tf_session.run(
             [self.box_tensor, self.score_tensor, self.class_tensor],
             feed_dict={self.image_tensor: im_w_batch_dim})
 
         return box_tensor_out, score_tensor_out, class_tensor_out
 
-    def generate_detections_one_image(self, image, image_id, 
-        detection_threshold=DEFAULT_OUTPUT_CONFIDENCE_THRESHOLD):
-        """
-        Aplicar el detector a una imagen.
+    def generate_detections_one_image(self, image, image_id,
+                                      detection_threshold=DEFAULT_OUTPUT_CONFIDENCE_THRESHOLD):
+        """Apply the detector to an image.
 
         Args:
-            - image: PIL del objeto de la imagen.
-            - image_id: identificador de imagen; estará en el campo del fichero de salida.
-            - detection_threshold: umbral de confianza por encima del cual se incluirá 
-                la prosible de detección.
+            image: the PIL Image object
+            image_id: a path to identify the image; will be in the "file" field of the output object
+            detection_threshold: confidence above which to include the detection proposal
 
         Returns:
         A dict with the following fields, see the 'images' key in https://github.com/microsoft/CameraTraps/tree/master/api/batch_processing#batch-processing-api-output-format
@@ -240,41 +240,41 @@ class TFDetector:
         try:
             b_box, b_score, b_class = self._generate_detections_one_image(image)
 
-            # Nuestro batch size es 1; se necesitaria hacer un bucle si batch size > 1
+            # our batch size is 1; need to loop the batch dim if supporting batch size > 1
             boxes, scores, classes = b_box[0], b_score[0], b_class[0]
 
-            detections_cur_image = [] # estará vacío si la imagen no tiene detecciones
+            detections_cur_image = []  # will be empty for an image with no confident detections
             max_detection_conf = 0.0
             for b, s, c in zip(boxes, scores, classes):
                 if s > detection_threshold:
                     detection_entry = {
-                        'categoria': str(int(c)),  # usamos string para el valor de la categoría de detección, no usamos int
-                        'conf': truncate_float(float(s),  # cast de float para json 
-                                            precision=TFDetector.CONF_DIGITS),
+                        'category': str(int(c)),  # use string type for the numerical class label, not int
+                        'conf': truncate_float(float(s),  # cast to float for json serialization
+                                               precision=TFDetector.CONF_DIGITS),
                         'bbox': TFDetector.__convert_coords(b)
                     }
-                detections_cur_image.append(detection_entry)
-                if s > max_detection_conf:
-                    max_detection_conf = s
-            result['max_detection_conf'] = truncate_float(float(max_detection_conf), precision = TFDetector.CONF_DIGITS)
+                    detections_cur_image.append(detection_entry)
+                    if s > max_detection_conf:
+                        max_detection_conf = s
+
+            result['max_detection_conf'] = truncate_float(float(max_detection_conf),
+                                                          precision=TFDetector.CONF_DIGITS)
             result['detections'] = detections_cur_image
+
         except Exception as e:
-            result[' failure'] = TFDetector.FAILURE_TF_INFER
+            result['failure'] = TFDetector.FAILURE_TF_INFER
             print('TFDetector: image {} failed during inference: {}'.format(image_id, str(e)))
-        
+
         return result
 
 
-
 ###################################################################################################
-#%% FUNCIÓN PRINCIPAL
-            
+# Main function
+
 def load_and_run_detector(model_file, image_file_names, output_dir,
                           render_confidence_threshold=TFDetector.DEFAULT_RENDERING_CONFIDENCE_THRESHOLD,
                           crop_images=False):
-    """
-    Carga y ejecuta el detector en imágenes y visualice los resultados.
-    """
+    """Load and run detector on target images, and visualize the results."""
     if len(image_file_names) == 0:
         print('Warning: no files available')
         return
@@ -282,7 +282,7 @@ def load_and_run_detector(model_file, image_file_names, output_dir,
     start_time = time.time()
     tf_detector = TFDetector(model_file)
     elapsed = time.time() - start_time
-    print('Cargado modelo en {}'.format(humanfriendly.format_timespan(elapsed)))
+    print('Loaded model in {}'.format(humanfriendly.format_timespan(elapsed)))
 
     detection_results = []
     time_load = []
@@ -294,37 +294,39 @@ def load_and_run_detector(model_file, image_file_names, output_dir,
     # as necessary to avoid collisions.
     output_filename_collision_counts = {}
 
-    def input_file_to_detection_file(fn, crop_index=-1):
-        """
-        Crea nombres únicos para los ficheros de salida.
+    def input_file_to_detection_file(fn, crop_index=-1, category=0):
+        """Creates unique file names for output files.
 
-        Esta función hace 3 cosas:
-        1) Si la opción --crop es usada, una imagen puede generar varios ficheros de 
-            salida. Por ejemplo, si foo.jpg tiene 3 detecciones, esta función se ejecutará 
-            3 veces, siendo la salida:
-                foo_crop00_detecciones.jpg
-                foo_crop01_detecciones.jpg
-                foo_crop02_detecciones.jpg
-        2) Si la opción --recursive es usada, entonces el mismo nombre fichero aparecerá 
-            multiples veces y las salidas se añadiran a la misma carpeta. Para evitar esto 
-            añadimos un prefijo numérico a los nombres duplicados, quedando:
+        This function does 3 things:
+        1) If the --crop flag is used, then each input image may produce several output
+            crops. For example, if foo.jpg has 3 detections, then this function should
+            get called 3 times, with crop_index taking on 0, 1, then 2. Each time, this
+            function appends crop_index to the filename, resulting in
+                foo_crop00_detections.jpg
+                foo_crop01_detections.jpg
+                foo_crop02_detections.jpg
+
+        2) If the --recursive flag is used, then the same file (base)name may appear
+            multiple times. However, we output into a single flat folder. To avoid
+            filename collisions, we prepend an integer prefix to duplicate filenames:
                 foo_crop00_detections.jpg
                 0000_foo_crop00_detections.jpg
                 0001_foo_crop00_detections.jpg
-        3) Antepone el directorio de salida:
-                out_dir/foo_crops00_detections.jpg
+
+        3) Prepends the output directory:
+                out_dir/foo_crop00_detections.jpg
 
         Args:
-            - fn: str, filename
-            - crop_index: int, crop number
+            fn: str, filename
+            crop_index: int, crop number
 
-        Returns: Ruta del archivo de salida.
+        Returns: output file path
         """
         fn = os.path.basename(fn).lower()
         name, ext = os.path.splitext(fn)
         if crop_index >= 0:
             name += '_crop{:0>2d}'.format(crop_index)
-        fn = '{}{}{}'.format(name, ImagePathUtils.DETECTION_FILENAME_INSERT, '.jpg')
+        fn = '{}_{}{}'.format(name, detector_bbox_category_id_to_name[category], '.jpg')
         if fn in output_filename_collision_counts:
             n_collisions = output_filename_collision_counts[fn]
             fn = '{:0>4d}'.format(n_collisions) + '_' + fn
@@ -360,6 +362,7 @@ def load_and_run_detector(model_file, image_file_names, output_dir,
             detection_results.append(result)
 
             elapsed = time.time() - start_time
+            print('TIEMPO: ', elapsed)
             time_infer.append(elapsed)
 
         except Exception as e:
@@ -369,22 +372,23 @@ def load_and_run_detector(model_file, image_file_names, output_dir,
         try:
             if crop_images:
 
-                images_cropped = viz_utils.crop_image(result['detecciones'], image)
+                images_cropped = viz_utils.crop_image(result['detections'], image)
 
-                for i_crop, cropped_image in enumerate(images_cropped):
-                    output_full_path = input_file_to_detection_file(im_file, i_crop)
+                for i_crop, (cropped_image, detection) in enumerate(zip(images_cropped, result['detections'])):
+                    output_full_path = input_file_to_detection_file(im_file, i_crop, int(detection['category']))
                     cropped_image.save(output_full_path)
 
             else:
 
                 # image is modified in place
-                viz_utils.render_detection_bounding_boxes(result['detecciones'], image,
+                viz_utils.render_detection_bounding_boxes(result['detections'], image,
                                                           label_map=TFDetector.DEFAULT_DETECTOR_LABEL_MAP,
                                                           confidence_threshold=render_confidence_threshold)
                 output_full_path = input_file_to_detection_file(im_file)
                 image.save(output_full_path)
 
         except Exception as e:
+            print(traceback.format_exc())
             print('Visualizing results on the image {} failed. Exception: {}'.format(im_file, e))
             continue
 
@@ -398,16 +402,15 @@ def load_and_run_detector(model_file, image_file_names, output_dir,
     else:
         std_dev_time_load = 'not available'
         std_dev_time_infer = 'not available'
-    print('De media, para esta imagen,')
+    print('On average, for each image,')
     print('- loading took {}, std dev is {}'.format(humanfriendly.format_timespan(ave_time_load),
                                                     std_dev_time_load))
     print('- inference took {}, std dev is {}'.format(humanfriendly.format_timespan(ave_time_infer),
                                                       std_dev_time_infer))
 
 
-
 ###################################################################################################
-#%% MAIN
+# Command-line driver
 
 def main():
 
@@ -456,7 +459,7 @@ def main():
     else:
         image_file_names = ImagePathUtils.find_images(args.image_dir, args.recursive)
 
-    print('Ejecutando detector en {} imagenes...'.format(len(image_file_names)))
+    print('Running detector on {} images...'.format(len(image_file_names)))
 
     if args.output_dir:
         os.makedirs(args.output_dir, exist_ok=True)
@@ -476,3 +479,22 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+###################################################################################################
+# Interactive driver
+
+if False:
+
+    #%%
+    model_file = r'c:\temp\models\md_v4.1.0.pb'
+    image_file_names = ImagePathUtils.find_images(r'c:\temp\demo_images\ssverymini')
+    output_dir = r'c:\temp\demo_images\ssverymini'
+    render_confidence_threshold = 0.8
+    crop_images = True
+
+    load_and_run_detector(model_file=model_file,
+                          image_file_names=image_file_names,
+                          output_dir=output_dir,
+                          render_confidence_threshold=render_confidence_threshold,
+                          crop_images=crop_images)
