@@ -20,17 +20,17 @@ cambiar la variable: DEFAULT_OUTPUT_CONFIDENCE_THRESHOLD
 import traceback
 
 import argparse
-import glob
 from logging import raiseExceptions
 import os
 import statistics
 import sys
 import time
-import warnings
 
 import humanfriendly
 import numpy as np
 from tqdm import tqdm
+
+import imagepathutils as ImagePathUtils
 
 from ct_utils import truncate_float
 import visualization.visualization_utils as viz_utils
@@ -56,54 +56,11 @@ print('Is GPU available? tf.test.is_gpu_available:', tf.test.is_gpu_available())
 ###################################################################################################
 # CLASSES
 
-#--------------------------------------------------------------------------------------------------
-class ImagePathUtils:
-    """
-    Una colección de funciones de utilidad que admiten este script independiente.
-    """
-
-    # Pegue esto en los nombres de archivo antes de la extensión para el resultado renderizado
-    DETECTION_FILENAME_INSERT = '_detections'
-
-    image_extensions = ['.jpg', '.jpeg', '.gif', '.png']
-
-    @staticmethod
-    def is_image_file(s):
-        """
-        Compara la extesión de un archivo con las extensiones admitadas en 
-        image_extensions.
-        """
-        ext = os.path.splitext(s)[1]
-        return ext.lower() in ImagePathUtils.image_extensions
-
-    @staticmethod
-    def find_image_files(strings):
-        """
-        Devuelve una lista de nombres candidatos a ser ficheros de imágenes. Para los 
-        nombres busca a partir de las extensiones incluidas en image_extension.
-        """
-        return [s for s in strings if ImagePathUtils.is_image_file(s)]
-
-    @staticmethod
-    def find_images(dir_name, recursive=False):
-        """
-        Busca todos los ficheros que parecen imagénes dentro de un directorio.
-        """
-        if recursive:
-            strings = glob.glob(os.path.join(dir_name, '**', '*.*'), recursive=True)
-        else:
-            strings = glob.glob(os.path.join(dir_name, '*.*'))
-
-        image_strings = ImagePathUtils.find_image_files(strings)
-
-        return image_strings
-
-
 class TFDetector:
     """
-    A detector model loaded at the time of initialization. It is intended to be used with
-    the MegaDetector (TF). The inference batch size is set to 1; code needs to be modified
-    to support larger batch sizes, including resizing appropriately.
+    Un modelo de detector cargado en el momento de la inicialización. Está destinado a ser 
+    utilizado con el MegaDetector (TF). El tamaño del lote de inferencia se establece en 1 
+    por defecto, si desea cambiarlo, tendrá que modificar el código.
     """
 
     # Number of decimal places to round to for confidence and bbox coordinates
@@ -130,8 +87,10 @@ class TFDetector:
     NUM_DETECTOR_CATEGORIES = 4  # animal, person, group, vehicle - for color assignment
 
     def __init__(self, model_path):
-        """Loads model from model_path and starts a tf.Session with this graph. Obtains
-        input and output tensor handles."""
+        """
+        Carga el modelo desde model_path e inicia tf.Session con este gráfico. Obtiene 
+        tensor handles de entrada y salida.
+        """
         detection_graph = TFDetector.__load_model(model_path)
         self.tf_session = tf.Session(graph=detection_graph)
 
@@ -156,6 +115,8 @@ class TFDetector:
 
         Returns: list of Python float, predicted bounding box coordinates [x1, y1, width, height]
         """
+
+
         # change from [y1, x1, y2, x2] to [x1, y1, width, height]
         width = tf_coords[3] - tf_coords[1]
         height = tf_coords[2] - tf_coords[0]
@@ -251,7 +212,8 @@ class TFDetector:
                         'category': str(int(c)),  # use string type for the numerical class label, not int
                         'conf': truncate_float(float(s),  # cast to float for json serialization
                                                precision=TFDetector.CONF_DIGITS),
-                        'bbox': TFDetector.__convert_coords(b)
+                        'bbox': TFDetector.__convert_coords(b),
+                        'bbox_img': b
                     }
                     detections_cur_image.append(detection_entry)
                     if s > max_detection_conf:
