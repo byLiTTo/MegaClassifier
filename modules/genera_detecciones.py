@@ -14,15 +14,18 @@ cambiar la variable: DEFAULT_OUTPUT_CONFIDENCE_THRESHOLD
 ###################################################################################################
 # IMPORTs
 
+import argparse
 import humanfriendly
 import imagepathutils as ip_utils
 import numpy as np
 import time
 import visualization.visualization_utils as v_utils
 import statistics
-import os
 import platform
 import json
+import sys
+import os
+import traceback
 
 
 
@@ -43,8 +46,11 @@ from datetime import datetime
 
 import tensorflow.compat.v1 as tf
 
+print('==========================================================================================')
 print('TensorFlow version:', tf.__version__)
-print('Is GPU available? tf.test.is_gpu_available:', tf.test.is_gpu_available())
+#print('Is GPU available? tf.test.is_gpu_available:', tf.test.is_gpu_available())
+print('Is GPU available? tf.test.is_gpu_available:',tf.config.list_physical_devices('GPU'))
+print('==========================================================================================')
 
 
 ###################################################################################################
@@ -149,6 +155,7 @@ class TFDetector:
             -model_path: ruta donde se encuentra el fichero ".pb" del modelo.
         Returns: Los gráficos cargados.
         """
+        print('==========================================================================================')
         print('TFDetector: Loading graph...')
         detection_graph = tf.Graph()
         with detection_graph.as_default():
@@ -158,6 +165,7 @@ class TFDetector:
                 od_graph_def.ParseFromString(serialized_graph)
                 tf.import_graph_def(od_graph_def, name='')
         print('TFDetector: Detection graph loaded.')
+        print('==========================================================================================')
 
         return detection_graph  
 
@@ -220,6 +228,7 @@ class TFDetector:
             result['detections'] = detections
 
         except Exception as e:
+            print(traceback.format_exc())
             result['failure'] = TFDetector.FAILURE_TF_INFER
             print('TFDetector: image {} failed during inference: {}'
                 .format(image_path, str(e)))
@@ -261,7 +270,9 @@ def generate_json(results, output_dir):
     with open(output_file, 'w') as f:
         json.dump(final_output, f, indent=1)
 
+    print('==========================================================================================')
     print('Fichero de salida guardado en {}'.format(output_file))
+    print('==========================================================================================')
 
 
 
@@ -282,8 +293,10 @@ def run(model_file, image_file_names, output_dir):
     tf_detector = TFDetector(model_file)
     elapsed_time = time.time() - start_time
 
+    print('==========================================================================================')
     print('Modelo cargado en: {}.'
         .format(humanfriendly.format_timespan(elapsed_time)))
+    print('==========================================================================================')
 
     all_results = []
     time_load = []
@@ -296,6 +309,7 @@ def run(model_file, image_file_names, output_dir):
             elapsed_time = time.time() - start_time
             time_load.append(elapsed_time)
         except Exception as e:
+            print(traceback.format_exc())
             print('La imagen {} no ha podido ser cargada. Excepcion: {}'.format(image_file, e))
             result = {
                 'file': image_file,
@@ -313,13 +327,14 @@ def run(model_file, image_file_names, output_dir):
                 .format(image_file, humanfriendly.format_timespan(elapsed_time)))
             time_infer.append(elapsed_time)
         except Exception as e:
+            print(traceback.format_exc())
             print('Ha ocurrido un error mientras se ejecutaba el detector en la imagen {}. EXCEPTION: {}'
                 .format(image_file, e))
             continue
     try:
         generate_json(all_results,output_dir)
     except Exception as e:
-        #print(traceback.format_exc())
+        print(traceback.format_exc())
         print('Error al generar fichero JSON de salida en la ruta {}, EXCEPTION: {}'
             .format(output_dir, e))
 
@@ -333,14 +348,141 @@ def run(model_file, image_file_names, output_dir):
         std_dev_time_load = 'NO DISPONIBLE'
         std_dev_time_infer = 'NO DISPONIBLE'
 
+    print('==========================================================================================')
     print('De media, por cada imagen, ')
     print('Ha tomado {} en cargar, con desviación de {}'
         .format(humanfriendly.format_timespan(average_time_load), std_dev_time_load))
     print('Ha tomado {} en procesar, con desviación de {}'
         .format(humanfriendly.format_timespan(average_time_infer), std_dev_time_infer))
+    print('==========================================================================================')
 
 
 
 ###################################################################################################
 # Command-line driver
+def main():
 
+    parser = argparse.ArgumentParser(
+        description='Module to run a TF animal detection model on images')
+    parser.add_argument(
+        'detector_file',
+        help='Path to .pb TensorFlow detector model file')
+    group = parser.add_mutually_exclusive_group(required=True)  # must specify either an image file or a directory
+    group.add_argument(
+        '--image_file',
+        help='Single file to process, mutually exclusive with --image_dir')
+    group.add_argument(
+        '--image_dir',
+        help='Directory to search for images, with optional recursion by adding --recursive')
+    parser.add_argument(
+        '--recursive',
+        action='store_true',
+        help='Recurse into directories, only meaningful if using --image_dir')
+    parser.add_argument(
+        '--output_dir',
+        help='Directory for output images (defaults to same as input)')
+    parser.add_argument(
+        '--threshold',
+        type=float,
+        default=TFDetector.DEFAULT_RENDERING_CONFIDENCE_THRESHOLD,
+        help=('Confidence threshold between 0 and 1.0; only render boxes above this confidence'
+              ' (but only boxes above 0.1 confidence will be considered at all)'))
+    parser.add_argument(
+        '--crop',
+        default=False,
+        action="store_true",
+        help=('If set, produces separate output images for each crop, '
+              'rather than adding bounding boxes to the original image'))
+    if len(sys.argv[1:]) == 0:
+        parser.print_help()
+        parser.exit()
+
+    args = parser.parse_args()
+
+    assert os.path.exists(args.detector_file), 'detector_file specified does not exist'
+    assert 0.0 < args.threshold <= 1.0, 'Confidence threshold needs to be between 0 and 1'  # Python chained comparison
+
+    if args.image_file:
+        image_file_names = [args.image_file]
+    else:
+        image_file_names = ip_utils.find_images(args.image_dir, args.recursive)
+
+    """
+    parser = argparse.ArgumentParser(
+        description='Modulo para ejecutar un modelo de detección en Tensorflow, sobre imágenes')
+    parser.add_argument(
+        'detector_file',
+        help='Ruta al fichero .pb del modelo de detección de tensorflow'
+    )
+
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument(
+        '--image_file',
+        help='Único fichero de imagen a procesar, para acceder a múltiples imágenes usar --image_dir'
+    )
+    group.add_argument(
+        '--image_dir',
+        help='Directorio donde se buscarán las imágenes a procesar, con la opción --recursive'
+    )
+    parser.add_argument(
+        '--recursive',
+        action='store_true',
+        help='Maneja directorios de forma recursiva, solo tiene sentido usarlo con --image_dir'
+    )
+    parser.add_argument(
+        '--output_dir',
+        help='Directorio de salida de los ficheros JSON, que contienen los datos de las detecciones'
+    )
+    parser.add_argument(
+        '--threshold',
+        type=float,
+        default=TFDetector.DEFAULT_RENDERING_CONFIDENCE_THRESHOLD,
+        help=('Umbral de confianza entre 0.0 y 1.0, solo se renderizarán las detecciones que satisfacen este umbral'
+            '(Pero solo se consideran las boxes con el umbral 0.1, puesto por defecto como el umbral de detección)')
+    )
+
+    if len(sys.argv[1:]) == 0:
+        parser.print_help()
+        parser.exit()
+
+    args = parser.parse_args()
+
+    assert os.path.exists(args.detector_file), 'El fichero del modelo de detección no existe'
+    assert 0.0 < args.threshold <= 1.0, 'Umbral de confianza debe estar entre 0 y 1'
+
+    assert os.path.exists(args.detector_file), 'detector_file specified does not exist'
+    assert 0.0 < args.threshold <= 1.0, 'Confidence threshold needs to be between 0 and 1'  # Python chained comparison
+
+    if args.image_file:
+        image_file_names = [args.image_file]
+    else:
+        image_file_names = ip_utils.find_images(args.image_dir, args.recursive)
+    """
+
+    print('==========================================================================================')
+    print('Ejecutando detector en {} imágenes...'
+        .format(len(image_file_names)))
+
+    if args.output_dir:
+        os.makedirs(args.output_dir, exist_ok=True)
+    else:
+        if args.image_dir:
+            args.output_dir = args.image_dir
+        else:
+            args.output_dir = os.path.dirname(args.image_file)
+
+    run(model_file=args.detector_file,
+        image_file_names=image_file_names,
+        output_dir=args.output_dir,
+        render_confidence_threshold=args.threshold
+    )
+    print('==========================================================================================')
+
+
+
+if __name__ == '__main__':
+    main()
+
+
+
+###################################################################################################
