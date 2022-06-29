@@ -2,10 +2,8 @@
 Módulo para ejecutar un modelo de detección de animales con TensorFlow.
 
 La clase TFDetector contiene funciones para cargar el modelo de detección de Tensorflow
-y ejecutar una instancia. La función main además renderiza los bounding boxes de las
+y ejecutar una instancia. La función main además calculará los bounding boxes de las
 predicciones y guardar los resultados.
-
-Este modulo no es práctico para ejecutarlo con un gran número de imágenes.
 
 Si no desea usar la GPU debe seleccionar la variable: CUDA_VISIBLE_DEVICES a -1
 
@@ -16,8 +14,15 @@ cambiar la variable: DEFAULT_OUTPUT_CONFIDENCE_THRESHOLD
 ###################################################################################################
 # IMPORTs
 
-import imagepathutils as ipu
+import humanfriendly
+import imagepathutils as ip_utils
 import numpy as np
+import time
+import visualization.visualization_utils as v_utils
+import statistics
+import os
+import platform
+import json
 
 
 
@@ -25,6 +30,8 @@ import numpy as np
 # FROMs
 
 from ct_utils import truncate_float
+from tqdm import tqdm
+from datetime import datetime
 
 
 
@@ -154,13 +161,13 @@ class TFDetector:
 
         return detection_graph  
 
-    def generate_detections_one_image(self, image):
-        np_im = np.asarray(image, np.uint8)
-        im_w_batch_dim = np.expand_dims(np_im, axis=0)
+    def generate_detection(self, image):
+        numpy_im = np.asarray(image, np.uint8)
+        im_w_batch_dim = np.expand_dims(numpy_im, axis=0)
 
         # need to change the above line to the following if supporting a batch size > 1 and resizing to the same size
-        # np_images = [np.asarray(image, np.uint8) for image in images]
-        # images_stacked = np.stack(np_images, axis=0) if len(images) > 1 else np.expand_dims(np_images[0], axis=0)
+        # numpy_images = [np.asarray(image, np.uint8) for image in images]
+        # images_stacked = np.stack(numpy_images, axis=0) if len(images) > 1 else np.expand_dims(numpy_images[0], axis=0)
 
         # performs inference
         (box_tensor_out, score_tensor_out, class_tensor_out) = self.tf_session.run(
@@ -169,9 +176,10 @@ class TFDetector:
 
         return box_tensor_out, score_tensor_out, class_tensor_out
 
-    def generate_detections_image(self, image, image_id,
-                                      detection_threshold=DEFAULT_OUTPUT_CONFIDENCE_THRESHOLD):
-        """Apply the detector to an image.
+    def generate_detections_image(self, image_obj, image_path, 
+            detection_threshold=DEFAULT_OUTPUT_CONFIDENCE_THRESHOLD):
+        """
+        Aplicar el detector a una imagen especificada.
 
         Args:
             image: the PIL Image object
@@ -186,36 +194,153 @@ class TFDetector:
             - 'failure'
         """
         result = {
-            'file': image_id
+            'file': image_path
         }
         try:
-            b_box, b_score, b_class = self.generate_detections_one_image(image)
+            b_box, b_score, b_class = self.generate_detection(image_obj)
 
             # our batch size is 1; need to loop the batch dim if supporting batch size > 1
             boxes, scores, classes = b_box[0], b_score[0], b_class[0]
 
-            detections_cur_image = []  # will be empty for an image with no confident detections
-            max_detection_conf = 0.0
+            detections = []  # Estará vacío si no encontramos detecciones que satisfacen el umbral especificado
+            max_detection_score = 0.0
             for b, s, c in zip(boxes, scores, classes):
                 if s > detection_threshold:
-                    detection_entry = {
-                        'category': str(int(c)),  # use string type for the numerical class label, not int
-                        'conf': truncate_float(float(s),  # cast to float for json serialization
-                                               precision=TFDetector.CONF_DIGITS),
+                    detection_successful = {
+                        'MD_class': str(int(c)),    # usamos string para el número de clase, no int
+                        'score': truncate_float(float(s), precision=TFDetector.CONF_DIGITS),    # cast a float para añadirlo al json
                         'bbox': TFDetector.convert_coords(b),
                     }
-                    detections_cur_image.append(detection_entry)
-                    if s > max_detection_conf:
-                        max_detection_conf = s
+                    detections.append(detection_successful)
+                    if s > max_detection_score:
+                        max_detection_score = s
 
-            result['max_detection_conf'] = truncate_float(float(max_detection_conf),
-                                                          precision=TFDetector.CONF_DIGITS)
-            result['detections'] = detections_cur_image
+            result['max_detection_conf'] = truncate_float(float(max_detection_score), 
+                                                precision=TFDetector.CONF_DIGITS)
+            result['detections'] = detections
 
         except Exception as e:
             result['failure'] = TFDetector.FAILURE_TF_INFER
-            print('TFDetector: image {} failed during inference: {}'.format(image_id, str(e)))
+            print('TFDetector: image {} failed during inference: {}'
+                .format(image_path, str(e)))
 
         return result
 
+
+
+###################################################################################################
+# FUNCIONES AUXIIARES
+
+def generate_json(results, output_dir):
+    if platform.system() == 'Windows':
+        windows = True
+    else:
+        windows = False
+
+    final_output = {
+        'images': results,
+        'detection_categories': TFDetector.DEFAULT_DETECTOR_LABEL_MAP,
+        'info': {
+            'detection_completion_time': datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'),
+            'format_version': '1.0'
+        }
+    }
+
+    name = (
+        str(datetime.now().date()) + '_'
+        + str(datetime.now().hour) + '-' 
+        + str(datetime.now().minute)
+    )
+    file_name = name + '.json'
     
+    if windows:
+        output_file = (output_dir + '\\' + file_name)
+    else:
+        output_file = (output_dir + '/' + file_name)
+
+    with open(output_file, 'w') as f:
+        json.dump(final_output, f, indent=1)
+
+    print('Fichero de salida guardado en {}'.format(output_file))
+
+
+
+
+###################################################################################################
+# FUNCION PRINCIPAL
+
+def run(model_file, image_file_names, output_dir):
+    """
+    
+    """
+    
+    if len(image_file_names) == 0:
+        print("WARNING: No hay ficheros disponibles")
+        return
+
+    start_time = time.time()
+    tf_detector = TFDetector(model_file)
+    elapsed_time = time.time() - start_time
+
+    print('Modelo cargado en: {}.'
+        .format(humanfriendly.format_timespan(elapsed_time)))
+
+    all_results = []
+    time_load = []
+    time_infer = []
+
+    for image_file in tqdm(image_file_names):
+        try:
+            start_time = time.time()
+            image_obj = v_utils.load_image(image_file)
+            elapsed_time = time.time() - start_time
+            time_load.append(elapsed_time)
+        except Exception as e:
+            print('La imagen {} no ha podido ser cargada. Excepcion: {}'.format(image_file, e))
+            result = {
+                'file': image_file,
+                'failure': TFDetector.FAILURE_IMAGE_OPEN
+            }
+            all_results.append(result)
+            continue
+
+        try:
+            start_time = time.time()
+            result = tf_detector.generate_detections_image(image_obj, image_file)
+            all_results.append(result)
+            elapsed_time = time.time() - start_time
+            print('Generadas detecciones de imagen {} en {}.'
+                .format(image_file, humanfriendly.format_timespan(elapsed_time)))
+            time_infer.append(elapsed_time)
+        except Exception as e:
+            print('Ha ocurrido un error mientras se ejecutaba el detector en la imagen {}. EXCEPTION: {}'
+                .format(image_file, e))
+            continue
+    try:
+        generate_json(all_results,output_dir)
+    except Exception as e:
+        #print(traceback.format_exc())
+        print('Error al generar fichero JSON de salida en la ruta {}, EXCEPTION: {}'
+            .format(output_dir, e))
+
+    average_time_load = statistics.mean(time_load)
+    average_time_infer = statistics.mean(time_infer)
+
+    if len(time_load) > 1 and len(time_infer) > 1:
+        std_dev_time_load = humanfriendly.format_timespan(statistics.stdev(time_load))
+        std_dev_time_infer = humanfriendly.format_timespan(statistics.stdev(time_infer))
+    else:
+        std_dev_time_load = 'NO DISPONIBLE'
+        std_dev_time_infer = 'NO DISPONIBLE'
+
+    print('De media, por cada imagen, ')
+    print('Ha tomado {} en cargar, con desviación de {}'
+        .format(humanfriendly.format_timespan(average_time_load), std_dev_time_load))
+    print('Ha tomado {} en procesar, con desviación de {}'
+        .format(humanfriendly.format_timespan(average_time_infer), std_dev_time_infer))
+
+
+
+###################################################################################################
+# Command-line driver
+
