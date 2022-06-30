@@ -1,6 +1,7 @@
 """
 
 """
+
 ###################################################################################################
 # IMPORTs
 
@@ -8,12 +9,26 @@ import os
 import sys
 import time
 import json
+import platform
 import argparse
 import visualization.visualization_utils as v_utils
 
 from tqdm import tqdm
 from pathutils import PathUtils as p_utils
+from data_management.annotations.annotation_constants import (
+    detector_bbox_category_id_to_name)  # here id is int
 
+
+
+###################################################################################################
+
+# convert category ID from int to str
+DEFAULT_DETECTOR_LABEL_MAP = {
+    str(k): v for k, v in detector_bbox_category_id_to_name.items()
+}
+
+CONFIDENCE: float = 0.8
+OUTPUT_IMAGE_WIDTH: int = 700
 
 
 
@@ -24,6 +39,10 @@ def run(input_file_names, output_dir):
     """
     
     """
+    if platform.system() == 'Windows':
+        windows = True
+    else:
+        windows = False
     if len(input_file_names) == 0:
         print("WARNING: No hay ficheros disponibles")
         return
@@ -31,49 +50,31 @@ def run(input_file_names, output_dir):
     time_load = []
     time_infer = []
 
-    output_filename_collision_counts = {}
-
-    def generate_crop(fn, crop_index=-1):
-        fn = os.path.basename(fn).lower()
-        name, ext = os.path.splitext(fn)
-        if crop_index >= 0:
-            name += '_crop{:0>2d}'.format(crop_index)
-        fn = '{}_{}'.format(name, '.jpg')
-        if fn in output_filename_collision_counts:
-            n_collisions = output_filename_collision_counts[fn]
-            fn = '{:0>4d}'.format(n_collisions) + '_' + fn
-            output_filename_collision_counts[fn] += 1
-        else:
-            output_filename_collision_counts[fn] = 0
-        fn = os.path.join(output_dir, fn)
-        return fn
-
-
     for input_path in tqdm(input_file_names):
-
         with open(input_path) as f:
             input_file = json.load(f)
 
         image_file = input_file['file']
 
-        try:
-            start_time = time.time()
+        name, ext = os.path.splitext(os.path.basename(image_file).lower())
+        if windows:
+            output_file = (output_dir + '\\' + name + '.jpg')
+        else:
+            output_file = (output_dir + '/' + name + '.jpg')
 
-            image_obj = v_utils.load_image(image_file)
-
-            elapsed = time.time() - start_time
-            time_load.append(elapsed)
-
-        except Exception as e:
-            print('Image {} cannot be loaded. Exception: {}'.format(image_file, e))
-            continue
-
-        images_cropped = v_utils.crop_image(input_file['detections'], image_obj)
-
-        for i_crop, cropped_image in enumerate(images_cropped):
-            output_full_path = generate_crop(image_file, i_crop)
-            cropped_image.save(output_full_path)
+        detector_label_map = DEFAULT_DETECTOR_LABEL_MAP
+        if 'detection_categories' in input_file:
+            print('detection_categories provided')
+            detector_label_map = input_file['detection_categories']
         
+        image = v_utils.resize_image(v_utils.open_image(image_file), OUTPUT_IMAGE_WIDTH)
+
+        v_utils.render_detection_bounding_boxes(
+            input_file['detections'], image, label_map=detector_label_map,
+            confidence_threshold=CONFIDENCE)
+
+        image.save(output_file)
+
 
 
 
@@ -82,7 +83,8 @@ def run(input_file_names, output_dir):
 
 def main():
     parser = argparse.ArgumentParser(
-        description = 'Módulo para generar recortes de las detecciones de las imágenes indicadas')
+        description = 'Módulo para renderizar los bounding boxes de las detecciones de las imágenes '
+            'indicadas')
     group = parser.add_mutually_exclusive_group(required = True)
     group.add_argument(
         '--input_file',
@@ -101,7 +103,8 @@ def main():
     )
     parser.add_argument(
         '--output_dir',
-        help = 'Ruta al directorio de donde se guardaran los recortes generados'
+        help = 'Ruta al directorio de donde se guardaran las imágenes con los bounding boxes '
+            'renderizados'
     )
 
     if len(sys.argv[1:]) == 0:
