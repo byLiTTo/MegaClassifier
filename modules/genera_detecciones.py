@@ -32,6 +32,7 @@ import traceback
 ###################################################################################################
 # FROMs
 
+from imagepathutils import ImagePathUtils as ip_utils
 from ct_utils import truncate_float
 from tqdm import tqdm
 from datetime import datetime
@@ -255,11 +256,7 @@ def generate_json(results, output_dir):
         }
     }
 
-    name = (
-        str(datetime.now().date()) + '_'
-        + str(datetime.now().hour) + '-' 
-        + str(datetime.now().minute)
-    )
+    name = datetime.utcnow().strftime('%Y-%m-%d_%H-%M')
     file_name = name + '.json'
     
     if windows:
@@ -363,52 +360,6 @@ def run(model_file, image_file_names, output_dir):
 def main():
 
     parser = argparse.ArgumentParser(
-        description='Module to run a TF animal detection model on images')
-    parser.add_argument(
-        'detector_file',
-        help='Path to .pb TensorFlow detector model file')
-    group = parser.add_mutually_exclusive_group(required=True)  # must specify either an image file or a directory
-    group.add_argument(
-        '--image_file',
-        help='Single file to process, mutually exclusive with --image_dir')
-    group.add_argument(
-        '--image_dir',
-        help='Directory to search for images, with optional recursion by adding --recursive')
-    parser.add_argument(
-        '--recursive',
-        action='store_true',
-        help='Recurse into directories, only meaningful if using --image_dir')
-    parser.add_argument(
-        '--output_dir',
-        help='Directory for output images (defaults to same as input)')
-    parser.add_argument(
-        '--threshold',
-        type=float,
-        default=TFDetector.DEFAULT_RENDERING_CONFIDENCE_THRESHOLD,
-        help=('Confidence threshold between 0 and 1.0; only render boxes above this confidence'
-              ' (but only boxes above 0.1 confidence will be considered at all)'))
-    parser.add_argument(
-        '--crop',
-        default=False,
-        action="store_true",
-        help=('If set, produces separate output images for each crop, '
-              'rather than adding bounding boxes to the original image'))
-    if len(sys.argv[1:]) == 0:
-        parser.print_help()
-        parser.exit()
-
-    args = parser.parse_args()
-
-    assert os.path.exists(args.detector_file), 'detector_file specified does not exist'
-    assert 0.0 < args.threshold <= 1.0, 'Confidence threshold needs to be between 0 and 1'  # Python chained comparison
-
-    if args.image_file:
-        image_file_names = [args.image_file]
-    else:
-        image_file_names = ip_utils.find_images(args.image_dir, args.recursive)
-
-    """
-    parser = argparse.ArgumentParser(
         description='Modulo para ejecutar un modelo de detección en Tensorflow, sobre imágenes')
     parser.add_argument(
         'detector_file',
@@ -433,13 +384,6 @@ def main():
         '--output_dir',
         help='Directorio de salida de los ficheros JSON, que contienen los datos de las detecciones'
     )
-    parser.add_argument(
-        '--threshold',
-        type=float,
-        default=TFDetector.DEFAULT_RENDERING_CONFIDENCE_THRESHOLD,
-        help=('Umbral de confianza entre 0.0 y 1.0, solo se renderizarán las detecciones que satisfacen este umbral'
-            '(Pero solo se consideran las boxes con el umbral 0.1, puesto por defecto como el umbral de detección)')
-    )
 
     if len(sys.argv[1:]) == 0:
         parser.print_help()
@@ -448,16 +392,11 @@ def main():
     args = parser.parse_args()
 
     assert os.path.exists(args.detector_file), 'El fichero del modelo de detección no existe'
-    assert 0.0 < args.threshold <= 1.0, 'Umbral de confianza debe estar entre 0 y 1'
-
-    assert os.path.exists(args.detector_file), 'detector_file specified does not exist'
-    assert 0.0 < args.threshold <= 1.0, 'Confidence threshold needs to be between 0 and 1'  # Python chained comparison
 
     if args.image_file:
         image_file_names = [args.image_file]
     else:
         image_file_names = ip_utils.find_images(args.image_dir, args.recursive)
-    """
 
     print('==========================================================================================')
     print('Ejecutando detector en {} imágenes...'
@@ -473,8 +412,7 @@ def main():
 
     run(model_file=args.detector_file,
         image_file_names=image_file_names,
-        output_dir=args.output_dir,
-        render_confidence_threshold=args.threshold
+        output_dir=args.output_dir
     )
     print('==========================================================================================')
 
