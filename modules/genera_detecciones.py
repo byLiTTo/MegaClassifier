@@ -3,7 +3,7 @@ Módulo para ejecutar un modelo de detección de animales con TensorFlow.
 
 La clase TFDetector contiene funciones para cargar el modelo de detección de Tensorflow
 y ejecutar una instancia. La función main además calculará los bounding boxes de las
-predicciones y guardar los resultados.
+predicciones y guardar los resultados en ficheros JSON.
 
 Si no desea usar la GPU debe seleccionar la variable: CUDA_VISIBLE_DEVICES a -1
 
@@ -14,28 +14,25 @@ cambiar la variable: DEFAULT_OUTPUT_CONFIDENCE_THRESHOLD
 ###################################################################################################
 # IMPORTs
 
+import os
+import sys
+import json
+import time
+import numpy as np
 import argparse
+import platform
+import traceback
+import statistics
 import humanfriendly
 import imagepathutils as ip_utils
-import numpy as np
-import time
 import visualization.visualization_utils as v_utils
-import statistics
-import platform
-import json
-import sys
-import os
-import traceback
 
 
 
-###################################################################################################
-# FROMs
-
-from imagepathutils import ImagePathUtils as ip_utils
-from ct_utils import truncate_float
 from tqdm import tqdm
+from ct_utils import truncate_float
 from datetime import datetime
+from imagepathutils import ImagePathUtils as ip_utils
 
 
 
@@ -54,6 +51,7 @@ print('Is GPU available? tf.test.is_gpu_available:',tf.config.list_physical_devi
 print('==========================================================================================')
 
 
+
 ###################################################################################################
 # CLASES:
 
@@ -68,15 +66,10 @@ class TFDetector:
     CONF_DIGITS = 3
     COORD_DIGITS = 4
 
-    # MegaDetector was trained with batch size of 1, and the resizing function is a part
-    # of the inference graph
-    BATCH_SIZE = 1
-
     # Lista de posibles fallos
     FAILURE_TF_INFER = 'Failure TF inference'
     FAILURE_IMAGE_OPEN = 'Failure image access'
 
-    DEFAULT_RENDERING_CONFIDENCE_THRESHOLD = 0.85  # to render bounding boxes
     DEFAULT_OUTPUT_CONFIDENCE_THRESHOLD = 0.1  # to include in the output json file
 
     DEFAULT_DETECTOR_LABEL_MAP = {
@@ -157,7 +150,7 @@ class TFDetector:
         Returns: Los gráficos cargados.
         """
         print('==========================================================================================')
-        print('TFDetector: Loading graph...')
+        print('TFDetector: Cargando gráficos')
         detection_graph = tf.Graph()
         with detection_graph.as_default():
             od_graph_def = tf.GraphDef()
@@ -165,7 +158,7 @@ class TFDetector:
                 serialized_graph = fid.read()
                 od_graph_def.ParseFromString(serialized_graph)
                 tf.import_graph_def(od_graph_def, name='')
-        print('TFDetector: Detection graph loaded.')
+        print('TFDetector: Gráficos de detección, cargados.')
         print('==========================================================================================')
 
         return detection_graph  
@@ -287,13 +280,8 @@ def generate_json(results, output_dir):
         with open(output_file, 'w') as f:
             json.dump(i_results, f, indent=1)
 
-    print('==========================================================================================')
-    print('Fichero de salida guardado en {}'.format(output_file))
-    print('==========================================================================================')
 
-
-
-
+            
 ###################################################################################################
 # FUNCION PRINCIPAL
 

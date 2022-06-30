@@ -27,5 +27,30 @@ Aprendizaje de los fundamentos de las redes neuronales convolucionales (CNNs) y 
 - Repositorio [ai4eutils](https://github.com/microsoft/ai4eutils) de Microsoft, que hemos incluido en la carpeta [repos](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/repos) de nuestro repositorio
 - Modelo MegaDetector: [megadetector_v4_1_0.pb](https://lilablobssc.blob.core.windows.net/models/camera_traps/megadetector/md_v4.1.0/md_v4.1.0.pb)
 
+# Librerías de Python utilizadas:
+Si al ejecutar los notebooks, sucede algún tipo de error, asegurese de tener instaladas las siguientes librerías en su entorno:
+
+- os
+- sys
+- json
+- time
+- numpy
+- argparse
+- platform
+- traceback
+- statistics
+- humandfriendly
+
 ___
 
+# Ejecutar aplicación
+Para poder ejecutar los módulos de python, hemos creado un entorno conda en nuestro dispositivo. Una vez instalados todos los requisitos, dependencias y librerías en nuestro entorno, lo usaremos como kernel para ejecutar los diferentes notebooks que hemos implementado para poder ejecutar de forma clara y ordenada, las diferentes fases de la aplicación.
+
+## Notebook: a01_GeneraDetecciones
+Se le indica un directorio de entrada de donde tomará las imágenes a las que le aplicará el modelo de detecciones entrenado de MegaDetector. (Por defecto hemos creado la carpeta [input](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/input) para que tome las imágenes).
+
+Una vez obtenidos los resultados, genera un fichero JSON con los datos de cada detección encontrada en cada una de las imágenes. Se generan tanto un JSON global que contiene todos los resultados de la ejecución, así como un fichero JSON por cada imagen de forma individual. 
+
+Todos estos resultados son guardados en la carpeta [output_json](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json), para los ficheros de resultados globales, hemos creado una carpeta dentro de la anteriormente mencionada, a modo de historial, se trata de [registry](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json/registry).
+
+___
