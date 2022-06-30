@@ -44,4 +44,10 @@ Una vez obtenidos los resultados, genera un fichero JSON con los datos de cada d
 
 Todos estos resultados son guardados en la carpeta [output_json](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json), para los ficheros de resultados globales, hemos creado una carpeta dentro de la anteriormente mencionada, a modo de historial, se trata de [registry](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json/registry).
 
+### Notebook: b01_GeneraMascaras
+
+### Notebook: b02_GeneraRecortes
+
+### Notebook: b03_GeneraBoundingBoxes
+
 ___
