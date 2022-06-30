@@ -1,0 +1,21 @@
+{
+ "file": "/home/carlos/WORKSPACE/TFG-DeteccionFototrampeo/input/1.jpg",
+ "max_detection_conf": 0.999,
+ "detections": [
+  {
+   "MD_class": "1",
+   "score": 0.999,
+   "bbox": [
+    0.6955,
+    0.4446,
+    0.216,
+    0.5165
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

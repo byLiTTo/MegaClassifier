@@ -260,12 +260,32 @@ def generate_json(results, output_dir):
     file_name = name + '.json'
     
     if windows:
-        output_file = (output_dir + '\\' + file_name)
+        os.makedirs((output_dir + '\\' + 'registry'), exist_ok=True)
+        output_file = (output_dir + '\\' + 'registry' + '\\' + file_name)
     else:
-        output_file = (output_dir + '/' + file_name)
+        os.makedirs((output_dir + '/' + 'registry'), exist_ok=True)
+        output_file = (output_dir + '/' + 'registry' + '/' + file_name)
 
     with open(output_file, 'w') as f:
         json.dump(final_output, f, indent=1)
+
+    for i_image in final_output['images']:
+        fn = i_image['file']
+        file_name = os.path.basename(fn).lower()
+        name, ext = os.path.splitext(file_name)
+        i_results = {
+            'file': fn,
+            'max_detection_conf': i_image['max_detection_conf'],
+            'detections': i_image['detections'],
+            'detection_categories': TFDetector.DEFAULT_DETECTOR_LABEL_MAP,
+        }
+        if windows:
+            output_file = (output_dir + '\\' + name + '.json')
+        else:
+            output_file = (output_dir + '/' + name + '.json')
+
+        with open(output_file, 'w') as f:
+            json.dump(i_results, f, indent=1)
 
     print('==========================================================================================')
     print('Fichero de salida guardado en {}'.format(output_file))
