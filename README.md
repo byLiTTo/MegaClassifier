@@ -30,16 +30,7 @@ Aprendizaje de los fundamentos de las redes neuronales convolucionales (CNNs) y 
 # Librerías de Python utilizadas:
 Si al ejecutar los notebooks, sucede algún tipo de error, asegurese de tener instaladas las siguientes librerías en su entorno:
 
-- os
-- sys
-- json
-- time
-- numpy
-- argparse
-- platform
-- traceback
-- statistics
-- humandfriendly
+_os, sys, json, time, umpy, argparse, platform, traceback, statistics, humandfriendly_
 
 ___
 
