@@ -24,7 +24,6 @@ import platform
 import traceback
 import statistics
 import humanfriendly
-import imagepathutils as ip_utils
 import visualization.visualization_utils as v_utils
 
 
@@ -32,7 +31,7 @@ import visualization.visualization_utils as v_utils
 from tqdm import tqdm
 from ct_utils import truncate_float
 from datetime import datetime
-from imagepathutils import ImagePathUtils as ip_utils
+from pathutils import PathUtils as p_utils
 
 
 
@@ -209,8 +208,8 @@ class TFDetector:
             for b, s, c in zip(boxes, scores, classes):
                 if s > detection_threshold:
                     detection_successful = {
-                        'MD_class': str(int(c)),    # usamos string para el número de clase, no int
-                        'score': truncate_float(float(s), precision=TFDetector.CONF_DIGITS),    # cast a float para añadirlo al json
+                        'category': str(int(c)),    # usamos string para el número de clase, no int
+                        'conf': truncate_float(float(s), precision=TFDetector.CONF_DIGITS),    # cast a float para añadirlo al json
                         'bbox': TFDetector.convert_coords(b),
                     }
                     detections.append(detection_successful)
@@ -386,7 +385,7 @@ def main():
     parser.add_argument(
         '--recursive',
         action='store_true',
-        help='Maneja directorios de forma recursiva, solo tiene sentido usarlo con --image_dir'
+        help='Maneja directorios de forma recursiva, solo tiene sentido usarlo con --image_file'
     )
     parser.add_argument(
         '--output_dir',
@@ -404,7 +403,7 @@ def main():
     if args.image_file:
         image_file_names = [args.image_file]
     else:
-        image_file_names = ip_utils.find_images(args.image_dir, args.recursive)
+        image_file_names = p_utils.find_images(args.image_dir, args.recursive)
 
     print('==========================================================================================')
     print('Ejecutando detector en {} imágenes...'
@@ -418,10 +417,7 @@ def main():
         else:
             args.output_dir = os.path.dirname(args.image_file)
 
-    run(model_file=args.detector_file,
-        image_file_names=image_file_names,
-        output_dir=args.output_dir
-    )
+    run(model_file=args.detector_file, image_file_names=image_file_names, output_dir=args.output_dir)
     print('==========================================================================================')
 
 

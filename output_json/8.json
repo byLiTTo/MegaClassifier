@@ -3,8 +3,8 @@
  "max_detection_conf": 0.999,
  "detections": [
   {
-   "MD_class": "1",
-   "score": 0.999,
+   "category": "1",
+   "conf": 0.999,
    "bbox": [
     0.5521,
     0.1785,

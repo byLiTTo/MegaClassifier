@@ -3,8 +3,8 @@
  "max_detection_conf": 0.999,
  "detections": [
   {
-   "MD_class": "1",
-   "score": 0.999,
+   "category": "1",
+   "conf": 0.999,
    "bbox": [
     0.5789,
     0.0906,
@@ -13,8 +13,8 @@
    ]
   },
   {
-   "MD_class": "1",
-   "score": 0.999,
+   "category": "1",
+   "conf": 0.999,
    "bbox": [
     0.4033,
     0.3862,
@@ -23,8 +23,8 @@
    ]
   },
   {
-   "MD_class": "2",
-   "score": 0.997,
+   "category": "2",
+   "conf": 0.997,
    "bbox": [
     0.1571,
     0.3647,
