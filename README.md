@@ -45,7 +45,7 @@ Una vez obtenidos los resultados, genera un fichero JSON con los datos de cada d
 Todos estos resultados son guardados en la carpeta [output_json](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json), para los ficheros de resultados globales, hemos creado una carpeta dentro de la anteriormente mencionada, a modo de historial, se trata de [registry](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json/registry).
 
 ### Notebook: b01_GeneraMascaras
-    __# PENDIENTE DE IMPLEMENTAR__
+    # PENDIENTE DE IMPLEMENTAR
 
 ### Notebook: b02_GeneraRecortes
 En este módulo partiremos de los resultados de ejecutar el notebook _a01_GeneraDetecciones_. A partir de los ficheros JSON, situaremos los bounding boxes en las fotos correspondientes. Generaremos nuevas imágenes con únicamente el contenido de dichos recuadros, serán creados tantos ficheros como detecciones haya por imágene original.
