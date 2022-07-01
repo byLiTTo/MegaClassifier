@@ -43,6 +43,7 @@ def run(input_file_names, output_dir):
         windows = True
     else:
         windows = False
+        
     if len(input_file_names) == 0:
         print("WARNING: No hay ficheros disponibles")
         return
