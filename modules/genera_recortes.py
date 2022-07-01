@@ -38,7 +38,7 @@ def run(input_file_names, output_dir):
         name, ext = os.path.splitext(fn)
         if crop_index >= 0:
             name += '_crop{:0>2d}'.format(crop_index)
-        fn = '{}_{}'.format(name, '.jpg')
+        fn = '{}_{}'.format(name, '.png')
         if fn in output_filename_collision_counts:
             n_collisions = output_filename_collision_counts[fn]
             fn = '{:0>4d}'.format(n_collisions) + '_' + fn

@@ -59,9 +59,9 @@ def run(input_file_names, output_dir):
 
         name, ext = os.path.splitext(os.path.basename(image_file).lower())
         if windows:
-            output_file = (output_dir + '\\' + name + '.jpg')
+            output_file = (output_dir + '\\' + name + '.png')
         else:
-            output_file = (output_dir + '/' + name + '.jpg')
+            output_file = (output_dir + '/' + name + '.png')
 
         detector_label_map = DEFAULT_DETECTOR_LABEL_MAP
         if 'detection_categories' in input_file:

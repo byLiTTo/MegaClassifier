@@ -5,11 +5,14 @@
 # IMPORTs
 
 import os
+import io
 import sys
 import cv2
 import json
+import numpy as np
 import platform
 import argparse
+import matplotlib
 import visualization.visualization_utils as v_utils
 
 from tqdm import tqdm
@@ -20,8 +23,28 @@ from pathutils import PathUtils as p_utils
 ###################################################################################################
 # FUNCIONES
 
-def generate_binary_image():
-    print('hola')
+def generate_binary_image(detections, image):
+    im_height, im_width = image.shape[0], image.shape[1]
+
+    mask = np.zeros((im_height, im_width))
+
+    for detection in detections:
+        x1, y1, w_box, h_box = detection['bbox']
+        ymin,xmin,ymax,xmax = y1, x1, y1 + h_box, x1 + w_box
+
+        # Convert to pixels so we can use the PIL crop() function
+        (left, right, top, bottom) = (xmin * im_width, xmax * im_width,
+                                        ymin * im_height, ymax * im_height)
+
+        left = round(left)
+        right = round(right)
+        top = round(top)
+        bottom = round(bottom)
+        
+        # Representación: img[y0:y1, x0:x1]
+        mask[top:bottom,left:right] = 1
+
+    return mask
 
 
 
@@ -49,17 +72,15 @@ def run(input_file_names, output_dir):
 
         name, ext = os.path.splitext(os.path.basename(image_file).lower())
         if windows:
-            output_file = (output_dir + '\\' + name + '.jpg')
+            output_file = (output_dir + '\\' + name + '_mask.png')
         else:
-            output_file = (output_dir + '/' + name + '.jpg')
+            output_file = (output_dir + '/' + name + '_mask.png')
 
-        image = cv2.imread(image_file)
-        im_width, im_height = image.size
+        image = cv2.imread(image_file)        
 
-        for detection in input_file['detections']:
-            print(detection['bbox'])
-
-
+        mask = generate_binary_image(input_file['detections'],image)
+        
+        cv2.imwrite(output_file, mask * 255)
 
 
 
