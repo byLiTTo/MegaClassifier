@@ -30,7 +30,7 @@ Aprendizaje de los fundamentos de las redes neuronales convolucionales (CNNs) y 
 # Librerías de Python utilizadas:
 Si al ejecutar los notebooks, sucede algún tipo de error, asegurese de tener instaladas las siguientes librerías en su entorno:
 
-_(Aún en fase de desarrollo, cuando concluya se realizará una lista definitiva)_
+    (Aún en fase de desarrollo, cuando concluya se realizará una lista definitiva)
 
 ___
 
@@ -45,7 +45,9 @@ Una vez obtenidos los resultados, genera un fichero JSON con los datos de cada d
 Todos estos resultados son guardados en la carpeta [output_json](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json), para los ficheros de resultados globales, hemos creado una carpeta dentro de la anteriormente mencionada, a modo de historial, se trata de [registry](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json/registry).
 
 ### Notebook: b01_GeneraMascaras
-    # PENDIENTE DE IMPLEMENTAR
+Módulo creado para generar máscaras con las regiones de interés de las imágenes dadas. En este caso tomaremos como regiones de interés los bounding boxes de las detecciones, por tanto partiremos de los ficheros JSON generados en el anterior notebook, que se encuentran en la carpeta [output_json](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json), por defecto.
+
+Como salida tendremos imágenes binarias, las cuales han sido guardadas con valores 0 y 255. Estas imágenes las usaremos como máscara, por defecto hemos asignado que se guarden en la carpeta [output_mask](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_mask), con el nombre de la imagen original añadiendo la terminación __mask_
 
 ### Notebook: b02_GeneraRecortes
 En este módulo partiremos de los resultados de ejecutar el notebook _a01_GeneraDetecciones_. A partir de los ficheros JSON, situaremos los bounding boxes en las fotos correspondientes. Generaremos nuevas imágenes con únicamente el contenido de dichos recuadros, serán creados tantos ficheros como detecciones haya por imágene original.

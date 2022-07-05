@@ -1,5 +1,5 @@
 {
- "file": "/home/carlos/WORKSPACE/TFG-DeteccionFototrampeo/input/9.jpg",
+ "file": "/Users/carlos/WORKSPACE/TFG-DeteccionFototrampeo/input/9.jpg",
  "max_detection_conf": 0.999,
  "detections": [
   {
