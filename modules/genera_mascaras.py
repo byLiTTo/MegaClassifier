@@ -5,21 +5,21 @@
 # IMPORTs
 
 import os
-import io
 import sys
 import cv2
+import time
 import json
 import numpy as np
-import scipy.io as sio
 import platform
 import argparse
-import matplotlib
+import traceback
+import statistics
+import humanfriendly
 import visualization.visualization_utils as v_utils
 
 from PIL import Image
 from tqdm import tqdm
 from pathutils import PathUtils as p_utils
-from matplotlib.pyplot import imshow
 
 
 
@@ -27,6 +27,16 @@ from matplotlib.pyplot import imshow
 # FUNCIONES
 
 def generate_binary_image(detections, image):
+    """
+    Genera una imagen binaria donde las posiciones de los pixeles que se encuentran dentro de las 
+    detecciones, tiene valor True.
+
+    Args:
+        - detections: Lista de detecciones  de la imagen en cuestión.
+        - image: np.array del objeto imagen
+    Returns:
+        - mask: np.array correspondiente a la imagen binaria como resultado (máscara)
+    """
     im_height, im_width = image.shape[0], image.shape[1] 
 
     mask = np.zeros((im_height, im_width))
@@ -54,9 +64,15 @@ def generate_binary_image(detections, image):
 ###################################################################################################
 # FUNCIÓN PRINCIPAL
 
-def run(input_file_names, output_dir):
+def run(input_file_names, output_mask):
     """
-    
+    Carga el fichero JSON especificado, a partir de las detecciones, genera una imagen binaria 
+    (máscara) y la guarda en la ruta especificada.
+
+    Args:
+        - input_file_names: Lista de las rutas de los ficheros JSON de los que se tomará la 
+            información para generar las máscaras.
+        - output_mask: Ruta donde se guardarán las máscaras generadas.
     """
     if platform.system() == 'Windows':
         windows = True
@@ -67,23 +83,75 @@ def run(input_file_names, output_dir):
         print("WARNING: No hay ficheros disponibles")
         return
     
+    time_infer = []
+
     for input_path in tqdm(input_file_names):
-        with open(input_path) as f:
-            input_file = json.load(f)
+        try:
+            with open(input_path) as f:
+                input_file = json.load(f)
+        except Exception as e:
+            print('Error al cargar el fichero JSON en la ruta {}, EXCEPTION: {}'
+                .format(input_path, e))
+            print('------------------------------------------------------------------------------------------')
+            print(traceback.format_exc())
+            continue
+        try:
+            image_file = input_file['file']
+            
+            image = np.array(Image.open(image_file)) 
+        except Exception as e:
+            print('Error al cargar imagen desde la ruta {}, EXCEPTION: {}'
+                .format(image_file, e))
+            print('------------------------------------------------------------------------------------------')
+            print(traceback.format_exc())
+            continue
+        try:
+            print('')
+            start_time = time.time()
+            mask = generate_binary_image(input_file['detections'],image)
+            elapsed_time = time.time() - start_time
+            print('')
+            print('Generada máscara de imagen {} en {}.'
+                .format(image_file, humanfriendly.format_timespan(elapsed_time)))
+            time_infer.append(elapsed_time)
+        except Exception as e:
+            print('')
+            print('Ha ocurrido un error mientras se generaba la máscara en la imagen {}. EXCEPTION: {}'
+                .format(image_file, e))
+            print('------------------------------------------------------------------------------------------')
+            print(traceback.format_exc())
+            continue
 
-        image_file = input_file['file']
+        try:
+            name, ext = os.path.splitext(os.path.basename(image_file).lower())
+            if windows:
+                output_file = (output_mask + '\\' + name + '_mask.png')
+            else:
+                output_file = (output_mask + '/' + name + '_mask.png')
+            
+            cv2.imwrite(output_file, mask * 255)
 
-        name, ext = os.path.splitext(os.path.basename(image_file).lower())
-        if windows:
-            output_file = (output_dir + '\\' + name + '_mask.png')
-        else:
-            output_file = (output_dir + '/' + name + '_mask.png')
+        except Exception as e:
+            print('')
+            print('Ha ocurrido un error. No puede guardarse la máscara en la ruta {}. EXCEPTION: {}'
+                .format(output_file, e))
+            print('------------------------------------------------------------------------------------------')
+            print(traceback.format_exc())
+            continue
 
-        image = np.array(Image.open(image_file)) 
+    average_time_infer = statistics.mean(time_infer)
 
-        mask = generate_binary_image(input_file['detections'],image)
-        
-        cv2.imwrite(output_file, mask * 255)
+    if len(time_infer) > 1:
+        std_dev_time_infer = humanfriendly.format_timespan(statistics.stdev(time_infer))
+    else:
+        std_dev_time_infer = 'NO DISPONIBLE'
+
+    print('')
+    print('==========================================================================================')
+    print('De media, por cada imagen: ')
+    print('Ha tomado {} en generar la máscara, con desviación de {}'
+        .format(humanfriendly.format_timespan(average_time_infer), std_dev_time_infer))
+    print('==========================================================================================')
 
 
 
@@ -92,28 +160,25 @@ def run(input_file_names, output_dir):
 
 def main():
     parser = argparse.ArgumentParser(
-        description = 'Módulo para renderizar los bounding boxes de las detecciones de las imágenes '
-            'indicadas')
+        description = 'Módulo para generar máscaras abarcando únicamente la zona de la detección')
     group = parser.add_mutually_exclusive_group(required = True)
     group.add_argument(
-        '--input_file',
-        help = 'Fichero JSON del que se tomarán los datos para realizar el recorte'
+        '--json_file',
+        help = 'Fichero JSON del que se tomarán los datos para delimitar la zona de la máscara'
     )
     group.add_argument(
-        '--input_dir',
+        '--json_dir',
         help = 'Ruta al directorio donde se encuentran los ficheros JSON de los cuales se tomarán '
-            'los datos para realizar los recortes a las diferentes imágenes, hace uso de la '
-            'opción --recursive'
+            'los datos para generar las diferentes máscaras, hace uso de la opción --recursive'
     )
     parser.add_argument(
         '--recursive',
         action = 'store_true',
-        help = 'Maneja directorios de forma recursiva, solo tiene sentido usarlo con --input_file'
+        help = 'Maneja directorios de forma recursiva, solo tiene sentido usarlo con --json_dir'
     )
     parser.add_argument(
-        '--output_dir',
-        help = 'Ruta al directorio de donde se guardaran las imágenes con los bounding boxes '
-            'renderizados'
+        '--output_mask',
+        help = 'Ruta al directorio de donde se guardarán las máscaras como fichero de imagen'
     )
 
     if len(sys.argv[1:]) == 0:
@@ -122,20 +187,27 @@ def main():
 
     args = parser.parse_args()
 
-    if args.input_file:
-        input_file_names = [args.input_file]
+    if args.json_file:
+        input_file_names = [args.json_file]
     else:
-        input_file_names = p_utils.find_detections(args.input_dir, args.recursive)
+        input_file_names = p_utils.find_detections(args.json_dir, args.recursive)
 
-    if args.output_dir:
-        os.makedirs(args.output_dir, exist_ok=True)
+    print('')
+    print('==========================================================================================')
+    print('Generando máscaras de {} imágenes...'
+        .format(len(input_file_names)))
+    print('')
+
+    if args.output_mask:
+        os.makedirs(args.output_mask, exist_ok=True)
     else:
-        if args.input_dir:
-            args.output_dir = args.input_dir
+        if args.json_dir:
+            args.output_mask = args.json_dir
         else:
-            args.output_dir = os.path.dirname(args.input_file)
+            args.output_mask = os.path.dirname(args.json_file)
     
-    run(input_file_names=input_file_names, output_dir=args.output_dir)
+    run(input_file_names=input_file_names, output_mask=args.output_mask)
+    print('')
     print('==========================================================================================')
 
 

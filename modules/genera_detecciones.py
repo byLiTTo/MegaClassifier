@@ -223,10 +223,11 @@ class TFDetector:
             result['detections'] = detections
 
         except Exception as e:
-            print(traceback.format_exc())
             result['failure'] = TFDetector.FAILURE_TF_INFER
             print('TFDetector: image {} failed during inference: {}'
                 .format(image_path, str(e)))
+            print('------------------------------------------------------------------------------------------')
+            print(traceback.format_exc())
 
         return result
 
@@ -329,9 +330,9 @@ def run(model_file, image_file_names, output_dir):
             elapsed_time = time.time() - start_time
             time_load.append(elapsed_time)
         except Exception as e:
-            print(traceback.format_exc())
-            print('!!!')
             print('La imagen {} no ha podido ser cargada. Excepcion: {}'.format(image_file, e))
+            print('------------------------------------------------------------------------------------------')
+            print(traceback.format_exc())
             result = {
                 'file': image_file,
                 'failure': TFDetector.FAILURE_IMAGE_OPEN
@@ -350,10 +351,11 @@ def run(model_file, image_file_names, output_dir):
                 .format(image_file, humanfriendly.format_timespan(elapsed_time)))
             time_infer.append(elapsed_time)
         except Exception as e:
-            print(traceback.format_exc())
-            print('!!!')
+            print('')
             print('Ha ocurrido un error mientras se ejecutaba el detector en la imagen {}. EXCEPTION: {}'
                 .format(image_file, e))
+            print('------------------------------------------------------------------------------------------')
+            print(traceback.format_exc())
             continue
     try:
         generate_json(all_results,output_dir)
@@ -379,7 +381,7 @@ def run(model_file, image_file_names, output_dir):
 
     print('')
     print('==========================================================================================')
-    print('De media, por cada imagen, ')
+    print('De media, por cada imagen: ')
     print('Ha tomado {} en cargar, con desviación de {}'
         .format(humanfriendly.format_timespan(average_time_load), std_dev_time_load))
     print('Ha tomado {} en procesar, con desviación de {}'
@@ -411,7 +413,7 @@ def main():
     parser.add_argument(
         '--recursive',
         action='store_true',
-        help='Maneja directorios de forma recursiva, solo tiene sentido usarlo con --image_file'
+        help='Maneja directorios de forma recursiva, solo tiene sentido usarlo con --image_dir'
     )
     parser.add_argument(
         '--output_dir',
