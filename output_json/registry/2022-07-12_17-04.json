@@ -1,0 +1,241 @@
+{
+ "images": [
+  {
+   "file": "/home/carlos/WORKSPACE/TFG-DeteccionFototrampeo/input/b1405IMAG0258.JPG",
+   "max_detection_conf": 0.999,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.999,
+     "bbox": [
+      0.2553,
+      0.1193,
+      0.3058,
+      0.4354
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.981,
+     "bbox": [
+      0.506,
+      0.1631,
+      0.06273,
+      0.1385
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/home/carlos/WORKSPACE/TFG-DeteccionFototrampeo/input/c18196IMAG0001.JPG",
+   "max_detection_conf": 0.777,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.777,
+     "bbox": [
+      0.2929,
+      0.3002,
+      0.05115,
+      0.02864
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.114,
+     "bbox": [
+      0.4235,
+      0.3431,
+      0.01849,
+      0.02172
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/home/carlos/WORKSPACE/TFG-DeteccionFototrampeo/input/lince71 (78).JPG",
+   "max_detection_conf": 0.999,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.999,
+     "bbox": [
+      0.2291,
+      0.4157,
+      0.285,
+      0.3795
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/home/carlos/WORKSPACE/TFG-DeteccionFototrampeo/input/PICT0030.JPG",
+   "max_detection_conf": 0.999,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.999,
+     "bbox": [
+      0.2952,
+      0.1147,
+      0.1157,
+      0.373
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.999,
+     "bbox": [
+      0.2307,
+      0.1886,
+      0.08729,
+      0.2975
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.443,
+     "bbox": [
+      0.3585,
+      0.2917,
+      0.0522,
+      0.1721
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.311,
+     "bbox": [
+      0.2732,
+      0.2456,
+      0.04508,
+      0.2378
+     ]
+    },
+    {
+     "category": "2",
+     "conf": 0.14,
+     "bbox": [
+      0.2729,
+      0.3557,
+      0.03327,
+      0.1218
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/home/carlos/WORKSPACE/TFG-DeteccionFototrampeo/input/35_20201218 (279).JPG",
+   "max_detection_conf": 0.999,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.999,
+     "bbox": [
+      0,
+      0.1956,
+      0.3744,
+      0.6714
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.999,
+     "bbox": [
+      0.5818,
+      0.04538,
+      0.4181,
+      0.9402
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/home/carlos/WORKSPACE/TFG-DeteccionFototrampeo/input/2_20201215 (5209).JPG",
+   "max_detection_conf": 0.997,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.997,
+     "bbox": [
+      0.8098,
+      0.4558,
+      0.02843,
+      0.06014
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.993,
+     "bbox": [
+      0.5116,
+      0.3766,
+      0.07886,
+      0.1313
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.822,
+     "bbox": [
+      0.6904,
+      0.4643,
+      0.02324,
+      0.019
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.27,
+     "bbox": [
+      0.6166,
+      0.4467,
+      0.02547,
+      0.03003
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/home/carlos/WORKSPACE/TFG-DeteccionFototrampeo/input/lince70 (208).JPG",
+   "max_detection_conf": 0.999,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.999,
+     "bbox": [
+      0.0004536,
+      0.4448,
+      0.5422,
+      0.5338
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/home/carlos/WORKSPACE/TFG-DeteccionFototrampeo/input/Vulvul 23_frame140.jpg",
+   "max_detection_conf": 0.999,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.999,
+     "bbox": [
+      0.4656,
+      0.5858,
+      0.2115,
+      0.4141
+     ]
+    }
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ },
+ "info": {
+  "detection_completion_time": "2022-07-12 17:04:01",
+  "format_version": "1.0"
+ }
+}

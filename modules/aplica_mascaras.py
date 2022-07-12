@@ -9,7 +9,6 @@ import sys
 import cv2
 import json
 import numpy as np
-import scipy.io as sio
 import platform
 import argparse
 
@@ -18,27 +17,37 @@ import argparse
 from PIL import Image
 from tqdm import tqdm
 from pathutils import PathUtils as p_utils
-from matplotlib import pyplot as plt
 
 
 
 ###################################################################################################
 # FUNCIONES
 
-def genera_imagen(image_path, mask_path, output_path):
-    image_np = np.array(Image.open(image_path))
+def generate_masked_image(image_path, mask_path):
+    """
+    Crea una imagen a la que se le ha aplicado una máscara. En este caso el resultado será una 
+    imagen con el fondo en negro salvo la zona que abarca la detección.
+
+    Args:
+        - image_path: Ruta del fichero de la imagen a la que aplicar la máscara.
+        - mask_path: Ruta donde se encuentra el fichero de la máscara a aplicar.
+        
+    Returns:
+        - masked: Imagen con la máscara aplicada.
+    """
+    image = cv2.imread(image_path)
     bin_mask = np.array(Image.open(mask_path))
 
-    masked = cv2.bitwise_and(image_np, image_np, mask=bin_mask)
+    masked = cv2.bitwise_and(image, image, mask=bin_mask)
 
-    cv2.imwrite(output_path, masked)
+    return masked
 
 
 
 ###################################################################################################
 # FUNCIÓN PRINCIPAL
 
-def run(input_file_names, output_mask, output_dir):
+def run(input_file_names, output_mask, output_masked):
     """
     
     """
@@ -51,7 +60,6 @@ def run(input_file_names, output_mask, output_dir):
         print("WARNING: No hay ficheros disponibles")
         return
 
-    time_load = []
     time_infer = []
 
     for input_path in tqdm(input_file_names):
@@ -62,11 +70,13 @@ def run(input_file_names, output_mask, output_dir):
         name, ext = os.path.splitext(os.path.basename(image_file).lower())
         if windows:
             mask_path = (output_mask + '\\' + name + '_mask.png')
-            output_path = (output_dir + '\\' + name + '.png')
+            output_path = (output_masked + '\\' + name + '.png')
         else:
             mask_path = (output_mask + '/' + name + '_mask.png')
-            output_path = (output_dir + '/' + name + '.png')
-        genera_imagen(image_file,mask_path, output_path)
+            output_path = (output_masked + '/' + name + '.png')
+        masked = generate_masked_image(image_file, mask_path)
+        
+        cv2.imwrite(output_path, masked)
 
 
 
@@ -80,11 +90,11 @@ def main():
             'indicadas')
     group = parser.add_mutually_exclusive_group(required = True)
     group.add_argument(
-        '--input_file',
+        '--json_file',
         help = 'Fichero JSON del que se tomarán los datos para realizar el recorte'
     )
     group.add_argument(
-        '--input_dir',
+        '--json_dir',
         help = 'Ruta al directorio donde se encuentran los ficheros JSON de los cuales se tomarán '
             'los datos para realizar los recortes a las diferentes imágenes, hace uso de la '
             'opción --recursive'
@@ -100,7 +110,7 @@ def main():
             'renderizados'
     )
     parser.add_argument(
-        '--output_dir',
+        '--output_masked',
         help = 'Ruta al directorio de donde se guardaran las imágenes con los bounding boxes '
             'renderizados'
     )
@@ -111,28 +121,28 @@ def main():
 
     args = parser.parse_args()
 
-    if args.input_file:
-        input_file_names = [args.input_file]
+    if args.json_file:
+        input_file_names = [args.json_file]
     else:
-        input_file_names = p_utils.find_detections(args.input_dir, args.recursive)
+        input_file_names = p_utils.find_detections(args.json_dir, args.recursive)
 
     if args.output_mask:
         os.makedirs(args.output_mask, exist_ok=True)
     else:
-        if args.input_dir:
-            args.output_mask = args.input_dir
+        if args.json_dir:
+            args.output_mask = args.json_dir
         else:
-            args.output_mask = os.path.dirname(args.input_file)
+            args.output_mask = os.path.dirname(args.json_file)
 
-    if args.output_dir:
-        os.makedirs(args.output_dir, exist_ok=True)
+    if args.output_masked:
+        os.makedirs(args.output_masked, exist_ok=True)
     else:
-        if args.input_dir:
-            args.output_dir = args.input_dir
+        if args.json_dir:
+            args.output_masked = args.json_dir
         else:
-            args.output_dir = os.path.dirname(args.input_file)
+            args.output_masked = os.path.dirname(args.json_file)
     
-    run(input_file_names=input_file_names, output_mask=args.output_mask, output_dir=args.output_dir)
+    run(input_file_names=input_file_names, output_mask=args.output_mask, output_masked=args.output_masked)
     print('==========================================================================================')
 
 

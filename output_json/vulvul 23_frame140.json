@@ -1,0 +1,21 @@
+{
+ "file": "/home/carlos/WORKSPACE/TFG-DeteccionFototrampeo/input/Vulvul 23_frame140.jpg",
+ "max_detection_conf": 0.999,
+ "detections": [
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0.4656,
+    0.5858,
+    0.2115,
+    0.4141
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

@@ -34,6 +34,7 @@ def generate_binary_image(detections, image):
     Args:
         - detections: Lista de detecciones  de la imagen en cuestión.
         - image: np.array del objeto imagen
+        
     Returns:
         - mask: np.array correspondiente a la imagen binaria como resultado (máscara)
     """

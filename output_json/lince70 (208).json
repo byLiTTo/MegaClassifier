@@ -1,0 +1,21 @@
+{
+ "file": "/home/carlos/WORKSPACE/TFG-DeteccionFototrampeo/input/lince70 (208).JPG",
+ "max_detection_conf": 0.999,
+ "detections": [
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0.0004536,
+    0.4448,
+    0.5422,
+    0.5338
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

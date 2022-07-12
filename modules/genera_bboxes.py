@@ -27,7 +27,7 @@ DEFAULT_DETECTOR_LABEL_MAP = {
     str(k): v for k, v in detector_bbox_category_id_to_name.items()
 }
 
-CONFIDENCE: float = 0.8
+CONFIDENCE: float = 0.7
 OUTPUT_IMAGE_WIDTH: int = 700
 
 
