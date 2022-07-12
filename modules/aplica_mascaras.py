@@ -6,7 +6,10 @@
 
 import os
 import sys
+import cv2
+import json
 import numpy as np
+import scipy.io as sio
 import platform
 import argparse
 
@@ -15,21 +18,20 @@ import argparse
 from PIL import Image
 from tqdm import tqdm
 from pathutils import PathUtils as p_utils
-from matplotlib.pyplot import imshow
+from matplotlib import pyplot as plt
 
 
 
 ###################################################################################################
 # FUNCIONES
 
-def genera_imagen(image_path, mask_path):
+def genera_imagen(image_path, mask_path, output_path):
     image_np = np.array(Image.open(image_path))
-    mask_np = np.array(Image.open(mask_path))
-    bin_mask = mask_np==1
-    
-    imshow(image_np)
-    imshow(mask_np)
-    imshow(bin_mask)
+    bin_mask = np.array(Image.open(mask_path))
+
+    masked = cv2.bitwise_and(image_np, image_np, mask=bin_mask)
+
+    cv2.imwrite(output_path, masked)
 
 
 
@@ -53,6 +55,18 @@ def run(input_file_names, output_mask, output_dir):
     time_infer = []
 
     for input_path in tqdm(input_file_names):
+        with open(input_path) as f:
+            input_file = json.load(f)
+
+        image_file = input_file['file']
+        name, ext = os.path.splitext(os.path.basename(image_file).lower())
+        if windows:
+            mask_path = (output_mask + '\\' + name + '_mask.png')
+            output_path = (output_dir + '\\' + name + '.png')
+        else:
+            mask_path = (output_mask + '/' + name + '_mask.png')
+            output_path = (output_dir + '/' + name + '.png')
+        genera_imagen(image_file,mask_path, output_path)
 
 
 

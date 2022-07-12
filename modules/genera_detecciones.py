@@ -43,11 +43,13 @@ from pathutils import PathUtils as p_utils
 
 import tensorflow.compat.v1 as tf
 
+print('')
 print('==========================================================================================')
 print('TensorFlow version:', tf.__version__)
 #print('Is GPU available? tf.test.is_gpu_available:', tf.test.is_gpu_available())
 print('Is GPU available? tf.test.is_gpu_available:',tf.config.list_physical_devices('GPU'))
 print('==========================================================================================')
+print('')
 
 
 
@@ -61,7 +63,7 @@ class TFDetector:
     por defecto, si desea cambiarlo, tendrá que modificar el código.
     """
 
-    # Number of decimal places to round to for confidence and bbox coordinates
+    # Número de decimales a redondear para el umbral de confianza y las coordenadas bbox
     CONF_DIGITS = 3
     COORD_DIGITS = 4
 
@@ -69,15 +71,13 @@ class TFDetector:
     FAILURE_TF_INFER = 'Failure TF inference'
     FAILURE_IMAGE_OPEN = 'Failure image access'
 
-    DEFAULT_OUTPUT_CONFIDENCE_THRESHOLD = 0.1  # to include in the output json file
+    DEFAULT_OUTPUT_CONFIDENCE_THRESHOLD = 0.1
 
     DEFAULT_DETECTOR_LABEL_MAP = {
         '1': 'animal',
         '2': 'person',
         '3': 'vehicle'  # Disponibles en megadetector v4+
     }
-
-    NUM_DETECTOR_CATEGORIES = 4  # animal, person, group, vehicle - for color assignment
 
     def __init__(self, model_path):
         """
@@ -118,7 +118,7 @@ class TFDetector:
 
         new = [tf_coords[1], tf_coords[0], width, height]  # must be a list instead of np.array
 
-        # convert numpy floats to Python floats
+        # Convierte numpy floats a Python floats
         for i, d in enumerate(new):
             new[i] = TFDetector.round_and_make_float(d, precision=TFDetector.COORD_DIGITS)
         return new   
@@ -148,6 +148,7 @@ class TFDetector:
             -model_path: ruta donde se encuentra el fichero ".pb" del modelo.
         Returns: Los gráficos cargados.
         """
+        print('')
         print('==========================================================================================')
         print('TFDetector: Cargando gráficos')
         detection_graph = tf.Graph()
@@ -159,6 +160,7 @@ class TFDetector:
                 tf.import_graph_def(od_graph_def, name='')
         print('TFDetector: Gráficos de detección, cargados.')
         print('==========================================================================================')
+        print('')
 
         return detection_graph  
 
@@ -183,15 +185,15 @@ class TFDetector:
         Aplicar el detector a una imagen especificada.
 
         Args:
-            image: the PIL Image object
-            image_id: a path to identify the image; will be in the "file" field of the output object
-            detection_threshold: confidence above which to include the detection proposal
+            - image: objeto PIL Image
+            - image_id: Ruta de la imagen; estará en el objeto del "fichero" de salida
+            - detection_threshold: Umbral de confianza a partir del cual se incluirán las detecciones
 
         Returns:
-        A dict with the following fields, see the 'images' key in https://github.com/microsoft/CameraTraps/tree/master/api/batch_processing#batch-processing-api-output-format
-            - 'file' (always present)
+        Diccionario con los siguientes campos, mirar 'images key' en: https://github.com/microsoft/CameraTraps/tree/master/api/batch_processing#batch-processing-api-output-format
+            - 'file' (siempre presente)
             - 'max_detection_conf'
-            - 'detections', which is a list of detection objects containing keys 'category', 'conf' and 'bbox'
+            - 'detections', el cual es una lista de los objeto detección con las claves 'category', 'conf' y 'bbox'
             - 'failure'
         """
         result = {
@@ -200,7 +202,7 @@ class TFDetector:
         try:
             b_box, b_score, b_class = self.generate_detection(image_obj)
 
-            # our batch size is 1; need to loop the batch dim if supporting batch size > 1
+            # Nuestro batch size es 1; need to loop the batch dim if supporting batch size > 1
             boxes, scores, classes = b_box[0], b_score[0], b_class[0]
 
             detections = []  # Estará vacío si no encontramos detecciones que satisfacen el umbral especificado
@@ -234,6 +236,13 @@ class TFDetector:
 # FUNCIONES AUXIIARES
 
 def generate_json(results, output_dir):
+    """
+    Genera diccionario con los resultados de las detecciones y las guarda en un fichero JSON
+
+    Args:
+        - results: Diccionario que contiene todas las detecciones de la imagen procesada.
+        - output_dir: Ruta en la cual se guardará el fichero JSON.
+    """
     if platform.system() == 'Windows':
         windows = True
     else:
@@ -286,7 +295,13 @@ def generate_json(results, output_dir):
 
 def run(model_file, image_file_names, output_dir):
     """
-    
+    Carga modelo de detección y lo aplica a las imágenes especificadas. Genera un fichero JSON con 
+    los resultados obtenidos.
+
+    Args:
+        - model_file: Ruta al fichero del modelo.
+        - image_file_names: Lista de rutas a los fichero de imágenes a los que se aplicará el modelo.
+        - output_dir: Ruta donde se guardará el fichero JSON generado con los resultados obtenidos.
     """
     
     if len(image_file_names) == 0:
@@ -297,10 +312,11 @@ def run(model_file, image_file_names, output_dir):
     tf_detector = TFDetector(model_file)
     elapsed_time = time.time() - start_time
 
-    print('==========================================================================================')
+    print('')
     print('Modelo cargado en: {}.'
         .format(humanfriendly.format_timespan(elapsed_time)))
     print('==========================================================================================')
+    print('')
 
     all_results = []
     time_load = []
@@ -314,6 +330,7 @@ def run(model_file, image_file_names, output_dir):
             time_load.append(elapsed_time)
         except Exception as e:
             print(traceback.format_exc())
+            print('!!!')
             print('La imagen {} no ha podido ser cargada. Excepcion: {}'.format(image_file, e))
             result = {
                 'file': image_file,
@@ -323,22 +340,30 @@ def run(model_file, image_file_names, output_dir):
             continue
 
         try:
+            print('')
             start_time = time.time()
             result = tf_detector.generate_detections_image(image_obj, image_file)
             all_results.append(result)
             elapsed_time = time.time() - start_time
+            print('')
             print('Generadas detecciones de imagen {} en {}.'
                 .format(image_file, humanfriendly.format_timespan(elapsed_time)))
             time_infer.append(elapsed_time)
         except Exception as e:
             print(traceback.format_exc())
+            print('!!!')
             print('Ha ocurrido un error mientras se ejecutaba el detector en la imagen {}. EXCEPTION: {}'
                 .format(image_file, e))
             continue
     try:
         generate_json(all_results,output_dir)
+        print('')
+        print('==========================================================================================')
+        print('Generado JSON con detecciones')
+        print('==========================================================================================')
     except Exception as e:
         print(traceback.format_exc())
+        print('!!!')
         print('Error al generar fichero JSON de salida en la ruta {}, EXCEPTION: {}'
             .format(output_dir, e))
 
@@ -352,6 +377,7 @@ def run(model_file, image_file_names, output_dir):
         std_dev_time_load = 'NO DISPONIBLE'
         std_dev_time_infer = 'NO DISPONIBLE'
 
+    print('')
     print('==========================================================================================')
     print('De media, por cada imagen, ')
     print('Ha tomado {} en cargar, con desviación de {}'
@@ -405,7 +431,6 @@ def main():
     else:
         image_file_names = p_utils.find_images(args.image_dir, args.recursive)
 
-    print('==========================================================================================')
     print('Ejecutando detector en {} imágenes...'
         .format(len(image_file_names)))
 
@@ -418,6 +443,7 @@ def main():
             args.output_dir = os.path.dirname(args.image_file)
 
     run(model_file=args.detector_file, image_file_names=image_file_names, output_dir=args.output_dir)
+    print('')
     print('==========================================================================================')
 
 

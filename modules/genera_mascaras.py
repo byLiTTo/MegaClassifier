@@ -10,13 +10,16 @@ import sys
 import cv2
 import json
 import numpy as np
+import scipy.io as sio
 import platform
 import argparse
 import matplotlib
 import visualization.visualization_utils as v_utils
 
+from PIL import Image
 from tqdm import tqdm
 from pathutils import PathUtils as p_utils
+from matplotlib.pyplot import imshow
 
 
 
@@ -24,7 +27,7 @@ from pathutils import PathUtils as p_utils
 # FUNCIONES
 
 def generate_binary_image(detections, image):
-    im_height, im_width = image.shape[0], image.shape[1]
+    im_height, im_width = image.shape[0], image.shape[1] 
 
     mask = np.zeros((im_height, im_width))
 
@@ -76,7 +79,7 @@ def run(input_file_names, output_dir):
         else:
             output_file = (output_dir + '/' + name + '_mask.png')
 
-        image = cv2.imread(image_file)        
+        image = np.array(Image.open(image_file)) 
 
         mask = generate_binary_image(input_file['detections'],image)
         
