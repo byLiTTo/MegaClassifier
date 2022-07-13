@@ -49,6 +49,15 @@ Módulo creado para generar máscaras con las regiones de interés de las imáge
 
 Como salida tendremos imágenes binarias, las cuales han sido guardadas con valores 0 y 255. Estas imágenes las usaremos como máscara, por defecto hemos asignado que se guarden en la carpeta [output_mask](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_mask), con el nombre de la imagen original añadiendo la terminación __mask_
 
+#### Notebook: c01_AplicaMascaras
+En este módulo combinaremos los resultados de los dos notebooks anteriores. Es decir, aplicaremos las máscaras a las imágenes originales, con el fin de obtener imágenes con el fondo negro y la zona correspondiente a las detecciones, mateniendo el valor de los pixeles originales.
+
+Tomaremos como entrada un fichero JSON, por defecto tomamos como origen la carpeta [output_json](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json). De estos ficheros obtenemos tanto la ruta al fichero de la imagen original, para tomar el valor de los pixeles, como los datos de las coordenadas de los bounding boxes de las detecciones.
+
+También necesitaremos una segunda entrada, que será la ruta al fichero de la máscara generada con el notebook b01_GeneraMascaras, por lo que antes de ejecutar éste módulo se ha debido de lanzar el anterior.
+
+Por último, deberemos indicar la ruta destino donde serán guardados los resultados. En este caso por defecto hemos asignado la carpeta [output_masked](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_masked), donde se guardarán ficheros de imagen con las características anteriormente mencionadas.
+
 ### Notebook: b02_GeneraRecortes
 En este módulo partiremos de los resultados de ejecutar el notebook _a01_GeneraDetecciones_. A partir de los ficheros JSON, situaremos los bounding boxes en las fotos correspondientes. Generaremos nuevas imágenes con únicamente el contenido de dichos recuadros, serán creados tantos ficheros como detecciones haya por imágene original.
 
