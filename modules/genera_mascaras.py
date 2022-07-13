@@ -1,5 +1,9 @@
 """
+Módulo que genera imágenes binarias que podrán ser usadas como máscaras.
 
+A partir de un fichero JSON con las coordenadas de los bboxes de las detecciones de una imagen de
+origen, crea una máscara con fondo negro y pixeles con valor True (ó 255) que se encuentran en la
+región que abarcan los bboxes.
 """
 ###################################################################################################
 # IMPORTs
@@ -193,12 +197,6 @@ def main():
     else:
         input_file_names = p_utils.find_detections(args.json_dir, args.recursive)
 
-    print('')
-    print('==========================================================================================')
-    print('Generando máscaras de {} imágenes...'
-        .format(len(input_file_names)))
-    print('')
-
     if args.output_mask:
         os.makedirs(args.output_mask, exist_ok=True)
     else:
@@ -206,8 +204,17 @@ def main():
             args.output_mask = args.json_dir
         else:
             args.output_mask = os.path.dirname(args.json_file)
+
+    print('')
+    print('==========================================================================================')
+    print('Generando máscaras de {} imágenes...'
+        .format(len(input_file_names)))
+    print('')
     
     run(input_file_names=input_file_names, output_mask=args.output_mask)
+
+    print('')
+    print('Resultados guardados en: {}'.format(args.output_mask))
     print('')
     print('==========================================================================================')
 

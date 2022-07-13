@@ -433,9 +433,6 @@ def main():
     else:
         image_file_names = p_utils.find_images(args.image_dir, args.recursive)
 
-    print('Ejecutando detector en {} imágenes...'
-        .format(len(image_file_names)))
-
     if args.output_dir:
         os.makedirs(args.output_dir, exist_ok=True)
     else:
@@ -444,7 +441,13 @@ def main():
         else:
             args.output_dir = os.path.dirname(args.image_file)
 
+    print('Ejecutando detector en {} imágenes...'
+        .format(len(image_file_names)))
+
     run(model_file=args.detector_file, image_file_names=image_file_names, output_dir=args.output_dir)
+
+    print('')
+    print('Resultados guardados en: {}'.format(args.output_dir))
     print('')
     print('==========================================================================================')
 
