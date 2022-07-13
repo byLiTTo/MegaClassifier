@@ -1,5 +1,24 @@
 """
+Módulo que genera imágenes con los bboxes de las detecciones dibujados sobre ella. Además también
+indicará a qué clase pertenece la detección. Estas clases son las que contiene el modelo 
+de MegaDetector. En este proyecto usamos las nuestras propias, pero nos parece interesante mostrar
+esta información de cara a futuras comparaciones.
 
+Hacemos uso de funciones de módulos de los repositorios CameraTraps.visualization.visualization_utils
+
+Para mostrar las detecciones usamos un umbral distinto al umbral de confianza para considerar 
+deteccones. Para diferenciarlo lo hemos denominada umbral de renderizado, por defecto posee valor 
+0.7, si se desea usar otro valor, habría que modificar la variable CONFIDENCE.
+
+Para mayor fluidez a la hora de renderizar, hacemos un redimensionado de las imágenes resultantes,
+por defecto redimensinamos con ancho 700px, si se desea otra dimensión, habría que modificar la 
+variable OUTPUT_IMAGE_WIDTH.
+
+En el caso de no querer hacer redimensionado y mantener la escala original de cada imagen, habría 
+que descomentar la línea: 
+    image = v_utils.open_image(image_file)
+y comentar la línea:
+    image = v_utils.resize_image(v_utils.open_image(image_file), OUTPUT_IMAGE_WIDTH)  
 """
 
 ###################################################################################################
@@ -11,6 +30,9 @@ import time
 import json
 import platform
 import argparse
+import traceback
+import statistics
+import humanfriendly
 import visualization.visualization_utils as v_utils
 
 from tqdm import tqdm
@@ -37,7 +59,14 @@ OUTPUT_IMAGE_WIDTH: int = 700
 
 def run(input_file_names, output_dir):
     """
-    
+    Carga las detecciones y la imagen original desde un fichero JSON y genera tanto recortes como
+    detecciones haya en cada imagen. Estos recortes corresponden a los diferentes bboxes 
+    encontrados.
+
+    Args:
+        - input_file_names: Lista de fichros JSON de los que se tomarán los datos de detecciones
+            y de imagen original.
+        - output_dir: Ruta al directorio donde se guardarán las imágenes recortadas resultantes.
     """
     if platform.system() == 'Windows':
         windows = True
@@ -48,12 +77,18 @@ def run(input_file_names, output_dir):
         print("WARNING: No hay ficheros disponibles")
         return
 
-    time_load = []
     time_infer = []
 
     for input_path in tqdm(input_file_names):
-        with open(input_path) as f:
-            input_file = json.load(f)
+        try:
+            with open(input_path) as f:
+                input_file = json.load(f)
+        except Exception as e:
+            print('Error al cargar el fichero JSON en la ruta {}, EXCEPTION: {}'
+                .format(input_path, e))
+            print('------------------------------------------------------------------------------------------')
+            print(traceback.format_exc())
+            continue
 
         image_file = input_file['file']
 
@@ -67,7 +102,11 @@ def run(input_file_names, output_dir):
         if 'detection_categories' in input_file:
             print('detection_categories provided')
             detector_label_map = input_file['detection_categories']
+
+        print('')
+        start_time = time.time()
         
+        #image = v_utils.open_image(image_file)
         image = v_utils.resize_image(v_utils.open_image(image_file), OUTPUT_IMAGE_WIDTH)
 
         v_utils.render_detection_bounding_boxes(
@@ -75,6 +114,26 @@ def run(input_file_names, output_dir):
             confidence_threshold=CONFIDENCE)
 
         image.save(output_file)
+
+        elapsed_time = time.time() - start_time
+        print('')
+        print('Renderizadas detecciones de imagen {} en {}.'
+            .format(image_file, humanfriendly.format_timespan(elapsed_time)))
+        time_infer.append(elapsed_time)
+
+    average_time_infer = statistics.mean(time_infer)
+
+    if len(time_infer) > 1:
+        std_dev_time_infer = humanfriendly.format_timespan(statistics.stdev(time_infer))
+    else:
+        std_dev_time_infer = 'NO DISPONIBLE'
+
+    print('')
+    print('==========================================================================================')
+    print('De media, por cada imagen: ')
+    print('Ha tomado {} en renderizar las detecciones, con desviación de {}'
+        .format(humanfriendly.format_timespan(average_time_infer), std_dev_time_infer))
+    print('==========================================================================================')
 
 
 
@@ -126,8 +185,18 @@ def main():
             args.output_dir = args.input_dir
         else:
             args.output_dir = os.path.dirname(args.input_file)
+
+    print('')
+    print('==========================================================================================')
+    print('Renderizando detecciones de {} imágenes...'
+        .format(len(input_file_names)))
+    print('')
     
     run(input_file_names=input_file_names, output_dir=args.output_dir)
+
+    print('')
+    print('Resultados guardados en: {}'.format(args.output_dir))
+    print('')
     print('==========================================================================================')
 
 
