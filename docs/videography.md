@@ -52,5 +52,13 @@ I already covered the full detailed mathematical theory behind the Convolutional
 
 For now, let's first see Image Classification using CNN Keras.
 
+___
+
+## TensorFlow Tutorial 1 - Installation and Setup Deep Learning Environment (Anaconda and PyCharm)
+[![](https://img.youtube.com/vi/5Ym-dOS9ssA/0.jpg)](https://youtu.be/5Ym-dOS9ssA)
+
+## TensorFlow Tutorial 18 - Custom Dataset for Images
+[![](https://img.youtube.com/vi/q7ZuZ8ZOErE/0.jpg)](https://youtu.be/q7ZuZ8ZOErE)
+
 ##
 [![](https://img.youtube.com/vi//0.jpg)]()
