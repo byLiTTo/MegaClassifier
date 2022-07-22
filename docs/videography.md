@@ -54,11 +54,43 @@ For now, let's first see Image Classification using CNN Keras.
 
 ___
 
-## TensorFlow Tutorial 1 - Installation and Setup Deep Learning Environment (Anaconda and PyCharm)
-[![](https://img.youtube.com/vi/5Ym-dOS9ssA/0.jpg)](https://youtu.be/5Ym-dOS9ssA)
+## TensorFlow Tutorial 4 - Convolutional Neural Networks with Sequential and Functional API
+[![](https://img.youtube.com/vi/WAciKiDP2bo/0.jpg)](https://youtu.be/WAciKiDP2bo)
+
+In this video we will learn how to build a convolutional neural network (cnn) in TensorFlow 2.0 using the Keras Sequential and Functional API. We take a look at how to do max pooling layers, batch normalization etc.
+
+Resources or prerequisite videos:
+1. Deep learning specialization course 4  (No need to watch all, for example not after C4W2L02): https://www.youtube.com/playlist?list=PLkDaE6sCZn6Gl29AoE31iwdVwSG-KnDzF
+
+2. Batch Normalization video: https://youtu.be/nUUqwaxLnWs
+
+I learned a lot and was inspired to make these TensorFlow videos by the TensorFlow Specialization on Coursera. Below you'll find both affiliate and non-affiliate links, the pricing for you is the same but a small commission goes back to the channel if you buy it through the affiliate link.
+affiliate: https://bit.ly/3t3tgI5
+non-affiliate: https://bit.ly/3kZgN5B
+
+GitHub Repository: https://github.com/aladdinpersson/Machine-Learning-Collection
+
+## TensorFlow Tutorial 10 - Saving and Loading Models
+[![](https://img.youtube.com/vi/idus3KO6Wic/0.jpg)](https://youtu.be/idus3KO6Wic)
+
+In this video I'm going to show you how to save and load model weights and then also how you can save and load the entire model including the architecture and optimizer states. The saved model will also be able to run on other TensorFlow frameworks such as TensorFlow.js and TensorFlow Lite without any model conversions. This process of saving the entire model (to a data structure that can then be run on any of these frameworks) is referred to as serialization.
+
+I learned a lot and was inspired to make these TensorFlow videos by the TensorFlow Specialization on Coursera. Below you'll find both affiliate and non-affiliate links, the pricing for you is the same but a small commission goes back to the channel if you buy it through the affiliate link.
+affiliate: https://bit.ly/3t3tgI5
+non-affiliate: https://bit.ly/3kZgN5B
+
+GitHub Repository: https://github.com/aladdinpersson/Machine-Learning-Collection
 
 ## TensorFlow Tutorial 18 - Custom Dataset for Images
 [![](https://img.youtube.com/vi/q7ZuZ8ZOErE/0.jpg)](https://youtu.be/q7ZuZ8ZOErE)
+
+In this video I will show you methods to efficiently load a custom dataset with images in directories. Depending on how your dataset is structured the method that is the easiest could vary and the most common ways to load is either having structured subfolders, a csv with with annotations or simply all of the images in a single folder. We use the functions image_dataset_from_directory, ImageDataGenerator together with flow_from_directory for subfolders. Pandas togethor with from_tensor_slices when dealing with an annotation csv file and lastly list_files when having all inside a single image folder directory. Hope you find this tutorial useful!
+
+I learned a lot and was inspired to make these TensorFlow videos by the TensorFlow Specialization on Coursera. Below you'll find both affiliate and non-affiliate links, the pricing for you is the same but a small commission goes back to the channel if you buy it through the affiliate link.
+affiliate: https://bit.ly/3t3tgI5
+non-affiliate: https://bit.ly/3kZgN5B
+
+GitHub Repository: https://github.com/aladdinpersson/Machine-Learning-Collection
 
 ##
 [![](https://img.youtube.com/vi//0.jpg)]()
