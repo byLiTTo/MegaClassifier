@@ -37,8 +37,23 @@ ___
 # Ejecutar aplicación
 Para poder ejecutar los módulos de python, hemos creado un entorno conda en nuestro dispositivo. Una vez instalados todos los requisitos, dependencias y librerías en nuestro entorno, lo usaremos como kernel para ejecutar los diferentes notebooks que hemos implementado para poder ejecutar de forma clara y ordenada, las diferentes fases de la aplicación.
 
-## Notebook: a01_GeneraDetecciones
-Se le indica un directorio de entrada de donde tomará las imágenes a las que le aplicará el modelo de detecciones entrenado de MegaDetector. (Por defecto hemos creado la carpeta [input](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/input) para que tome las imágenes).
+Para realizar este proyecto, se nos ha facilitado un dataset con imágenes de fototrampeo de diferentes especies de animales, humanos y vehículos, capturadas en los parajes del [Parque natural de Doñana](https://es.wikipedia.org/wiki/Parque_nacional_y_natural_de_Doñana). La forma de manejar los datos es a través de un fichero CSV, donde en una columna se nos indica la ruta del fichero correspondiente a la imagen y en su segunda columna se nos dice a qué clase pertenece dicha imagen.
+
+## Notebook: a01_GeneraDataset
+Como hemos mencionado, en el dataset existen varias especies de animales, en nuestro proyecto, por el momento solo nos interesa identificar la presencia de animales, por lo que solo nos serán necesarias dos clases _Animal_ o _Vacía_.
+
+Para hacer funcionar el notebook de forma correcta, deberemos indicar la localización del CSV.
+
+Lo primero que realiza es una convesión de las clases del dataset original a las dos clases mencionadas anteriormente.
+A continuación, si lo deseamos podemos hacer una partición de el número de muestras de la clase vacía, en nuestro caso hemos hecho una de 700 muestras y otra para el tamaño original de 10000 muestras. 
+El siguiente paso es el de dividir el dataset en 3 partes, _Train_, _Validation_ y _Test_. Por cada uno generamos un CSV con el mismo formato que el original. Estos ficheros que guardarán en la carpeta [data](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/data).
+
+## Notebook: a02_GeneraDetecciones
+Para este notebook, tenemos dos modos de aportarle los datos de entrada.
+
+La primera es indicarle la ruta de un fichero CSV, del que tomará las rutas de las imágenes de un dataset y la ruta raiz de dicho dataset, en nuestro caso los ficheros CSV, por defecto se encuentran en [data](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/data).
+
+La segunda forma es indicando un directorio de entrada de donde tomará las imágenes a las que le aplicará el modelo de detecciones entrenado de MegaDetector. (Por defecto hemos creado la carpeta [input](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/input) para que tome las imágenes).
 
 Una vez obtenidos los resultados, genera un fichero JSON con los datos de cada detección encontrada en cada una de las imágenes. Se generan tanto un JSON global que contiene todos los resultados de la ejecución, así como un fichero JSON por cada imagen de forma individual. 
 
