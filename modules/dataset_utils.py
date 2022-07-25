@@ -1,7 +1,11 @@
 import os
+import math
 import numpy as np
 import pandas as pd
 import platform
+
+from sklearn.utils import shuffle
+
 
 
 ###################################################################################################
@@ -30,10 +34,19 @@ class DatasetUtils:
     """
 
     @staticmethod
-    def generate_train_validation_test(file_path):
+    def generate_train_validation_test(empty, animals, samples, per_train, per_test):
 
+        df = pd.DataFrame(empty[:samples])
+        train_empty, validation_empty, test_empty = np.split(df.sample(frac=1, random_state=42),[int(per_train*len(df)), int((per_train+per_test)*len(df))])
+    
+        df = pd.DataFrame(animals[:(math.trunc(len(animals)*(samples/len(empty))))])
+        train_animals, validation_animals, test_animals = np.split(df.sample(frac=1, random_state=42),[int(per_train*len(df)), int((per_train+per_test)*len(df))])
 
-        return 0
+        train = shuffle(pd.concat([train_empty, train_animals]), random_state=42)
+        validation = shuffle(pd.concat([validation_empty, validation_animals]), random_state=42)
+        test = shuffle(pd.concat([test_empty, test_animals]), random_state=42)
+
+        return train, validation, test
     
     @staticmethod
     def load_csv(csv_file):
