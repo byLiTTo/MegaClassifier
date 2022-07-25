@@ -1,0 +1,21 @@
+{
+ "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/vacia/vacia_alumno_TH_3_TH_JC/32_20201022 (691).JPG",
+ "max_detection_conf": 0.609,
+ "detections": [
+  {
+   "category": "2",
+   "conf": 0.609,
+   "bbox": [
+    0.8884,
+    0.4193,
+    0.05443,
+    0.2187
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

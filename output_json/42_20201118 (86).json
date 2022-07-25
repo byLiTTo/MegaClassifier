@@ -1,0 +1,10 @@
+{
+ "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/vacia/vacia_revGinetasJC_REV1_4_donana/42_20201118 (86).JPG",
+ "max_detection_conf": 0,
+ "detections": [],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/vacia/vacias_PNM_2012_ME/d14562FILE0006.JPG",
+ "max_detection_conf": 0.121,
+ "detections": [
+  {
+   "category": "2",
+   "conf": 0.121,
+   "bbox": [
+    0.5229,
+    0.2749,
+    0.05941,
+    0.2673
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

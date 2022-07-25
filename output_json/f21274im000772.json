@@ -1,0 +1,21 @@
+{
+ "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/humanovehiculo/humano_vehiculo_PNM_2013-O_ISAAC/f21274IM000772.JPG",
+ "max_detection_conf": 0.999,
+ "detections": [
+  {
+   "category": "2",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0,
+    0.7414,
+    0.9987
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

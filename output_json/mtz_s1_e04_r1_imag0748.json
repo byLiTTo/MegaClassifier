@@ -1,0 +1,10 @@
+{
+ "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/vacia/empty_SnapshotMountainZebra/MTZ_S1_E04_R1_IMAG0748.JPG",
+ "max_detection_conf": 0,
+ "detections": [],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

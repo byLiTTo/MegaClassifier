@@ -1,0 +1,31 @@
+{
+ "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/humanovehiculo/humanovehiculo_Caltech/59910491-23d2-11e8-a6a3-ec086b02610b.jpg",
+ "max_detection_conf": 0.999,
+ "detections": [
+  {
+   "category": "2",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0.3795,
+    0.5012,
+    0.619
+   ]
+  },
+  {
+   "category": "2",
+   "conf": 0.998,
+   "bbox": [
+    0.7428,
+    0.01587,
+    0.2569,
+    0.9654
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

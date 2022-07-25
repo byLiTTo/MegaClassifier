@@ -1,0 +1,10 @@
+{
+ "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/vacia/empty_IslandConservationCameraTraps/dominicanrepublic_cam1125abril2015_20150411_173951_img_0995.jpg",
+ "max_detection_conf": 0,
+ "detections": [],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

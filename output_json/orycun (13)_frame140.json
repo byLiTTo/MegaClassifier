@@ -1,0 +1,10 @@
+{
+ "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/leporido/conejo_alumno_1_TH/Conejo_alumno_2_AM_JC/Orycun (13)_frame140.jpg",
+ "max_detection_conf": 0,
+ "detections": [],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

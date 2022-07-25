@@ -1,0 +1,21 @@
+{
+ "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/humanovehiculo/car_CaltechCameraTrap_ME/vehiculo/58d47bf4-23d2-11e8-a6a3-ec086b02610b.jpg",
+ "max_detection_conf": 0.999,
+ "detections": [
+  {
+   "category": "3",
+   "conf": 0.999,
+   "bbox": [
+    0.005206,
+    0.002554,
+    0.9871,
+    0.6869
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

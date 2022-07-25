@@ -1,0 +1,61 @@
+{
+ "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/humanovehiculo/humanovehiculo_PNC_2013-O_RED_ISAAC/b8326FILE0147.JPG",
+ "max_detection_conf": 0.98,
+ "detections": [
+  {
+   "category": "2",
+   "conf": 0.98,
+   "bbox": [
+    0,
+    0,
+    0.1451,
+    0.623
+   ]
+  },
+  {
+   "category": "2",
+   "conf": 0.956,
+   "bbox": [
+    0.2679,
+    0,
+    0.2445,
+    0.6411
+   ]
+  },
+  {
+   "category": "2",
+   "conf": 0.858,
+   "bbox": [
+    0.47,
+    0,
+    0.369,
+    0.7049
+   ]
+  },
+  {
+   "category": "2",
+   "conf": 0.42,
+   "bbox": [
+    0.2312,
+    0,
+    0.5748,
+    0.6994
+   ]
+  },
+  {
+   "category": "2",
+   "conf": 0.192,
+   "bbox": [
+    0.1082,
+    0.004739,
+    0.4459,
+    0.6462
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

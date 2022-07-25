@@ -1,0 +1,31 @@
+{
+ "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/humanovehiculo/HUMANORVEHICLE_ZOO_5_6_7_9/20_20210618 (2).JPG",
+ "max_detection_conf": 0.996,
+ "detections": [
+  {
+   "category": "2",
+   "conf": 0.996,
+   "bbox": [
+    0.00976,
+    0,
+    0.9902,
+    0.9817
+   ]
+  },
+  {
+   "category": "2",
+   "conf": 0.957,
+   "bbox": [
+    0.008606,
+    0.01859,
+    0.6266,
+    0.9504
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

@@ -1,0 +1,171 @@
+{
+ "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/lince/linces_fecha_Linces2_Leo_JC/2_Lince_flecha_Linces2_Leo_JC/lince224 (248).JPG",
+ "max_detection_conf": 0.999,
+ "detections": [
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0.434,
+    0.1627,
+    0.1654
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0.434,
+    0.1627,
+    0.1654
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0.434,
+    0.1627,
+    0.1654
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0.434,
+    0.1627,
+    0.1654
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0.434,
+    0.1627,
+    0.1654
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0.434,
+    0.1627,
+    0.1654
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0.434,
+    0.1627,
+    0.1654
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0.434,
+    0.1627,
+    0.1654
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0.434,
+    0.1627,
+    0.1654
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0.434,
+    0.1627,
+    0.1654
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0.434,
+    0.1627,
+    0.1654
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0.434,
+    0.1627,
+    0.1654
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0.434,
+    0.1627,
+    0.1654
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0.434,
+    0.1627,
+    0.1654
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0.434,
+    0.1627,
+    0.1654
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0.434,
+    0.1627,
+    0.1654
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

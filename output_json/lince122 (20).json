@@ -1,0 +1,171 @@
+{
+ "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/lince/Lince_a_Linces2_Leo_JC/lince122 (20).JPG",
+ "max_detection_conf": 0.999,
+ "detections": [
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0,
+    0.9343,
+    0.9599
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0,
+    0.9343,
+    0.9599
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0,
+    0.9343,
+    0.9599
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0,
+    0.9343,
+    0.9599
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0,
+    0.9343,
+    0.9599
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0,
+    0.9343,
+    0.9599
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0,
+    0.9343,
+    0.9599
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0,
+    0.9343,
+    0.9599
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0,
+    0.9343,
+    0.9599
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0,
+    0.9343,
+    0.9599
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0,
+    0.9343,
+    0.9599
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0,
+    0.9343,
+    0.9599
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0,
+    0.9343,
+    0.9599
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0,
+    0.9343,
+    0.9599
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0,
+    0.9343,
+    0.9599
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.999,
+   "bbox": [
+    0,
+    0,
+    0.9343,
+    0.9599
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

@@ -1,0 +1,171 @@
+{
+ "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/cervidae/CERVIDREDORFALLOWDEER_ZOO_1_4/10_20201019 (757).JPG",
+ "max_detection_conf": 0.986,
+ "detections": [
+  {
+   "category": "1",
+   "conf": 0.986,
+   "bbox": [
+    0,
+    0,
+    1.0,
+    0.9779
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.986,
+   "bbox": [
+    0,
+    0,
+    1.0,
+    0.9779
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.986,
+   "bbox": [
+    0,
+    0,
+    1.0,
+    0.9779
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.986,
+   "bbox": [
+    0,
+    0,
+    1.0,
+    0.9779
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.986,
+   "bbox": [
+    0,
+    0,
+    1.0,
+    0.9779
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.986,
+   "bbox": [
+    0,
+    0,
+    1.0,
+    0.9779
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.986,
+   "bbox": [
+    0,
+    0,
+    1.0,
+    0.9779
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.986,
+   "bbox": [
+    0,
+    0,
+    1.0,
+    0.9779
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.986,
+   "bbox": [
+    0,
+    0,
+    1.0,
+    0.9779
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.986,
+   "bbox": [
+    0,
+    0,
+    1.0,
+    0.9779
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.986,
+   "bbox": [
+    0,
+    0,
+    1.0,
+    0.9779
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.986,
+   "bbox": [
+    0,
+    0,
+    1.0,
+    0.9779
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.986,
+   "bbox": [
+    0,
+    0,
+    1.0,
+    0.9779
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.986,
+   "bbox": [
+    0,
+    0,
+    1.0,
+    0.9779
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.986,
+   "bbox": [
+    0,
+    0,
+    1.0,
+    0.9779
+   ]
+  },
+  {
+   "category": "1",
+   "conf": 0.986,
+   "bbox": [
+    0,
+    0,
+    1.0,
+    0.9779
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

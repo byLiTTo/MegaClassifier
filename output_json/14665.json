@@ -1,0 +1,21 @@
+{
+ "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/vacia/Nothing_mammalWeb/14665.jpg",
+ "max_detection_conf": 0.69,
+ "detections": [
+  {
+   "category": "3",
+   "conf": 0.69,
+   "bbox": [
+    0.7861,
+    0.3162,
+    0.2082,
+    0.5352
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

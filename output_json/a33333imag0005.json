@@ -1,0 +1,31 @@
+{
+ "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/humanovehiculo/humanovehiculo_vac\u00edas_humanos_PNC_2012_ME/a33333IMAG0005.JPG",
+ "max_detection_conf": 0.998,
+ "detections": [
+  {
+   "category": "2",
+   "conf": 0.998,
+   "bbox": [
+    0.2789,
+    0.005847,
+    0.6428,
+    0.9044
+   ]
+  },
+  {
+   "category": "2",
+   "conf": 0.995,
+   "bbox": [
+    0,
+    0.1313,
+    0.3153,
+    0.8148
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

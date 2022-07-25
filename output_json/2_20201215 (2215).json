@@ -1,0 +1,31 @@
+{
+ "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/caballo/caballos_alumno_AM/caballos_alumno_AM/2_20201215 (2215).JPG",
+ "max_detection_conf": 0.957,
+ "detections": [
+  {
+   "category": "2",
+   "conf": 0.957,
+   "bbox": [
+    0.009378,
+    0.005454,
+    0.5248,
+    0.9698
+   ]
+  },
+  {
+   "category": "2",
+   "conf": 0.154,
+   "bbox": [
+    0.283,
+    0,
+    0.245,
+    0.9668
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

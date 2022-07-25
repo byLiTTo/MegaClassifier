@@ -1,0 +1,31 @@
+{
+ "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/humanovehiculo/humanovehiculo_leo_donana/0013989.JPG",
+ "max_detection_conf": 0.999,
+ "detections": [
+  {
+   "category": "3",
+   "conf": 0.999,
+   "bbox": [
+    0.001176,
+    0.2189,
+    0.4105,
+    0.2519
+   ]
+  },
+  {
+   "category": "2",
+   "conf": 0.122,
+   "bbox": [
+    0.2527,
+    0.2775,
+    0.03424,
+    0.04924
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/humanovehiculo/humanovehiculo_PNC_2013-O_RED_ISAAC/b18655IMAG0003.JPG",
+ "max_detection_conf": 0.994,
+ "detections": [
+  {
+   "category": "2",
+   "conf": 0.994,
+   "bbox": [
+    0.006674,
+    0.01037,
+    0.9875,
+    0.9896
+   ]
+  },
+  {
+   "category": "2",
+   "conf": 0.878,
+   "bbox": [
+    0.5537,
+    0,
+    0.4272,
+    0.3364
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}
