@@ -23,7 +23,7 @@ import visualization.visualization_utils as v_utils
 
 from PIL import Image
 from tqdm import tqdm
-from pathutils import PathUtils as p_utils
+from path_utils import PathUtils as p_utils
 
 
 

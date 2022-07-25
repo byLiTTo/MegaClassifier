@@ -36,7 +36,7 @@ import humanfriendly
 import visualization.visualization_utils as v_utils
 
 from tqdm import tqdm
-from pathutils import PathUtils as p_utils
+from path_utils import PathUtils as p_utils
 from data_management.annotations.annotation_constants import (
     detector_bbox_category_id_to_name)  # here id is int
 

@@ -20,7 +20,7 @@ import humanfriendly
 
 from PIL import Image
 from tqdm import tqdm
-from pathutils import PathUtils as p_utils
+from path_utils import PathUtils as p_utils
 
 
 
