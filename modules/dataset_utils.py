@@ -42,9 +42,11 @@ class DatasetUtils:
         df = pd.DataFrame(animals[:(math.trunc(len(animals)*(samples/len(empty))))])
         train_animals, validation_animals, test_animals = np.split(df.sample(frac=1, random_state=42),[int(per_train*len(df)), int((per_train+per_test)*len(df))])
 
-        train = shuffle(pd.concat([train_empty, train_animals]), random_state=42)
-        validation = shuffle(pd.concat([validation_empty, validation_animals]), random_state=42)
-        test = shuffle(pd.concat([test_empty, test_animals]), random_state=42)
+        aux = [["file_name","label"]]
+
+        train = pd.concat([pd.DataFrame(aux), shuffle(pd.concat([train_empty, train_animals]), random_state=42)])
+        validation = pd.concat([pd.DataFrame(aux), shuffle(pd.concat([validation_empty, validation_animals]), random_state=42)])
+        test = pd.concat([pd.DataFrame(aux), shuffle(pd.concat([test_empty, test_animals]), random_state=42)])
 
         return train, validation, test
     

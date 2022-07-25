@@ -24,14 +24,15 @@ import platform
 import traceback
 import statistics
 import humanfriendly
-import visualization.visualization_utils as v_utils
+import visualization.visualization_utils as visualization_utils
 
 
 
 from tqdm import tqdm
 from ct_utils import truncate_float
 from datetime import datetime
-from pathutils import PathUtils as p_utils
+from path_utils import PathUtils as path_utils
+from dataset_utils import DatasetUtils as dataset_path
 
 
 
@@ -42,7 +43,7 @@ from pathutils import PathUtils as p_utils
 # os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 import tensorflow.compat.v1 as tf
-
+'''
 print('')
 print('==========================================================================================')
 print('TensorFlow version:', tf.__version__)
@@ -50,6 +51,7 @@ print('TensorFlow version:', tf.__version__)
 print('Is GPU available? tf.test.is_gpu_available:',tf.config.list_physical_devices('GPU'))
 print('==========================================================================================')
 print('')
+'''
 
 
 
@@ -326,7 +328,7 @@ def run(model_file, image_file_names, output_dir):
     for image_file in tqdm(image_file_names):
         try:
             start_time = time.time()
-            image_obj = v_utils.load_image(image_file)
+            image_obj = visualization_utils.load_image(image_file)
             elapsed_time = time.time() - start_time
             time_load.append(elapsed_time)
         except Exception as e:
@@ -410,10 +412,18 @@ def main():
         '--image_dir',
         help='Directorio donde se buscarán las imágenes a procesar, con la opción --recursive'
     )
+    group.add_argument(
+        '--csv_file',
+        help='Fichero CSV con las rutas de las imagenes que forman el dataset'
+    )
     parser.add_argument(
         '--recursive',
         action='store_true',
         help='Maneja directorios de forma recursiva, solo tiene sentido usarlo con --image_dir'
+    )
+    parser.add_argument(
+        '--dataset_dir',
+        help='Directorio donde se ubican las imágenes del dataset'
     )
     parser.add_argument(
         '--output_dir',
@@ -431,7 +441,12 @@ def main():
     if args.image_file:
         image_file_names = [args.image_file]
     else:
-        image_file_names = p_utils.find_images(args.image_dir, args.recursive)
+        if args.image_dir:
+            image_file_names = path_utils.find_images(args.image_dir, args.recursive)
+        else:
+            file_names, labels = dataset_path.load_csv(args.csv_file)
+            file_names, labels = dataset_path.convert_to_abspath(args.dataset_dir , file_names, labels)
+            image_file_names = file_names
 
     if args.output_dir:
         os.makedirs(args.output_dir, exist_ok=True)
