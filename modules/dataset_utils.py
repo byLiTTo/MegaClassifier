@@ -1,3 +1,4 @@
+from cProfile import label
 import os
 import math
 import numpy as np
@@ -51,6 +52,11 @@ class DatasetUtils:
         return train, validation, test
     
     @staticmethod
+    def load_dataset(csv_file, location):
+        file_names, labels = DatasetUtils.load_csv(csv_file)
+        file_names, labels = DatasetUtils.convert_to_abspath(location, file_names, labels)
+
+    @staticmethod
     def load_csv(csv_file):
         """
         Lee un fichero CSV que contiene las rutas relativas de las imágenes que forman un dataset.
@@ -70,6 +76,21 @@ class DatasetUtils:
         return df['file_name'].values, df['label'].values
 
     @staticmethod
+    def reset_path(file_names, labels):
+        new_file_names = []
+        if platform.system() == 'Windows':
+            for fn in file_names:
+                fn = os.path.basename(fn.replace('/','\\')).lower()
+                name, ext = os.path.splitext(fn)
+                new_file_names.append('\\' + name)
+        else:
+            for fn in file_names:
+                fn = os.path.basename(fn.replace('\\','/')).lower()
+                name, ext = os.path.splitext(fn)
+                new_file_names.append('/'+ name)
+        return new_file_names, labels
+
+    @staticmethod
     def convert_to_abspath(location,file_names,labels):
         new_file_names = []
         if platform.system() == 'Windows':
@@ -82,6 +103,12 @@ class DatasetUtils:
 
     @staticmethod
     def load_image(image_file, labels):
-        image = tf.io.read_file(image_file)
-        image = tf.image.decode_image(image, channels=3)
+        image = tf.io.read_file(image_file + '.png')
+        image = tf.image.decode_png(image, channels=3)
+        #image = tf.image.decode_png(image, channels=3, dtype=tf.uint8)
+        return image, labels
+
+    @staticmethod
+    def resize_image(image_file, labels):
+        image = tf.image.resize(image_file, (700,700), antialias=True)
         return image, labels
