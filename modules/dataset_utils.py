@@ -54,7 +54,9 @@ class DatasetUtils:
     @staticmethod
     def load_dataset(csv_file, location):
         file_names, labels = DatasetUtils.load_csv(csv_file)
+        file_names, labels = DatasetUtils.reset_path(file_names, labels)
         file_names, labels = DatasetUtils.convert_to_abspath(location, file_names, labels)
+        return file_names, labels
 
     @staticmethod
     def load_csv(csv_file):
@@ -103,7 +105,7 @@ class DatasetUtils:
 
     @staticmethod
     def load_image(image_file, labels):
-        image = tf.io.read_file(image_file + '.png')
+        image = tf.io.read_file((image_file + '.png'))
         image = tf.image.decode_png(image, channels=3)
         #image = tf.image.decode_png(image, channels=3, dtype=tf.uint8)
         return image, labels
