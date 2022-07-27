@@ -1,11 +1,12 @@
-from cProfile import label
 import os
 import math
 import numpy as np
 import pandas as pd
 import platform
+import sys
 
 from sklearn.utils import shuffle
+from matplotlib import pyplot as plt
 
 
 
@@ -45,9 +46,9 @@ class DatasetUtils:
 
         aux = [["file_name","label"]]
 
-        train = pd.concat([pd.DataFrame(aux), shuffle(pd.concat([train_empty, train_animals]), random_state=42)])
-        validation = pd.concat([pd.DataFrame(aux), shuffle(pd.concat([validation_empty, validation_animals]), random_state=42)])
-        test = pd.concat([pd.DataFrame(aux), shuffle(pd.concat([test_empty, test_animals]), random_state=42)])
+        train =         pd.concat([pd.DataFrame(aux), shuffle(pd.concat([train_empty, train_animals]), random_state=42)])
+        validation =    pd.concat([pd.DataFrame(aux), shuffle(pd.concat([validation_empty, validation_animals]), random_state=42)])
+        test =          pd.concat([pd.DataFrame(aux), shuffle(pd.concat([test_empty, test_animals]), random_state=42)])
 
         return train, validation, test
     
@@ -55,7 +56,7 @@ class DatasetUtils:
     def load_dataset(csv_file, location):
         file_names, labels = DatasetUtils.load_csv(csv_file)
         file_names, labels = DatasetUtils.reset_path(file_names, labels)
-        file_names, labels = DatasetUtils.convert_to_abspath(location, file_names, labels)
+        file_names, labels = DatasetUtils.convert_to_abspath_image(location, file_names, labels)
         return file_names, labels
 
     @staticmethod
@@ -104,10 +105,22 @@ class DatasetUtils:
         return new_file_names, labels
 
     @staticmethod
+    def convert_to_abspath_image(location,file_names,labels):
+        new_file_names = []
+        if platform.system() == 'Windows':
+            for fn in file_names:
+                new_file_names.append(location+fn.replace('/','\\')+'.png')
+        else:
+            for fn in file_names:
+                new_file_names.append(location+fn.replace('\\','/')+'.png')
+        return new_file_names, labels
+
+    @staticmethod
     def load_image(image_file, labels):
-        image = tf.io.read_file((image_file + '.png'))
-        image = tf.image.decode_png(image, channels=3)
-        #image = tf.image.decode_png(image, channels=3, dtype=tf.uint8)
+        image = tf.io.read_file((image_file))
+        image = tf.image.decode_png(image, channels=3, dtype=tf.uint8)
+        image = tf.image.convert_image_dtype(image, dtype=tf.float32)
+        image = image/255
         return image, labels
 
     @staticmethod
