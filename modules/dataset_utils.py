@@ -56,7 +56,7 @@ class DatasetUtils:
     def load_dataset(csv_file, location):
         file_names, labels = DatasetUtils.load_csv(csv_file)
         file_names, labels = DatasetUtils.reset_path(file_names, labels)
-        file_names, labels = DatasetUtils.convert_to_abspath_image(location, file_names, labels)
+        file_names, labels = DatasetUtils.convert_to_abspath(location, file_names, labels)
         return file_names, labels
 
     @staticmethod
@@ -105,25 +105,16 @@ class DatasetUtils:
         return new_file_names, labels
 
     @staticmethod
-    def convert_to_abspath_image(location,file_names,labels):
-        new_file_names = []
-        if platform.system() == 'Windows':
-            for fn in file_names:
-                new_file_names.append(location+fn.replace('/','\\')+'.png')
-        else:
-            for fn in file_names:
-                new_file_names.append(location+fn.replace('\\','/')+'.png')
-        return new_file_names, labels
-
-    @staticmethod
     def load_image(image_file, labels):
-        image = tf.io.read_file((image_file))
-        image = tf.image.decode_png(image, channels=3, dtype=tf.uint8)
+        image = tf.io.read_file((image_file + '.png'))
+        image = tf.image.decode_png(image, channels=3)
         image = tf.image.convert_image_dtype(image, dtype=tf.float32)
-        image = image/255
         return image, labels
 
     @staticmethod
     def resize_image(image_file, labels):
-        image = tf.image.resize(image_file, (700,700), antialias=True)
-        return image, labels
+        return tf.image.resize(image_file, (500,500), antialias=True), labels
+    
+    @staticmethod
+    def normalize_images(image, label):
+        return tf.cast(image, tf.float32)/255.0, label

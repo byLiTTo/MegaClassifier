@@ -85,4 +85,11 @@ El resultado final es una imagen con los bounding boxes de las detecciones, dibu
 
 Una vez más la carpeta de origen de donde se tomarán los datos, será [output_json](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json) y como carpeta destino [output_img](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_img)
 
+## Notebook: a03_EntrenaClasificador
+En este notebook cargamos los dataset generados hasta ahora, así como las imágenes con las máscaras aplicadas.
+
+Nuestro clasificador de imágenes se tratará de un modelo basado en una Red Neuronal Convolucional (CNN), la cual diseñaremos y entrenaremos en este fichero.
+
+
+
 ___
