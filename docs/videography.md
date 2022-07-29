@@ -92,5 +92,38 @@ non-affiliate: https://bit.ly/3kZgN5B
 
 GitHub Repository: https://github.com/aladdinpersson/Machine-Learning-Collection
 
+___
+
+## Build a Deep CNN Image Classifier with ANY Images
+[![](https://img.youtube.com/vi/jztwpsIzEGc/0.jpg)](https://youtu.be/jztwpsIzEGc)
+Get the Code https://github.com/nicknochnack/ImageClassification
+
+So...you wanna build your own image classifier eh? Well in this tutorial you're going to learn how to do exactly that...FROM SCRATCH using Python, Tensorflow and Keras. But best yet, you can do it on virtually any dataset. Go on, give it a go!
+
+Links
+Sigmoid Activation: https://en.wikipedia.org/wiki/Sigmoid_function
+Relu Activation: https://en.wikipedia.org/wiki/Rectifier_(neural_networks)
+Conv2D Layer: https://www.tensorflow.org/api_docs/python/tf/keras/layers/Conv2D
+MaxPooling Layer: https://keras.io/api/layers/pooling_layers/max_pooling2d/
+
+___
+
+## Simple explanation of convolutional neural network | Deep Learning Tutorial 23 (Tensorflow & Python)
+[![](https://img.youtube.com/vi/zfiSAzpy9NM/0.jpg)](https://youtu.be/zfiSAzpy9NM)
+
+## Image classification using CNN (CIFAR10 dataset) | Deep Learning Tutorial 24 (Tensorflow & Python)
+[![](https://img.youtube.com/vi/7HPwo4wnJeA/0.jpg)](https://youtu.be/7HPwo4wnJeA)
+
+In this video we will do small image classification using CIFAR10 dataset in tensorflow. We will use convolutional neural network for this image classification problem. First we will train a model using simple artificial neural network and then check how the performance looks like and then we will train a CNN and see how the model accuracy improves. This tutorial will help you understand why CNN is preferred over ANN for image classification. 
+
+Code: https://github.com/codebasics/deep-learning-keras-tf-tutorial/blob/master/16_cnn_cifar10_small_image_classification/cnn_cifar10_dataset.ipynb
+Exercise: Scroll to the very end of above notebook. You will find exercise description and solution link
+
+## Convolution padding and stride | Deep Learning Tutorial 25 (Tensorflow2.0, Keras & Python)
+[![](https://img.youtube.com/vi/oDAPkZ53zKk/0.jpg)](https://youtu.be/oDAPkZ53zKk)
+In this video we will cover what is padding and stride in convolution operation. Padding allows corner pixels in image to participate well in feature detection. Stride is by how much amount you are moving a filter window during convolution operation.
+
+___
+
 ##
 [![](https://img.youtube.com/vi//0.jpg)]()
