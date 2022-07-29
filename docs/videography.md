@@ -111,6 +111,17 @@ ___
 ## Simple explanation of convolutional neural network | Deep Learning Tutorial 23 (Tensorflow & Python)
 [![](https://img.youtube.com/vi/zfiSAzpy9NM/0.jpg)](https://youtu.be/zfiSAzpy9NM)
 
+A very simple explanation of convolutional neural network or CNN or ConvNet such that even a high school student can understand it easily. This video involves very less math and is perfect for total beginner who doesn't have any idea on what CNN is and how it works. We will cover different topics such as,
+
+1. Why traditionally humans are better at image recognition than computers?
+2. Disadvantages of using traditional artificial neural network (ANN) for image classification.
+3. How human brain recognizes images?
+4. How computers can use filters for feature detection
+5. What is convolution operation and how it works
+6. Importance of ReLU activation in CNN
+7. Importance of pooling operation in CNN
+8. How to handle rotation and scale in CNN
+
 ## Image classification using CNN (CIFAR10 dataset) | Deep Learning Tutorial 24 (Tensorflow & Python)
 [![](https://img.youtube.com/vi/7HPwo4wnJeA/0.jpg)](https://youtu.be/7HPwo4wnJeA)
 
@@ -121,6 +132,7 @@ Exercise: Scroll to the very end of above notebook. You will find exercise descr
 
 ## Convolution padding and stride | Deep Learning Tutorial 25 (Tensorflow2.0, Keras & Python)
 [![](https://img.youtube.com/vi/oDAPkZ53zKk/0.jpg)](https://youtu.be/oDAPkZ53zKk)
+
 In this video we will cover what is padding and stride in convolution operation. Padding allows corner pixels in image to participate well in feature detection. Stride is by how much amount you are moving a filter window during convolution operation.
 
 ___
