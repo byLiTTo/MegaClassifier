@@ -38,10 +38,10 @@ class DatasetUtils:
     @staticmethod
     def generate_train_validation_test(empty, animals, samples, per_train, per_test):
 
-        df = pd.DataFrame(empty[:samples])
+        df = pd.DataFrame(shuffle(empty[:samples], random_state=42))
         train_empty, validation_empty, test_empty = np.split(df.sample(frac=1, random_state=42),[int(per_train*len(df)), int((per_train+per_test)*len(df))])
     
-        df = pd.DataFrame(animals[:(math.trunc(len(animals)*(samples/len(empty))))])
+        df = pd.DataFrame(shuffle(animals[:(math.trunc(len(animals)*(samples/len(empty))))], random_state=42))
         train_animals, validation_animals, test_animals = np.split(df.sample(frac=1, random_state=42),[int(per_train*len(df)), int((per_train+per_test)*len(df))])
 
         aux = [["file_name","label"]]
