@@ -333,7 +333,7 @@ def test_epoch(model: torch.nn.Module,
         accs_weighted = {k: train_classifier.AverageMeter() for k in top}
         losses_weighted = train_classifier.AverageMeter()
 
-    num_examples = len(loader.dataset)
+    num_examples = len(loader.DatasetUtils)
     num_labels = len(label_names)
 
     all_img_files = []

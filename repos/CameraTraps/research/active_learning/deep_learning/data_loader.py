@@ -122,7 +122,7 @@ class BalancedBatchSampler(BatchSampler):
 
     def __init__(self, underlying_dataset, n_classes, n_samples):
         if hasattr(underlying_dataset, "dataset"):
-            self.labels = [underlying_dataset.dataset.samples[underlying_dataset.dataset.indices[i]][1] for i in underlying_dataset.indices]
+            self.labels = [underlying_dataset.DatasetUtils.samples[underlying_dataset.DatasetUtils.indices[i]][1] for i in underlying_dataset.indices]
         else:
             self.labels = [underlying_dataset.samples[i][1] for i in underlying_dataset.indices]
         self.labels_set = set(self.labels)

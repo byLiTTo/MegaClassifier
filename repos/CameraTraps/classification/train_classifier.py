@@ -669,7 +669,7 @@ def run_epoch(model: torch.nn.Module,
         fp_heaps: dict[int, list[HeapItem]] = defaultdict(list)
         fn_heaps: dict[int, list[HeapItem]] = defaultdict(list)
 
-    all_labels = np.zeros(len(loader.dataset), dtype=np.int32)
+    all_labels = np.zeros(len(loader.DatasetUtils), dtype=np.int32)
     all_preds = np.zeros_like(all_labels)
     end_i = 0
 

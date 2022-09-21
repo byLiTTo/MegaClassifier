@@ -94,7 +94,7 @@ def detect_process():
 
                     for d in _detections:
                         if d['conf'] > return_confidence_threshold:
-                            res = TFDetector.convert_to_tf_coords(d['bbox'])
+                            res = TFDetector.convert_to_tf_coordinates(d['bbox'])
                             res.append(d['conf'])
                             res.append(int(d['category']))
                             detections[image_name].append(res)

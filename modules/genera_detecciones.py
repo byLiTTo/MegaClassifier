@@ -1,70 +1,46 @@
 """
-Módulo para ejecutar un modelo de detección de animales con TensorFlow.
-
-La clase TFDetector contiene funciones para cargar el modelo de detección de Tensorflow
-y ejecutar una instancia. La función main además calculará los bounding boxes de las
-predicciones y guardar los resultados en ficheros JSON.
-
-Si no desea usar la GPU debe seleccionar la variable: CUDA_VISIBLE_DEVICES a -1
-
-Este módulo solo considera detecciones por encima de 0.1 de umbral. El umbral que
-se especifica es para las renderizaciones. Si desea trabajar con valores menores deberá
-cambiar la variable: DEFAULT_OUTPUT_CONFIDENCE_THRESHOLD
+It takes a model file, a list of image file names, and an output directory, and it runs the model on the images, saving
+the results in the output directory
 """
-###################################################################################################
-# IMPORTs
 
-import os
-import sys
-import json
-import time
-import numpy as np
 import argparse
+import json
+import os
 import platform
-import traceback
 import statistics
-import humanfriendly
-import visualization.visualization_utils as visualization_utils
-
-
-
-from tqdm import tqdm
-from ct_utils import truncate_float
+import sys
+import time
+import traceback
 from datetime import datetime
-from path_utils import PathUtils as path_utils
-from dataset_utils import DatasetUtils as dataset_path
 
-
-
-###################################################################################################
-# IMPORTACION TENSORFLOW
-
-# Useful hack to force CPU inference
-# os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
-
+import humanfriendly
+import numpy as np
 import tensorflow.compat.v1 as tf
-'''
+from tqdm import tqdm
+
+import repos.CameraTraps.visualization.visualization_utils as visualization_utils
+from dataset_utils import DatasetUtils
+from path_utils import PathUtils
+from repos.CameraTraps.ct_utils import truncate_float
+
 print('')
-print('==========================================================================================')
+print(
+    '=======================================================================================================================================')
 print('TensorFlow version:', tf.__version__)
-#print('Is GPU available? tf.test.is_gpu_available:', tf.test.is_gpu_available())
-print('Is GPU available? tf.test.is_gpu_available:',tf.config.list_physical_devices('GPU'))
-print('==========================================================================================')
+# print('Is GPU available? tf.test.is_gpu_available:', tf.test.is_gpu_available())
+print('Is GPU available? tf.test.is_gpu_available:', tf.config.list_physical_devices('GPU'))
+print(
+    '=======================================================================================================================================')
 print('')
-'''
 
 
-
-###################################################################################################
+########################################################################################################################
 # CLASES:
 
 class TFDetector:
     """
-    Un modelo de detector cargado en el momento de la inicialización. Está destinado a ser 
-    utilizado con el MegaDetector (TF). El tamaño del lote de inferencia se establece en 1 
-    por defecto, si desea cambiarlo, tendrá que modificar el código.
+    This class is a wrapper for the TensorFlow Object Detection API
     """
-
     # Número de decimales a redondear para el umbral de confianza y las coordenadas bbox
     CONF_DIGITS = 3
     COORD_DIGITS = 4
@@ -78,13 +54,13 @@ class TFDetector:
     DEFAULT_DETECTOR_LABEL_MAP = {
         '1': 'animal',
         '2': 'person',
-        '3': 'vehicle'  # Disponibles en megadetector v4+
+        '3': 'vehicle'  # Disponibles en mega detector v4+
     }
 
     def __init__(self, model_path):
         """
-        Carga el modelo desde model_path e inicia tf.Session con este gráfico. Obtiene 
-        tensor handles de entrada y salida.
+        We load the model, create a session, and get the tensors that we need to detect objects in images
+        :param model_path: The path to the frozen graph file that contains the model
         """
         detection_graph = TFDetector.load_model(model_path)
         self.tf_session = tf.Session(graph=detection_graph)
@@ -96,42 +72,39 @@ class TFDetector:
 
     @staticmethod
     def round_and_make_float(d, precision=4):
+        """
+        It takes a number, rounds it to the nearest integer, and then converts it to a float
+        :param d: the number to be rounded
+        :param precision: The number of decimal places to round to, defaults to 4 (optional)
+        :return: A float with a precision of 4.
+        """
         return truncate_float(float(d), precision=precision)
 
     @staticmethod
-    def convert_coords(tf_coords):
+    def convert_coordinates(tf_coordinates):
         """
-        Convierte las coordenadas del formato de salida del modelo: [y1, x1, y2, x2]
-        al formato de coordenadas de la API de MegaDB: [x1, y1, width, height].
-
-        Ambos formatos de coordenadas se cuentran normalizados entre [0, 1].
-
-        Args:
-        - tf_coords: np.array que contiene las coordenadas del bounding box que devuelve 
-            TF detector, con el formato: [y1, x1, y2, x2].
-
-        Returns: Listo de decimales (Python), con las coordenadas del bounding box, pero
-            en formato: [x1, y1, width, height].
+        It converts the coordinates from [y1, x1, y2, x2] to [x1, y1, width, height]
+        :param tf_coordinates: [y1, x1, y2, x2]
+        :return: The coordinates of the bounding box.
         """
-
         # Cambiamos de [y1, x1, y2, x2] a [x1, y1, width, height]
-        width = tf_coords[3] - tf_coords[1]
-        height = tf_coords[2] - tf_coords[0]
+        width = tf_coordinates[3] - tf_coordinates[1]
+        height = tf_coordinates[2] - tf_coordinates[0]
 
-        new = [tf_coords[1], tf_coords[0], width, height]  # must be a list instead of np.array
+        new = [tf_coordinates[1], tf_coordinates[0], width, height]  # must be a list instead of np.array
 
         # Convierte numpy floats a Python floats
         for i, d in enumerate(new):
             new[i] = TFDetector.round_and_make_float(d, precision=TFDetector.COORD_DIGITS)
-        return new   
+        return new
 
     @staticmethod
-    def convert_to_tf_coords(array):
+    def convert_to_tf_coordinates(array):
         """
-        A partir del formato de coordenadas: [x1, y1, width, height], las convierte al 
-        formato: [y1, x1, y2, x2]. Donde x1 es x_min y x2 es x_max.
-
-        Esta función la hemos creado para mantener la compatibilidad con la API.
+        It takes in a list of coordinates in the format [x1, y1, width, height] and returns a list of coordinates in the
+        format [y1, x1, y2, x2]
+        :param array: the array of bounding boxes
+        :return: the coordinates of the bounding box in the format that Tensorflow requires.
         """
         x1 = array[0]
         y1 = array[1]
@@ -144,11 +117,10 @@ class TFDetector:
     @staticmethod
     def load_model(model_path):
         """
-        Carga el modelo de detección desde un fichero ".pb".
-
-        Args:
-            -model_path: ruta donde se encuentra el fichero ".pb" del modelo.
-        Returns: Los gráficos cargados.
+        It takes the path to a frozen inference graph, loads the graph into the default TensorFlow graph, and returns
+        the graph
+        :param model_path: The path to the frozen inference graph
+        :return: The graph is being returned.
         """
         print('')
         print('==========================================================================================')
@@ -164,9 +136,14 @@ class TFDetector:
         print('==========================================================================================')
         print('')
 
-        return detection_graph  
+        return detection_graph
 
     def generate_detection(self, image):
+        """
+        It takes an image, adds a batch dimension to it, and then runs the image through the TensorFlow session
+        :param image: the image to perform inference on
+        :return: The bounding box coordinates, the confidence score, and the class of the object detected.
+        """
         numpy_im = np.asarray(image, np.uint8)
         im_w_batch_dim = np.expand_dims(numpy_im, axis=0)
 
@@ -181,22 +158,18 @@ class TFDetector:
 
         return box_tensor_out, score_tensor_out, class_tensor_out
 
-    def generate_detections_image(self, image_obj, image_path, 
-            detection_threshold=DEFAULT_OUTPUT_CONFIDENCE_THRESHOLD):
+    def generate_detections_image(self, image_obj, image_path, detection_threshold=DEFAULT_OUTPUT_CONFIDENCE_THRESHOLD):
         """
-        Aplicar el detector a una imagen especificada.
-
-        Args:
-            - image: objeto PIL Image
-            - image_id: Ruta de la imagen; estará en el objeto del "fichero" de salida
-            - detection_threshold: Umbral de confianza a partir del cual se incluirán las detecciones
-
-        Returns:
-        Diccionario con los siguientes campos, mirar 'images key' en: https://github.com/microsoft/CameraTraps/tree/master/api/batch_processing#batch-processing-api-output-format
-            - 'file' (siempre presente)
+        It takes an image, runs it through the model, and returns a dictionary with the detections
+        :param image_obj: the image object
+        :param image_path: The path to the image file
+        :param detection_threshold: The confidence threshold for detections
+        :return: A dictionary with the following fields:
+            - 'file' (always present)
             - 'max_detection_conf'
-            - 'detections', el cual es una lista de los objeto detección con las claves 'category', 'conf' y 'bbox'
+            - 'detections', which is a list of the detection objects with the keys 'category', 'conf' and 'bbox'
             - 'failure'
+            For more details: https: // github.com / microsoft / CameraTraps / tree / master / api / batch_processing
         """
         result = {
             'file': image_path
@@ -212,39 +185,35 @@ class TFDetector:
             for b, s, c in zip(boxes, scores, classes):
                 if s > detection_threshold:
                     detection_successful = {
-                        'category': str(int(c)),    # usamos string para el número de clase, no int
-                        'conf': truncate_float(float(s), precision=TFDetector.CONF_DIGITS),    # cast a float para añadirlo al json
-                        'bbox': TFDetector.convert_coords(b),
+                        'category': str(int(c)),  # usamos string para el número de clase, no int
+                        'conf': truncate_float(float(s), precision=TFDetector.CONF_DIGITS),
+                        # cast a float para añadirlo al json
+                        'bbox': TFDetector.convert_coordinates(b),
                     }
                     detections.append(detection_successful)
                     if s > max_detection_score:
                         max_detection_score = s
 
-            result['max_detection_conf'] = truncate_float(float(max_detection_score), 
-                                                precision=TFDetector.CONF_DIGITS)
+            result['max_detection_conf'] = truncate_float(float(max_detection_score), precision=TFDetector.CONF_DIGITS)
             result['detections'] = detections
 
         except Exception as e:
             result['failure'] = TFDetector.FAILURE_TF_INFER
-            print('TFDetector: image {} failed during inference: {}'
-                .format(image_path, str(e)))
+            print('TFDetector: image {} failed during inference: {}'.format(image_path, str(e)))
             print('------------------------------------------------------------------------------------------')
             print(traceback.format_exc())
 
         return result
 
 
-
-###################################################################################################
-# FUNCIONES AUXIIARES
+########################################################################################################################
+# FUNCIONES AUXILIARES
 
 def generate_json(results, output_dir):
     """
-    Genera diccionario con los resultados de las detecciones y las guarda en un fichero JSON
-
-    Args:
-        - results: Diccionario que contiene todas las detecciones de la imagen procesada.
-        - output_dir: Ruta en la cual se guardará el fichero JSON.
+    It takes the results of the detection and writes them to a JSON file
+    :param results: The results of the detection
+    :param output_dir: The directory where the output files will be saved
     """
     if platform.system() == 'Windows':
         windows = True
@@ -262,7 +231,7 @@ def generate_json(results, output_dir):
 
     name = datetime.utcnow().strftime('%Y-%m-%d_%H-%M')
     file_name = name + '.json'
-    
+
     if windows:
         os.makedirs((output_dir + '\\' + 'registry'), exist_ok=True)
         output_file = (output_dir + '\\' + 'registry' + '\\' + file_name)
@@ -292,21 +261,17 @@ def generate_json(results, output_dir):
             json.dump(i_results, f, indent=1)
 
 
-            
-###################################################################################################
-# FUNCION PRINCIPAL
+########################################################################################################################
+# FUNCTION PRINCIPAL
 
 def run(model_file, image_file_names, output_dir):
     """
-    Carga modelo de detección y lo aplica a las imágenes especificadas. Genera un fichero JSON con 
-    los resultados obtenidos.
-
-    Args:
-        - model_file: Ruta al fichero del modelo.
-        - image_file_names: Lista de rutas a los fichero de imágenes a los que se aplicará el modelo.
-        - output_dir: Ruta donde se guardará el fichero JSON generado con los resultados obtenidos.
+    It takes a model file, a list of image file names, and an output directory, and it runs the model on the images,
+    saving the results in the output directory
+    :param model_file: The path to the model file
+    :param image_file_names: A list of image file names
+    :param output_dir: The directory where the output files will be saved
     """
-    
     if len(image_file_names) == 0:
         print("WARNING: No hay ficheros disponibles")
         return
@@ -316,8 +281,7 @@ def run(model_file, image_file_names, output_dir):
     elapsed_time = time.time() - start_time
 
     print('')
-    print('Modelo cargado en: {}.'
-        .format(humanfriendly.format_timespan(elapsed_time)))
+    print('Modelo cargado en: {}.'.format(humanfriendly.format_timespan(elapsed_time)))
     print('==========================================================================================')
     print('')
 
@@ -332,7 +296,7 @@ def run(model_file, image_file_names, output_dir):
             elapsed_time = time.time() - start_time
             time_load.append(elapsed_time)
         except Exception as e:
-            print('La imagen {} no ha podido ser cargada. Excepcion: {}'.format(image_file, e))
+            print('La imagen {} no ha podido ser cargada. Exception: {}'.format(image_file, e))
             print('------------------------------------------------------------------------------------------')
             print(traceback.format_exc())
             result = {
@@ -349,18 +313,18 @@ def run(model_file, image_file_names, output_dir):
             all_results.append(result)
             elapsed_time = time.time() - start_time
             print('')
-            print('Generadas detecciones de imagen {} en {}.'
-                .format(image_file, humanfriendly.format_timespan(elapsed_time)))
+            print('Generadas detecciones de imagen {} en {}.'.format(image_file,
+                                                                     humanfriendly.format_timespan(elapsed_time)))
             time_infer.append(elapsed_time)
         except Exception as e:
             print('')
-            print('Ha ocurrido un error mientras se ejecutaba el detector en la imagen {}. EXCEPTION: {}'
-                .format(image_file, e))
+            print('Ha ocurrido un error mientras se ejecutaba el detector en la imagen {}. EXCEPTION: {}'.format(
+                image_file, e))
             print('------------------------------------------------------------------------------------------')
             print(traceback.format_exc())
             continue
     try:
-        generate_json(all_results,output_dir)
+        generate_json(all_results, output_dir)
         print('')
         print('==========================================================================================')
         print('Generado JSON con detecciones')
@@ -368,8 +332,7 @@ def run(model_file, image_file_names, output_dir):
     except Exception as e:
         print(traceback.format_exc())
         print('!!!')
-        print('Error al generar fichero JSON de salida en la ruta {}, EXCEPTION: {}'
-            .format(output_dir, e))
+        print('Error al generar fichero JSON de salida en la ruta {}, EXCEPTION: {}'.format(output_dir, e))
 
     average_time_load = statistics.mean(time_load)
     average_time_infer = statistics.mean(time_infer)
@@ -384,18 +347,16 @@ def run(model_file, image_file_names, output_dir):
     print('')
     print('==========================================================================================')
     print('De media, por cada imagen: ')
-    print('Ha tomado {} en cargar, con desviación de {}'
-        .format(humanfriendly.format_timespan(average_time_load), std_dev_time_load))
-    print('Ha tomado {} en procesar, con desviación de {}'
-        .format(humanfriendly.format_timespan(average_time_infer), std_dev_time_infer))
+    print('Ha tomado {} en cargar, con desviación de {}'.format(humanfriendly.format_timespan(average_time_load),
+                                                                std_dev_time_load))
+    print('Ha tomado {} en procesar, con desviación de {}'.format(humanfriendly.format_timespan(average_time_infer),
+                                                                  std_dev_time_infer))
     print('==========================================================================================')
 
 
-
-###################################################################################################
+########################################################################################################################
 # Command-line driver
 def main():
-
     parser = argparse.ArgumentParser(
         description='Modulo para ejecutar un modelo de detección en Tensorflow, sobre imágenes')
     parser.add_argument(
@@ -414,7 +375,7 @@ def main():
     )
     group.add_argument(
         '--csv_file',
-        help='Fichero CSV con las rutas de las imagenes que forman el dataset'
+        help='Fichero CSV con las rutas de las imágenes que forman el dataset'
     )
     parser.add_argument(
         '--recursive',
@@ -442,10 +403,10 @@ def main():
         image_file_names = [args.image_file]
     else:
         if args.image_dir:
-            image_file_names = path_utils.find_images(args.image_dir, args.recursive)
+            image_file_names = PathUtils.find_images(args.image_dir, args.recursive)
         else:
-            file_names, labels = dataset_path.load_csv(args.csv_file)
-            file_names, labels = dataset_path.convert_to_abspath(args.dataset_dir , file_names, labels)
+            file_names, labels = DatasetUtils.load_csv(args.csv_file)
+            file_names, labels = DatasetUtils.convert_to_abspath(args.dataset_dir, file_names, labels)
             image_file_names = file_names
 
     if args.output_dir:
@@ -457,7 +418,7 @@ def main():
             args.output_dir = os.path.dirname(args.image_file)
 
     print('Ejecutando detector en {} imágenes...'
-        .format(len(image_file_names)))
+          .format(len(image_file_names)))
 
     run(model_file=args.detector_file, image_file_names=image_file_names, output_dir=args.output_dir)
 
@@ -467,10 +428,5 @@ def main():
     print('==========================================================================================')
 
 
-
 if __name__ == '__main__':
     main()
-
-
-
-###################################################################################################

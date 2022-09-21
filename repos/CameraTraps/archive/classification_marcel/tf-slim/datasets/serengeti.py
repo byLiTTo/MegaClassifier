@@ -76,7 +76,7 @@ def get_split(split_name, dataset_dir, file_pattern=None, reader=None):
   if dataset_utils.has_labels(dataset_dir):
     labels_to_names = dataset_utils.read_label_file(dataset_dir)
 
-  return slim.dataset.Dataset(
+  return slim.DatasetUtils.Dataset(
       data_sources=file_pattern,
       reader=reader,
       decoder=decoder,

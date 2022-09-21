@@ -125,10 +125,10 @@ class Engine():
 
         # switch to evaluate mode
         self.model.eval()
-        embeddings = np.zeros((len(dataloader.dataset), dim), dtype=np.float32)
-        labels = np.zeros(len(dataloader.dataset), dtype=np.int64)
+        embeddings = np.zeros((len(dataloader.DatasetUtils), dim), dtype=np.float32)
+        labels = np.zeros(len(dataloader.DatasetUtils), dtype=np.int64)
         if load_info:
-          paths=[None]*len(dataloader.dataset)
+          paths=[None]*len(dataloader.DatasetUtils)
         k = 0
         dataloader = tqdm(dataloader, desc = "Prediction:")
         for i, batch in enumerate(dataloader):
@@ -157,7 +157,7 @@ class Engine():
 
         # switch to evaluate mode
         self.model.eval()
-        embeddings = np.zeros((len(dataloader.dataset), dim), dtype=np.float32)
+        embeddings = np.zeros((len(dataloader.DatasetUtils), dim), dtype=np.float32)
         k = 0
         dataloader = tqdm(dataloader, desc = "Embedding:")
         for i, batch in enumerate(dataloader):

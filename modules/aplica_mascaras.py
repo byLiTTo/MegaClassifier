@@ -1,47 +1,42 @@
 """
-
+It takes a list of JSON files, applies the masks to the images
+and saves the masked images in the output directory
 """
-###################################################################################################
-# IMPORTs
 
-import os
-import sys
-import cv2
-import json
-import time
-import numpy as np
-import platform
 import argparse
-import traceback
+import json
+import os
+import platform
 import statistics
-import humanfriendly
+import sys
+import time
+import traceback
 
+import cv2
+import humanfriendly
+import numpy as np
 from PIL import Image
 from tqdm import tqdm
-from path_utils import PathUtils as p_utils
+
+from path_utils import PathUtils
 
 
-###################################################################################################
+########################################################################################################################
 # FUNCIONES
 
 def generate_masked_image(image_path, mask_path):
     """
-    Crea una imagen a la que se le ha aplicado una máscara. En este caso el resultado será una 
-    imagen con el fondo en negro salvo la zona que abarca la detección.
+    It takes an image and a mask, and returns the masked image
 
-    Args:
-        - image_path: Ruta del fichero de la imagen a la que aplicar la máscara.
-        - mask_path: Ruta donde se encuentra el fichero de la máscara a aplicar.
-        
-    Returns:
-        - masked: Imagen con la máscara aplicada.
+    :param image_path: The path to the image you want to mask
+    :param mask_path: path to the mask image
+    :return: A masked image.
     """
     try:
         image = cv2.imread(image_path)
     except Exception as e:
         print('')
-        print('Ha ocurrido un error. No se puede cargar la imagen {}. EXCEPTION: {}'
-              .format(image_path, e))
+        print('Ha ocurrido un error. No se puede cargar la imagen {}. EXCEPTION: {}'.format(image_path, e))
         print('------------------------------------------------------------------------------------------')
         print(traceback.format_exc())
         return
@@ -49,8 +44,7 @@ def generate_masked_image(image_path, mask_path):
         bin_mask = np.array(Image.open(mask_path))
     except Exception as e:
         print('')
-        print('Ha ocurrido un error. No se puede cargar la máscara {}. EXCEPTION: {}'
-              .format(mask_path, e))
+        print('Ha ocurrido un error. No se puede cargar la máscara {}. EXCEPTION: {}'.format(mask_path, e))
         print('------------------------------------------------------------------------------------------')
         print(traceback.format_exc())
         return
@@ -60,20 +54,17 @@ def generate_masked_image(image_path, mask_path):
     return masked
 
 
-###################################################################################################
+########################################################################################################################
 # FUNCIÓN PRINCIPAL
 
 def run(input_file_names, output_mask, output_masked):
     """
-    Carga un fichero JSON, abre su imagen de origen y aplica la máscara correspondiente a dicha
-    imagen. El resultado será una imagen con el fondo negro y los pixeles que formen parte de la 
-    zona comprendida en los bboxes, con el valor de la imagen original.
+    It takes a list of input files, and for each one, it loads the image, applies the mask, and saves the masked image
 
-    Args:
-        - input_file_names: Lista de las rutas de ficheros JSON de los cuales se optendrán las 
-            rutas de las imágenes originales.
-        - output_mask: Ruta al directorio donde se encuentran los ficheros de máscaras.
-        - output_masked: Ruta al directorio donde se guardarán los resultados.
+    :param input_file_names: A list of paths to the JSON files that contain the image paths
+    :param output_mask: The path to the folder where the masks will be saved
+    :param output_masked: The directory where the masked images will be saved
+    :return: the masked image.
     """
     if platform.system() == 'Windows':
         windows = True
@@ -92,8 +83,7 @@ def run(input_file_names, output_mask, output_masked):
                 input_file = json.load(f)
         except Exception as e:
             print('')
-            print('Ha ocurrido un error. No se ha podido abrir el fichero {}. EXCEPTION: {}'
-                  .format(input_path, e))
+            print('Ha ocurrido un error. No se ha podido abrir el fichero {}. EXCEPTION: {}'.format(input_path, e))
             print('------------------------------------------------------------------------------------------')
             print(traceback.format_exc())
             continue
@@ -113,8 +103,7 @@ def run(input_file_names, output_mask, output_masked):
         masked = generate_masked_image(image_file, mask_path)
         elapsed_time = time.time() - start_time
         print('')
-        print('Aplicada máscara en imagen {} en {}.'
-              .format(image_file, humanfriendly.format_timespan(elapsed_time)))
+        print('Aplicada máscara en imagen {} en {}.'.format(image_file, humanfriendly.format_timespan(elapsed_time)))
         time_infer.append(elapsed_time)
 
         cv2.imwrite(output_path, masked)
@@ -129,30 +118,31 @@ def run(input_file_names, output_mask, output_masked):
     print('')
     print('==========================================================================================')
     print('De media, por cada imagen: ')
-    print('Ha tomado {} en aplicar la máscara, con desviación de {}'
-          .format(humanfriendly.format_timespan(average_time_infer), std_dev_time_infer))
+    print('Ha tomado {} en aplicar la máscara, con desviación de {}'.format(
+        humanfriendly.format_timespan(average_time_infer), std_dev_time_infer))
     print('==========================================================================================')
 
 
-###################################################################################################
+########################################################################################################################
 # Command-line driver
 
 def main():
+    """
+    It takes a list of JSON files, applies the masks to the images
+    and saves the masked images in the output directory
+    """
     parser = argparse.ArgumentParser(
-        description='Módulo para aplicar las máscaras anteriormente generadas a las imágenes'
-                    'indicadas'
+        description='Módulo para aplicar las máscaras anteriormente generadas a las imágenes indicadas'
     )
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument(
         '--json_file',
-        help='Fichero JSON del que se tomará la ruta de la imagen original a la que aplicar'
-             'la máscara'
+        help='Fichero JSON del que se tomará la ruta de la imagen original a la que aplicar la máscara'
     )
     group.add_argument(
         '--json_dir',
-        help='Ruta al directorio donde se encuentran los ficheros JSON de los cuales se tomarán '
-             'las rutas de las imágenes a las que aplicar sus correspondientes máscaras, hace uso '
-             'de la opción --recursive'
+        help='Ruta al directorio donde se encuentran los ficheros JSON de los cuales se tomarán las rutas de '
+             'las imágenes a las que aplicar sus correspondientes máscaras, hace uso de la opción --recursive'
     )
     parser.add_argument(
         '--recursive',
@@ -178,7 +168,7 @@ def main():
     if args.json_file:
         input_file_names = [args.json_file]
     else:
-        input_file_names = p_utils.find_detections(args.json_dir, args.recursive)
+        input_file_names = PathUtils.find_detections(args.json_dir, args.recursive)
 
     if args.output_mask:
         os.makedirs(args.output_mask, exist_ok=True)
@@ -198,11 +188,11 @@ def main():
 
     print('')
     print('==========================================================================================')
-    print('Aplicando máscaras en {} imágenes...'
-          .format(len(input_file_names)))
+    print('Aplicando máscaras en {} imágenes...'.format(len(input_file_names)))
     print('')
 
-    run(input_file_names=input_file_names, output_mask=args.output_mask, output_masked=args.output_masked)
+    run(input_file_names=input_file_names, output_mask=args.output_mask,
+        output_masked=args.output_masked)
 
     print('')
     print('Resultados guardados en: {}'.format(args.output_masked))
@@ -212,5 +202,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-    ###################################################################################################

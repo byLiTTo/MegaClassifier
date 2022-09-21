@@ -1,38 +1,31 @@
 """
-Módulo que genera recortes de la imagen original. Estos recortes son la región que abarca cada bbox
-de las diferentes detecciones que pueda tener la imagen original.
+It takes a list of JSON files, loads the images, crops them, and saves the crops to disk
 """
-###################################################################################################
-# IMPORTs
 
+import argparse
+import json
 import os
+import statistics
 import sys
 import time
-import json
-import argparse
 import traceback
-import statistics
+
 import humanfriendly
-import visualization.visualization_utils as v_utils
-
 from tqdm import tqdm
-from path_utils import PathUtils as p_utils
+
+import repos.CameraTraps.visualization.visualization_utils as v_utils
+from path_utils import PathUtils
 
 
-
-
-###################################################################################################
-# FUNCION PRINCIPAL
+########################################################################################################################
+# FUNCTION PRINCIPAL
 
 def run(input_file_names, output_dir):
     """
-    Carga las detecciones de la imagen a partir de un fichoero JSON que contiene las coordenadas
-    de los bbox. Recorta dicha región y genera tantas imágenes recortadas como detecciones haya.
-
-    Args:
-        - input_file_names: Lista de los ficheros JSON de los cuales se obtendrán los datos de 
-            coordenadas de bbox y la ruta del fichero de imagen original.
-        - output_dir: Ruta al directorio donde se guardarán las imágenes recortadas generadas.
+    It takes a list of JSON files, loads the images, crops them, and saves the crops to disk
+    :param input_file_names: A list of paths to the JSON files that contain the detections
+    :param output_dir: The directory where the cropped images will be saved
+    :return: the average time it takes to load the image and the average time it takes to process the image.
     """
     if len(input_file_names) == 0:
         print("WARNING: No hay ficheros disponibles")
@@ -44,6 +37,12 @@ def run(input_file_names, output_dir):
     output_filename_collision_counts = {}
 
     def generate_crop(fn, crop_index=-1):
+        """
+        It takes a filename, and returns a filename that is guaranteed to be unique
+        :param fn: the filename of the image to be cropped
+        :param crop_index: the index of the crop to generate. If -1, then generate all crops
+        :return: the file name of the image.
+        """
         fn = os.path.basename(fn).lower()
         name, ext = os.path.splitext(fn)
         if crop_index >= 0:
@@ -58,14 +57,13 @@ def run(input_file_names, output_dir):
         fn = os.path.join(output_dir, fn)
         return fn
 
-
     for input_path in tqdm(input_file_names):
         try:
-           with open(input_path) as f:
+            with open(input_path) as f:
                 input_file = json.load(f)
         except Exception as e:
             print('Error al cargar el fichero JSON en la ruta {}, EXCEPTION: {}'
-                .format(input_path, e))
+                  .format(input_path, e))
             print('------------------------------------------------------------------------------------------')
             print(traceback.format_exc())
             continue
@@ -95,7 +93,7 @@ def run(input_file_names, output_dir):
         elapsed = time.time() - start_time
         print('')
         print('Generados recortes de imagen {} en {}.'
-            .format(image_file, humanfriendly.format_timespan(elapsed)))
+              .format(image_file, humanfriendly.format_timespan(elapsed)))
         time_infer.append(elapsed)
 
     average_time_load = statistics.mean(time_load)
@@ -111,40 +109,38 @@ def run(input_file_names, output_dir):
     print('')
     print('==========================================================================================')
     print('De media, por cada imagen: ')
-    print('Ha tomado {} en cargar, con desviación de {}'
-        .format(humanfriendly.format_timespan(average_time_load), std_dev_time_load))
-    print('Ha tomado {} en procesar, con desviación de {}'
-        .format(humanfriendly.format_timespan(average_time_infer), std_dev_time_infer))
+    print('Ha tomado {} en cargar, con desviación de {}'.format(humanfriendly.format_timespan(average_time_load),
+                                                                std_dev_time_load))
+    print('Ha tomado {} en procesar, con desviación de {}'.format(humanfriendly.format_timespan(average_time_infer),
+                                                                  std_dev_time_infer))
     print('==========================================================================================')
-        
 
 
-
-###################################################################################################
+########################################################################################################################
 # Command-line driver
 
 def main():
     parser = argparse.ArgumentParser(
-        description = 'Módulo para generar recortes de las detecciones de las imágenes indicadas')
-    group = parser.add_mutually_exclusive_group(required = True)
+        description='Módulo para generar recortes de las detecciones de las imágenes indicadas')
+    group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument(
         '--input_file',
-        help = 'Fichero JSON del que se tomarán los datos para realizar el recorte'
+        help='Fichero JSON del que se tomarán los datos para realizar el recorte'
     )
     group.add_argument(
         '--input_dir',
-        help = 'Ruta al directorio donde se encuentran los ficheros JSON de los cuales se tomarán '
-            'los datos para realizar los recortes a las diferentes imágenes, hace uso de la '
-            'opción --recursive'
+        help='Ruta al directorio donde se encuentran los ficheros JSON de los cuales se tomarán '
+             'los datos para realizar los recortes a las diferentes imágenes, hace uso de la '
+             'opción --recursive'
     )
     parser.add_argument(
         '--recursive',
-        action = 'store_true',
-        help = 'Maneja directorios de forma recursiva, solo tiene sentido usarlo con --input_dir'
+        action='store_true',
+        help='Maneja directorios de forma recursiva, solo tiene sentido usarlo con --input_dir'
     )
     parser.add_argument(
         '--output_dir',
-        help = 'Ruta al directorio de donde se guardaran los recortes generados'
+        help='Ruta al directorio de donde se guardaran los recortes generados'
     )
 
     if len(sys.argv[1:]) == 0:
@@ -156,7 +152,7 @@ def main():
     if args.input_file:
         input_file_names = [args.input_file]
     else:
-        input_file_names = p_utils.find_detections(args.input_dir, args.recursive)
+        input_file_names = PathUtils.find_detections(args.input_dir, args.recursive)
 
     if args.output_dir:
         os.makedirs(args.output_dir, exist_ok=True)
@@ -165,11 +161,10 @@ def main():
             args.output_dir = args.input_dir
         else:
             args.output_dir = os.path.dirname(args.input_file)
-    
+
     print('')
     print('==========================================================================================')
-    print('Generando recortes de {} imágenes...'
-        .format(len(input_file_names)))
+    print('Generando recortes de {} imágenes...'.format(len(input_file_names)))
     print('')
 
     run(input_file_names=input_file_names, output_dir=args.output_dir)
@@ -180,10 +175,5 @@ def main():
     print('==========================================================================================')
 
 
-
 if __name__ == '__main__':
-    main()    
-
-
-
-###################################################################################################
+    main()

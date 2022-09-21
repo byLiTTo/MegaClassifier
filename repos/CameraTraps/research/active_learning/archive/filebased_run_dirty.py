@@ -380,9 +380,9 @@ def main():
 def extract_embeddings(dataloader, model):
     with torch.no_grad():
         model.eval()
-        embeddings = np.zeros((len(dataloader.dataset),256))# 3*218*218))
-        labels = np.zeros(len(dataloader.dataset))
-        paths=[None]*len(dataloader.dataset)
+        embeddings = np.zeros((len(dataloader.DatasetUtils), 256))# 3*218*218))
+        labels = np.zeros(len(dataloader.DatasetUtils))
+        paths=[None]*len(dataloader.DatasetUtils)
         k = 0
         for images, target, path in dataloader:
             

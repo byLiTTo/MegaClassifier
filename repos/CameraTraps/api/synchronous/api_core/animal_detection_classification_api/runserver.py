@@ -193,7 +193,7 @@ def detect_sync(*args, **kwargs):
 
             for d in detections:
                 if d['conf'] > detection_confidence:
-                    res = TFDetector.convert_to_tf_coords(d['bbox'])
+                    res = TFDetector.convert_to_tf_coordinates(d['bbox'])
                     res.append(d['conf'])
                     res.append(int(d['category']))  # category is an int here, not string as in the async API
                     filtered_results[image_name].append(res)
