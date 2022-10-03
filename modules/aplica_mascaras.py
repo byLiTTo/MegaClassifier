@@ -27,7 +27,6 @@ from path_utils import PathUtils
 def generate_masked_image(image_path, mask_path):
     """
     It takes an image and a mask, and returns the masked image
-
     :param image_path: The path to the image you want to mask
     :param mask_path: path to the mask image
     :return: A masked image.
@@ -60,7 +59,6 @@ def generate_masked_image(image_path, mask_path):
 def run(input_file_names, output_mask, output_masked):
     """
     It takes a list of input files, and for each one, it loads the image, applies the mask, and saves the masked image
-
     :param input_file_names: A list of paths to the JSON files that contain the image paths
     :param output_mask: The path to the folder where the masks will be saved
     :param output_masked: The directory where the masked images will be saved

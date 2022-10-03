@@ -1,7 +1,3 @@
-"""
-It takes a list of JSON files, each of which contains a list of detections, and generates a binary mask for each image
-"""
-
 import argparse
 import json
 import os
@@ -23,48 +19,37 @@ from path_utils import PathUtils
 ########################################################################################################################
 # FUNCIONES
 
-def generate_binary_image(detections, image):
-    """
-    It takes a list of detections and an image, and returns a binary image where the pixels that are inside the bounding
-    boxes are set to 1
-    :param detections: a list of dictionaries, each containing the bounding box coordinates and the class of the
-    detected object
-    :param image: The image to be processed
-    :return: A binary image with the detections.
-    """
-    im_height, im_width = image.shape[0], image.shape[1]
+def remove_borderV1(image):
+    img_np = np.array(image)
+    im_height, im_width = img_np.shape[0], img_np.shape[1]
 
-    mask = np.zeros((im_height, im_width))
+    image.show()
 
-    for detection in detections:
-        x1, y1, w_box, h_box = detection['bbox']
-        y_min, x_min, y_max, x_max = y1, x1, y1 + h_box, x1 + w_box
+    border_up = im_height
+    for j in range(im_width):
+        for i in range(im_height):
+            if img_np[i][j][0] != 0 or img_np[i][j][1] != 0 or img_np[i][j][2] != 0:
+                if i < border_up:
+                    border_up = i
+                    break
 
-        # Convert to pixels, so we can use the PIL crop() function
-        (left, right, top, bottom) = (x_min * im_width, x_max * im_width, y_min * im_height, y_max * im_height)
+    edited = np.zeros((im_height - border_up, im_width, 3), dtype='uint8')
+    print(edited.dtype)
 
-        left = round(left)
-        right = round(right)
-        top = round(top)
-        bottom = round(bottom)
+    for i in range(im_height - border_up):
+        for j in range(im_width):
+            edited[i][j][0] = img_np[i + border_up][j][0]
+            edited[i][j][1] = img_np[i + border_up][j][1]
+            edited[i][j][2] = img_np[i + border_up][j][2]
 
-        # Representación: img[y0:y1, x0:x1]
-        mask[top:bottom, left:right] = 1
-
-    return mask
+    im = Image.fromarray(edited, mode='RGB')
+    im.show()
 
 
 ########################################################################################################################
 # FUNCIÓN PRINCIPAL
 
-def run(input_file_names, output_mask):
-    """
-    It takes a list of JSON files, each of which contains a list of detections, and generates a binary mask for each
-    image
-    :param input_file_names: A list of paths to the JSON files that contain the detections
-    :param output_mask: The path to the folder where the masks will be saved
-    :return: the binary image with the mask of the detected objects.
-    """
+def run(input_file_names, output_masked, output_edited):
     if platform.system() == 'Windows':
         windows = True
     else:
@@ -113,9 +98,9 @@ def run(input_file_names, output_mask):
         try:
             name, ext = os.path.splitext(os.path.basename(image_file).lower())
             if windows:
-                output_file = (output_mask + '\\' + name + '_mask.png')
+                output_file = (output_masked + '\\' + name + '_mask.png')
             else:
-                output_file = (output_mask + '/' + name + '_mask.png')
+                output_file = (output_masked + '/' + name + '_mask.png')
 
             cv2.imwrite(output_file, mask * 255)
 
@@ -164,7 +149,11 @@ def main():
         help='Maneja directorios de forma recursiva, solo tiene sentido usarlo con --json_dir'
     )
     parser.add_argument(
-        '--output_mask',
+        '--output_masked',
+        help='Ruta al directorio de donde se encuentran guardadas las imágenes enmascaradas'
+    )
+    parser.add_argument(
+        '--output_edited',
         help='Ruta al directorio de donde se guardarán las máscaras como fichero de imagen'
     )
 
@@ -179,23 +168,31 @@ def main():
     else:
         input_file_names = PathUtils.find_detections(args.json_dir, args.recursive)
 
-    if args.output_mask:
-        os.makedirs(args.output_mask, exist_ok=True)
+    if args.output_masked:
+        os.makedirs(args.output_masked, exist_ok=True)
     else:
         if args.json_dir:
-            args.output_mask = args.json_dir
+            args.output_masked = args.json_dir
         else:
-            args.output_mask = os.path.dirname(args.json_file)
+            args.output_masked = os.path.dirname(args.json_file)
+
+    if args.output_edited:
+        os.makedirs(args.output_edited, exist_ok=True)
+    else:
+        if args.json_dir:
+            args.output_edited = args.json_dir
+        else:
+            args.output_edited = os.path.dirname(args.json_file)
 
     print('')
     print('==========================================================================================')
     print('Generando máscaras de {} imágenes...'.format(len(input_file_names)))
     print('')
 
-    run(input_file_names=input_file_names, output_mask=args.output_mask)
+    run(input_file_names=input_file_names, output_masked=args.output_masked, output_edited=args.output_edited)
 
     print('')
-    print('Resultados guardados en: {}'.format(args.output_mask))
+    print('Resultados guardados en: {}'.format(args.output_edited))
     print('')
     print('==========================================================================================')
 
