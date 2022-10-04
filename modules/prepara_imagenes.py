@@ -18,32 +18,6 @@ from path_utils import PathUtils
 ########################################################################################################################
 # FUNCIONES
 
-def remove_borderV1(image):
-    img_np = np.array(image)
-    im_height, im_width = img_np.shape[0], img_np.shape[1]
-
-    image.show()
-
-    border_up = im_height
-    for j in range(im_width):
-        for i in range(im_height):
-            if img_np[i][j][0] != 0 or img_np[i][j][1] != 0 or img_np[i][j][2] != 0:
-                if i < border_up:
-                    border_up = i
-                    break
-
-    edited = np.zeros((im_height - border_up, im_width, 3), dtype='uint8')
-    print(edited.dtype)
-
-    for i in range(im_height - border_up):
-        for j in range(im_width):
-            edited[i][j][0] = img_np[i + border_up][j][0]
-            edited[i][j][1] = img_np[i + border_up][j][1]
-            edited[i][j][2] = img_np[i + border_up][j][2]
-
-    im = Image.fromarray(edited, mode='RGB')
-    im.show()
-
 
 def remove_border(detections, np_image):
     height, width = np_image.shape[0], np_image.shape[1]
@@ -86,6 +60,7 @@ def remove_border(detections, np_image):
 
     new_height = bottom - top
     new_width = right - left
+
     np_cropped = np.zeros((new_height, new_width, 3), dtype='uint8')
 
     i_old = top
@@ -106,6 +81,37 @@ def remove_border(detections, np_image):
         j_new = 0
 
     return np_cropped
+
+
+def make_squared(np_image):
+    height, width = np_image.shape[0], np_image.shape[1]
+    im = Image.fromarray(np_image, 'RGB')
+    desired_size = 500
+    if height < width:
+        desired_size = width
+    if height > width:
+        desired_size = width
+    if height == width:
+        return im
+
+    old_size = im.size  # old_size[0] is in (width, height) format
+
+    ratio = float(desired_size) / max(old_size)
+    new_size = tuple([int(x * ratio) for x in old_size])
+    # use thumbnail() or resize() method to resize the input image
+
+    # thumbnail is an in-place operation
+
+    # im.thumbnail(new_size, Image.ANTIALIAS)
+
+    im = im.resize(new_size, Image.ANTIALIAS)
+    # create a new image and paste the resized on it
+
+    new_im = Image.new("RGB", (desired_size, desired_size))
+    new_im.paste(im, ((desired_size - new_size[0]) // 2,
+                      (desired_size - new_size[1]) // 2))
+
+    return new_im
 
 
 ########################################################################################################################
@@ -150,7 +156,8 @@ def run(input_file_names, output_masked, output_edited):
         try:
             print('')
             start_time = time.time()
-            np_without_border = remove_border(input_file['detections'], np_image)
+            np_crop = remove_border(input_file['detections'], np_image)
+            im = make_squared(np_crop)
             elapsed_time = time.time() - start_time
             print('')
             print(
@@ -165,7 +172,6 @@ def run(input_file_names, output_masked, output_edited):
             continue
 
         try:
-            im = Image.fromarray(np_without_border, 'RGB')
             im.save(output_file)
         except Exception as e:
             print('')
