@@ -7,7 +7,6 @@ import sys
 import time
 import traceback
 
-import cv2
 import humanfriendly
 import numpy as np
 from PIL import Image
@@ -46,6 +45,69 @@ def remove_borderV1(image):
     im.show()
 
 
+def remove_border(detections, np_image):
+    height, width = np_image.shape[0], np_image.shape[1]
+
+    if not detections:
+        if height <= width:
+            np_empty = np.zeros((height, height, 3), dtype='uint8')
+            return np_empty
+        else:
+            np_empty = np.zeros((width, width, 3), dtype='uint8')
+            return np_empty
+
+    tops = []
+    bottoms = []
+    lefts = []
+    rights = []
+
+    for detection in detections:
+        x1, y1, w_box, h_box = detection['bbox']
+        y_min, x_min, y_max, x_max = y1, x1, y1 + h_box, x1 + w_box
+
+        # Convert to pixels, so we can use the PIL crop() function
+        (left, right, top, bottom) = (x_min * width, x_max * width, y_min * height, y_max * height)
+
+        lefts.append(round(left))
+        rights.append(round(right))
+
+        tops.append(round(top))
+        bottoms.append(round(bottom))
+
+    lefts.sort()
+    rights.sort(reverse=True)
+    tops.sort()
+    bottoms.sort(reverse=True)
+
+    left = lefts[0]
+    right = rights[0]
+    top = tops[0]
+    bottom = bottoms[0]
+
+    new_height = bottom - top
+    new_width = right - left
+    np_cropped = np.zeros((new_height, new_width, 3), dtype='uint8')
+
+    i_old = top
+    i_new = 0
+
+    j_old = left
+    j_new = 0
+
+    while i_old < bottom:
+        while j_old < right:
+            np_cropped[i_new][j_new] = np_image[i_old][j_old]
+            j_old = j_old + 1
+            j_new = j_new + 1
+        i_old = i_old + 1
+        i_new = i_new + 1
+
+        j_old = lefts[0]
+        j_new = 0
+
+    return np_cropped
+
+
 ########################################################################################################################
 # FUNCIÓN PRINCIPAL
 
@@ -72,38 +134,39 @@ def run(input_file_names, output_masked, output_edited):
             continue
         try:
             image_file = input_file['file']
-            image = np.array(Image.open(image_file))
+            name, ext = os.path.splitext(os.path.basename(image_file).lower())
+            if windows:
+                image_path = (output_masked + '\\' + name + '.png')
+                output_file = (output_edited + '\\' + name + '.png')
+            else:
+                image_path = (output_masked + '/' + name + '.png')
+                output_file = (output_edited + '/' + name + '.png')
+            np_image = np.asarray(Image.open(image_path), dtype='uint8')
         except Exception as e:
-            print('Error al cargar imagen desde la ruta {}, EXCEPTION: {}'.format(image_file, e))
+            print('Error al cargar imagen desde la ruta {}, EXCEPTION: {}'.format(image_path, e))
             print('------------------------------------------------------------------------------------------')
             print(traceback.format_exc())
             continue
         try:
             print('')
             start_time = time.time()
-            mask = generate_binary_image(input_file['detections'], image)
+            np_without_border = remove_border(input_file['detections'], np_image)
             elapsed_time = time.time() - start_time
             print('')
             print(
-                'Generada máscara de imagen {} en {}.'.format(image_file, humanfriendly.format_timespan(elapsed_time)))
+                'Generada máscara de imagen {} en {}.'.format(image_path, humanfriendly.format_timespan(elapsed_time)))
             time_infer.append(elapsed_time)
         except Exception as e:
             print('')
             print('Ha ocurrido un error mientras se generaba la máscara en la imagen {}. EXCEPTION: {}'
-                  .format(image_file, e))
+                  .format(image_path, e))
             print('------------------------------------------------------------------------------------------')
             print(traceback.format_exc())
             continue
 
         try:
-            name, ext = os.path.splitext(os.path.basename(image_file).lower())
-            if windows:
-                output_file = (output_masked + '\\' + name + '_mask.png')
-            else:
-                output_file = (output_masked + '/' + name + '_mask.png')
-
-            cv2.imwrite(output_file, mask * 255)
-
+            im = Image.fromarray(np_without_border, 'RGB')
+            im.save(output_file)
         except Exception as e:
             print('')
             print('Ha ocurrido un error. No puede guardarse la máscara en la ruta {}. EXCEPTION: {}'.format(output_file,
