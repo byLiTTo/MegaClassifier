@@ -1,11 +1,7 @@
-"""
-It contains a set of utility functions for working with datasets.
-"""
-
-import math
 import os
 import platform
 
+import math
 import numpy as np
 import pandas as pd
 import tensorflow as tf
@@ -171,3 +167,5 @@ class DatasetUtils:
         :return: The image and label are being returned.
         """
         return tf.cast(image, tf.float32) / 255.0, label
+
+#%%
