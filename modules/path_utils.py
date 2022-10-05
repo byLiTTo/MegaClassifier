@@ -1,7 +1,3 @@
-"""
-It provides a set of utility functions for working with file paths
-"""
-
 import glob
 import os
 

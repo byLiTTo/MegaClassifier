@@ -161,11 +161,11 @@ def run(input_file_names, output_masked, output_edited):
             elapsed_time = time.time() - start_time
             print('')
             print(
-                'Generada máscara de imagen {} en {}.'.format(image_path, humanfriendly.format_timespan(elapsed_time)))
+                'Ajustada imagen {} en {}.'.format(image_path, humanfriendly.format_timespan(elapsed_time)))
             time_infer.append(elapsed_time)
         except Exception as e:
             print('')
-            print('Ha ocurrido un error mientras se generaba la máscara en la imagen {}. EXCEPTION: {}'
+            print('Ha ocurrido un error mientras se ajustaba la imagen {}. EXCEPTION: {}'
                   .format(image_path, e))
             print('------------------------------------------------------------------------------------------')
             print(traceback.format_exc())
@@ -175,8 +175,8 @@ def run(input_file_names, output_masked, output_edited):
             im.save(output_file)
         except Exception as e:
             print('')
-            print('Ha ocurrido un error. No puede guardarse la máscara en la ruta {}. EXCEPTION: {}'.format(output_file,
-                                                                                                            e))
+            print('Ha ocurrido un error. No puede guardarse la imagen en la ruta {}. EXCEPTION: {}'.format(output_file,
+                                                                                                           e))
             print('------------------------------------------------------------------------------------------')
             print(traceback.format_exc())
             continue
@@ -191,7 +191,7 @@ def run(input_file_names, output_masked, output_edited):
     print('')
     print('==========================================================================================')
     print('De media, por cada imagen: ')
-    print('Ha tomado {} en generar la máscara, con desviación de {}'.format(
+    print('Ha tomado {} en ajustar la imagen, con desviación de {}'.format(
         humanfriendly.format_timespan(average_time_infer), std_dev_time_infer))
     print('==========================================================================================')
 
@@ -201,7 +201,7 @@ def run(input_file_names, output_masked, output_edited):
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Módulo para generar máscaras abarcando únicamente la zona de la detección')
+        description='Módulo para ajustar las imágenes enmascaradas convirtiéndolas en cuadradas')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument(
         '--json_file',
@@ -223,7 +223,7 @@ def main():
     )
     parser.add_argument(
         '--output_edited',
-        help='Ruta al directorio de donde se guardarán las máscaras como fichero de imagen'
+        help='Ruta al directorio de donde se guardarán las imágenes ajustadas'
     )
 
     if len(sys.argv[1:]) == 0:
@@ -255,7 +255,7 @@ def main():
 
     print('')
     print('==========================================================================================')
-    print('Generando máscaras de {} imágenes...'.format(len(input_file_names)))
+    print('Ajustando {} imágenes...'.format(len(input_file_names)))
     print('')
 
     run(input_file_names=input_file_names, output_masked=args.output_masked, output_edited=args.output_edited)
