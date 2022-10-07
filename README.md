@@ -55,13 +55,18 @@ entorno:
 | tensorflow-macos | 2.10.0 |
 | tensorflow-metal | 0.6.0 |
 
+Para mayor facilidad hemos creado una carpeta donde guardaremos copias de seguridad de los entornos que vayamos creando
+a medida que completemos proyecto. Cada vez que instalemos una nueva librería o actualicemos la versión de las ya
+existentes subiremos una copia de seguridad. La carpeta en cuestión
+es [env](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/env).
+
 ___
 
 # Ejecutar aplicación
 
-Para poder ejecutar los módulos de python, hemos creado un entorno conda en nuestro dispositivo. Una vez instalados
-todos los requisitos, dependencias y librerías en nuestro entorno, lo usaremos como kernel para ejecutar los diferentes
-notebooks que hemos implementado para poder ejecutar de forma clara y ordenada, las diferentes fases de la aplicación.
+En la creación de la aplicación hemos implementado varios notebooks, cada uno de ellos ejecuta cada una de las fases
+que forman el proyecto global. Lo hemos realizado de esta manera para una mejor gestión de las nuevas funcionalidades
+que se añadían a medida que se avanzaba el desarrollo.
 
 Para realizar este proyecto, se nos ha facilitado un dataset con imágenes de foto trampeo de diferentes especies de
 animales, humanos y vehículos, capturadas en los parajes
@@ -69,19 +74,44 @@ del [Parque natural de Doñana](https://es.wikipedia.org/wiki/Parque_nacional_y_
 los datos es a través de un fichero CSV, donde en una columna se nos indica la ruta del fichero correspondiente a la
 imagen y en su segunda columna se nos dice a qué clase pertenece dicha imagen.
 
-## Notebook: a01_GeneraDataset
+Como hemos mencionado anteriormente, para cada funcionalidad se ha intentado crear un notebook que la ejecute, por
+algunos de ellos no necesitan ser ejecutados para obtener los resultados. A continuación, vamos a explicar la
+funcionalidad de cada uno, así como el orden de ejecución.
 
-Como hemos mencionado, en el dataset existen varias especies de animales, en nuestro proyecto, por el momento solo nos
+___
+
+# Notebooks principales:
+
+## a01_GeneraDataset
+
+En el dataset existen varias especies de animales, en nuestro proyecto, por el momento solo nos
 interesa identificar la presencia de animales, por lo que solo nos serán necesarias dos clases _Animal_ o _Vacía_.
+Además en nuestro caso queríamos trabajar con un dataset de valores binarios para las clases, lo que tuvimos que
+realizar una conversión previa, en la que:
 
-Para hacer funcionar el notebook de forma correcta, deberemos indicar la localización del CSV.
+- Indicamos la nomenclatura de las clases originales (variable _ORIGINAL_CLASSES_).
+- Nomenclaturas que formarán la nueva clase _ANIMAL_ (variable _CLASS_ANIMAL_).
+- Nomenclaturas que formarán la nueva clase _VACÍA_ (variable _CLASS_EMPTY_).
 
-Lo primero que realiza es una conversión de las clases del dataset original a las dos clases mencionadas anteriormente.
-A continuación, si lo deseamos podemos hacer una partición del número de muestras de la clase vacía, en nuestro caso
-hemos hecho una de 700 muestras y otra para el tamaño original de 10000 muestras.
-El siguiente paso es el de dividir el dataset en 3 partes, _Train_, _Validation_ y _Test_. Por cada uno generamos un CSV
-con el mismo formato que el original. Estos ficheros que guardarán en la
-carpeta [data](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/data).
+Para hacer funcionar el notebook de forma correcta, deberemos indicar:
+
+- Localización del fichero CSV de origen, indicada en la variable _dataset_csv_relative_.
+- Localización donde se guardarán los ficheros CSV fraccionados, indicada en la variable _custom_csv_relative_.
+- Número de muestras de la clase _VACÍA_, indicada en la variable _NUMBER_IMAGES_.
+- Porcentaje de muestras de la clase _VACÍA_ para el CSV de entrenamiento, indicada en la variable _TRAIN_PERCENTAGE_.
+- Porcentaje de muestras de la clase _VACÍA_ para el CSV de validación, indicada en la variable _VALIDATION_PERCENTAGE_.
+- Porcentaje de muestras de la clase _VACÍA_ para el CSV de test, indicada en la variable _TEST_PERCENTAGE_.
+
+Si lo deseamos podemos hacer una partición del número de muestras de la clase vacía, en nuestro caso hemos hecho una de
+700 muestras y otra para el tamaño original de 10000 muestras.
+
+El dataset quedará dividido en tres partes, _Train_, _Validation_ y _Test_. Por cada uno generamos un CSV con el mismo
+formato que el original. Estos ficheros que guardarán por defecto en la
+carpeta [TFG-DeteccionFototrampeo/data](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/data).
+
+___
+SIN ACTUALIZAR
+___
 
 ## Notebook: a02_GeneraDetecciones
 
