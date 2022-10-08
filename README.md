@@ -1,6 +1,6 @@
 # Aplicación de estrategias de deep-learning para la detección de animales en imágenes de foto trampeo
 
-<img src="https://www.ingebook.com/ib/pimg/Ingebook/00100_0000001391_UHU_transparente.png" align="right" height="200" />
+<img src="https://www.ingebook.com/ib/pimg/Ingebook/00100_0000001391_UHU_transparente.png" align="right" height="190" />
 
 **Alumno:** Carlos García Silva
 
@@ -54,18 +54,18 @@ entorno:
 </p>
 <p align="center">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Python_logo_and_wordmark.svg/2560px-Python_logo_and_wordmark.svg.png" height="100" align="left" />
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1767px-Jupyter_logo.svg.png" height="100" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/OpenCV_Logo_with_text_svg_version.svg/831px-OpenCV_Logo_with_text_svg_version.svg.png" height="100" />
   <img src="https://matplotlib.org/stable/_images/sphx_glr_logos2_003.png" height="100" align="right" />
 </p>
 <p align="center">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/NumPy_logo_2020.svg/1280px-NumPy_logo_2020.svg.png" height="100" align="left" />
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/OpenCV_Logo_with_text_svg_version.svg/831px-OpenCV_Logo_with_text_svg_version.svg.png" height="100" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1767px-Jupyter_logo.svg.png" height="100" />
+  <img src="https://l3c.cloud/wp-content/uploads/2019/02/tensorflow-logo.png" height="100" />
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Pandas_logo.svg/2560px-Pandas_logo.svg.png" height="100" align="right" />
 </p>
 <p align="center">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/2560px-Scikit_learn_logo_small.svg.png" height="100" align="left" />
-  <img src="https://l3c.cloud/wp-content/uploads/2019/02/tensorflow-logo.png" height="100" />
-  <img src="https://www.applesutra.com/wp-content/uploads/2020/06/Apple-Silicon.png" height="100" align="right" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/1200px-Microsoft_logo_%282012%29.svg.png" height="100" />
 </p>
 <p align="center">
   <img src="https://ibvm.es/wp-content/uploads/2020/06/babysitter-background-white-1.png" height="20" />
@@ -102,7 +102,7 @@ ___
 
 En el dataset existen varias especies de animales, en nuestro proyecto, por el momento solo nos
 interesa identificar la presencia de animales, por lo que solo nos serán necesarias dos clases _Animal_ o _Vacía_.
-Además en nuestro caso queríamos trabajar con un dataset de valores binarios para las clases, lo que tuvimos que
+Además, en nuestro caso queríamos trabajar con un dataset de valores binarios para las clases, lo que tuvimos que
 realizar una conversión previa, en la que:
 
 - Indicamos la nomenclatura de las clases originales (variable _ORIGINAL_CLASSES_).
@@ -125,11 +125,15 @@ El dataset quedará dividido en tres partes, _Train_, _Validation_ y _Test_. Por
 formato que el original. Estos ficheros que guardarán por defecto en la
 carpeta [TFG-DeteccionFototrampeo/data](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/data).
 
-___
-SIN ACTUALIZAR
-___
+<p align="center">
+  <img src="./resources/data.png" height="100" />
+</p>
 
 ## Notebook: a02_GeneraDetecciones
+
+A la hora de procesar las imágenes el primer paso es generar las detecciones. Para ello hemos decidido hacer uso de un
+modelo ya entrenado. Se trata de Megadetector, un modelo de detección de objetos desarrollado por Microsoft disponible
+en su repositorio [CameraTraps](https://github.com/microsoft/CameraTraps).
 
 Para este notebook, tenemos dos modos de aportarle los datos de entrada.
 
@@ -149,6 +153,10 @@ Todos estos resultados son guardados en la
 carpeta [output_json](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json), para los ficheros de
 resultados globales, hemos creado una carpeta dentro de la anteriormente mencionada, a modo de historial, se trata
 de [registry](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json/registry).
+
+___
+SIN ACTUALIZAR
+___
 
 ### Notebook: b01_GeneraMascaras
 
