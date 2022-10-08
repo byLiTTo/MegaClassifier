@@ -1,6 +1,6 @@
 # Aplicación de estrategias de deep-learning para la detección de animales en imágenes de foto trampeo
 
-<img src="http://www.uhu.es/identidad/images/archivos/usuarios/principal/VERSIO_MIXTA/COLOR_POSITIVO.jpg" width="500" align="right"/>
+<img src="https://www.ingebook.com/ib/pimg/Ingebook/00100_0000001391_UHU_transparente.png" width="200" align="right"/>
 
 **Alumno:** Carlos García Silva
 
