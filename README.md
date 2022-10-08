@@ -59,7 +59,7 @@ entorno:
 </p>
 <p align="center">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/NumPy_logo_2020.svg/1280px-NumPy_logo_2020.svg.png" height="100" align="left" />
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1767px-Jupyter_logo.svg.png" height="100" />
+  <img src="https://miro.medium.com/max/1400/0*QIgnHgnQB16zQtSy.png" height="100" />
   <img src="https://l3c.cloud/wp-content/uploads/2019/02/tensorflow-logo.png" height="100" />
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Pandas_logo.svg/2560px-Pandas_logo.svg.png" height="100" align="right" />
 </p>
