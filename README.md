@@ -1,6 +1,6 @@
 # Aplicación de estrategias de deep-learning para la detección de animales en imágenes de foto trampeo
 
-<img src="https://www.ingebook.com/ib/pimg/Ingebook/00100_0000001391_UHU_transparente.png" width="190" align="right"/>
+<img src="https://www.ingebook.com/ib/pimg/Ingebook/00100_0000001391_UHU_transparente.png" align="right" height="200" />
 
 **Alumno:** Carlos García Silva
 
@@ -49,9 +49,27 @@ entorno:
 | pandas | 1.4.4 |     | pillow | 9.2.0 |     | python | 3.8.13 |
 | scikit-learn | 1.1.1 |     | tensorflow-macos | 2.10.0 |     | tensorflow-metal | 0.6.0 |
 
-<img align="left" src="https://www.ingebook.com/ib/pimg/Ingebook/00100_0000001391_UHU_transparente.png" width="190"/>
-<img align="center" src="https://www.ingebook.com/ib/pimg/Ingebook/00100_0000001391_UHU_transparente.png" width="190"/> 
-<img align="right" src="https://www.ingebook.com/ib/pimg/Ingebook/00100_0000001391_UHU_transparente.png" width="190"/>
+<p align="center">
+  <img src="https://ibvm.es/wp-content/uploads/2020/06/babysitter-background-white-1.png" height="20" />
+</p>
+<p align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Python_logo_and_wordmark.svg/2560px-Python_logo_and_wordmark.svg.png" height="100" align="left" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1767px-Jupyter_logo.svg.png" height="100" />
+  <img src="https://matplotlib.org/stable/_images/sphx_glr_logos2_003.png" height="100" align="right" />
+</p>
+<p align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/NumPy_logo_2020.svg/1280px-NumPy_logo_2020.svg.png" height="100" align="left" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/OpenCV_Logo_with_text_svg_version.svg/831px-OpenCV_Logo_with_text_svg_version.svg.png" height="100" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Pandas_logo.svg/2560px-Pandas_logo.svg.png" height="100" align="right" />
+</p>
+<p align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/2560px-Scikit_learn_logo_small.svg.png" height="100" align="left" />
+  <img src="https://l3c.cloud/wp-content/uploads/2019/02/tensorflow-logo.png" height="100" />
+  <img src="https://www.applesutra.com/wp-content/uploads/2020/06/Apple-Silicon.png" height="100" align="right" />
+</p>
+<p align="center">
+  <img src="https://ibvm.es/wp-content/uploads/2020/06/babysitter-background-white-1.png" height="20" />
+</p>
 
 Para mayor facilidad hemos creado una carpeta donde guardaremos copias de seguridad de los entornos que vayamos creando
 a medida que completemos proyecto. Cada vez que instalemos una nueva librería o actualicemos la versión de las ya
