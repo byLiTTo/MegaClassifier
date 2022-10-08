@@ -1,6 +1,6 @@
 # Aplicación de estrategias de deep-learning para la detección de animales en imágenes de foto trampeo
 
-<img src="https://www.ingebook.com/ib/pimg/Ingebook/00100_0000001391_UHU_transparente.png" width="200" align="right"/>
+<img src="https://www.ingebook.com/ib/pimg/Ingebook/00100_0000001391_UHU_transparente.png" width="190" align="right"/>
 
 **Alumno:** Carlos García Silva
 
@@ -48,6 +48,10 @@ entorno:
 | matplotlib | 3.5.2 |     | numpy | 1.23.1 |     | opencv | 4.6.0 |
 | pandas | 1.4.4 |     | pillow | 9.2.0 |     | python | 3.8.13 |
 | scikit-learn | 1.1.1 |     | tensorflow-macos | 2.10.0 |     | tensorflow-metal | 0.6.0 |
+
+<img align="left" src="https://www.ingebook.com/ib/pimg/Ingebook/00100_0000001391_UHU_transparente.png" width="190"/>
+<img align="center" src="https://www.ingebook.com/ib/pimg/Ingebook/00100_0000001391_UHU_transparente.png" width="190"/> 
+<img align="right" src="https://www.ingebook.com/ib/pimg/Ingebook/00100_0000001391_UHU_transparente.png" width="190"/>
 
 Para mayor facilidad hemos creado una carpeta donde guardaremos copias de seguridad de los entornos que vayamos creando
 a medida que completemos proyecto. Cada vez que instalemos una nueva librería o actualicemos la versión de las ya
