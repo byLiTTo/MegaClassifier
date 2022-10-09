@@ -109,7 +109,7 @@ Como hemos mencionado anteriormente, para cada funcionalidad se ha intentado cre
 algunos de ellos no necesitan ser ejecutados para obtener los resultados. A continuación, vamos a explicar la
 funcionalidad de cada uno, así como el orden de ejecución.
 
-### a01_GeneraDataset
+## a01_GeneraDataset
 
 En el dataset existen varias especies de animales, en nuestro proyecto, por el momento solo nos
 interesa identificar la presencia de animales, por lo que solo nos serán necesarias dos clases _Animal_ o _Vacía_.
@@ -140,7 +140,7 @@ carpeta [TFG-DeteccionFototrampeo/data](https://github.com/byLiTTo/TFG-Deteccion
   <img src="./resources/data.png" height="100" />
 </p>
 
-### a02_GeneraDetecciones
+## a02_GeneraDetecciones
 
 A la hora de procesar las imágenes el primer paso es generar las detecciones. Para ello hemos decidido hacer uso de
 Megadetector, un modelo de detección de objetos desarrollado por Microsoft disponible
@@ -248,14 +248,8 @@ Decidimos realizar una serie de ajustes previos a las imágenes antes de aportar
 CNN.
 
 <p align="center">
-  <img src="./resources/593a4df5-23d2-11e8-a6a3-ec086b02610b.png" height="250" align="left" />
-  <img src="./resources/593a4df5-23d2-11e8-a6a3-ec086b02610b 2.png" height="250" align="right" />
+  <img src="./resources/593a4df5-23d2-11e8-a6a3-ec086b02610b.png" height="250" />
 </p>
-
-<p align="center">
-  <img src="https://ibvm.es/wp-content/uploads/2020/06/babysitter-background-white-1.png" height="1" width="200" />
-</p>
-<p align="center">
 
 Ajustes realizados:
 
@@ -264,10 +258,19 @@ Ajustes realizados:
   alrededor (píxeles de valor 0).
 
 <p align="center">
-  <img src="./resources/5_20210219 (134) (2021_04_15 06_16_22 utc) 2.png" height="250" />
+  <img src="./resources/5_20210219 (134) (2021_04_15 06_16_22 utc) 2.png" height="250" align="left" />
+  <img src="./resources/593a4df5-23d2-11e8-a6a3-ec086b02610b 2.png" height="250" align="right" />
 </p>
+<p align="center">
+  <img src="https://ibvm.es/wp-content/uploads/2020/06/babysitter-background-white-1.png" height="1" width="200" />
+</p>
+<p align="center">
 
-### a03_EntrenaClasificador
+## a03_EntrenaClasificador
+
+<p align="center">
+  <img src="./resources/output.png" height="330"/>
+</p>
 
 ~~~
 Entrenamiento CNN AÚN EN DESARROLLO
@@ -275,7 +278,7 @@ Entrenamiento CNN AÚN EN DESARROLLO
 
 ___
 
-# Notebooks adicionales
+# Funcionalidades Adicionales
 
 ### Notebook: b02_GeneraRecortes
 
