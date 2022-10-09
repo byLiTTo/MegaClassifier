@@ -52,21 +52,28 @@ entorno:
 <p align="center">
   <img src="https://ibvm.es/wp-content/uploads/2020/06/babysitter-background-white-1.png" height="20" />
 </p>
+
 <p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Python_logo_and_wordmark.svg/2560px-Python_logo_and_wordmark.svg.png" height="100" align="left" />
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/OpenCV_Logo_with_text_svg_version.svg/831px-OpenCV_Logo_with_text_svg_version.svg.png" height="100" />
-  <img src="https://matplotlib.org/stable/_images/sphx_glr_logos2_003.png" height="100" align="right" />
+  <img src="https://miro.medium.com/max/1400/0*QIgnHgnQB16zQtSy.png" align="left" height="100" />
+  <img src="https://matplotlib.org/stable/_images/sphx_glr_logos2_003.png" height="100" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/NumPy_logo_2020.svg/1280px-NumPy_logo_2020.svg.png" align="right" height="100" />
 </p>
+
 <p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/NumPy_logo_2020.svg/1280px-NumPy_logo_2020.svg.png" height="100" align="left" />
-  <img src="https://miro.medium.com/max/1400/0*QIgnHgnQB16zQtSy.png" height="100" />
+  <img src="https://content.axopen.com/uploads/opencv_logo_62fb531c30.png" align="left" height="100" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Pandas_logo.svg/2560px-Pandas_logo.svg.png" height="100" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Python_logo_and_wordmark.svg/2560px-Python_logo_and_wordmark.svg.png" align="right" height="100" />
+</p>
+
+<p align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/2560px-Scikit_learn_logo_small.svg.png" align="left" height="100" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/1200px-Microsoft_logo_%282012%29.svg.png" align="right" height="100" />
+</p>
+
+<p align="center">
   <img src="https://l3c.cloud/wp-content/uploads/2019/02/tensorflow-logo.png" height="100" />
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Pandas_logo.svg/2560px-Pandas_logo.svg.png" height="100" align="right" />
 </p>
-<p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/2560px-Scikit_learn_logo_small.svg.png" height="100" align="left" />
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/1200px-Microsoft_logo_%282012%29.svg.png" height="100" />
-</p>
+
 <p align="center">
   <img src="https://ibvm.es/wp-content/uploads/2020/06/babysitter-background-white-1.png" height="20" />
 </p>
@@ -90,15 +97,19 @@ del [Parque natural de Doñana](https://es.wikipedia.org/wiki/Parque_nacional_y_
 los datos es a través de un fichero CSV, donde en una columna se nos indica la ruta del fichero correspondiente a la
 imagen y en su segunda columna se nos dice a qué clase pertenece dicha imagen.
 
-Como hemos mencionado anteriormente, para cada funcionalidad se ha intentado crear un notebook que la ejecute, por
-algunos de ellos no necesitan ser ejecutados para obtener los resultados. A continuación, vamos a explicar la
-funcionalidad de cada uno, así como el orden de ejecución.
+<p align="center">
+  <img src="https://s2.abcstatics.com/media/viajar/2019/10/30/donana-corral-kPxC--620x349@abc.jpg" height="250" />
+</p>
 
 ___
 
 # Notebooks principales:
 
-## a01_GeneraDataset
+Como hemos mencionado anteriormente, para cada funcionalidad se ha intentado crear un notebook que la ejecute, por
+algunos de ellos no necesitan ser ejecutados para obtener los resultados. A continuación, vamos a explicar la
+funcionalidad de cada uno, así como el orden de ejecución.
+
+### a01_GeneraDataset
 
 En el dataset existen varias especies de animales, en nuestro proyecto, por el momento solo nos
 interesa identificar la presencia de animales, por lo que solo nos serán necesarias dos clases _Animal_ o _Vacía_.
@@ -129,64 +140,142 @@ carpeta [TFG-DeteccionFototrampeo/data](https://github.com/byLiTTo/TFG-Deteccion
   <img src="./resources/data.png" height="100" />
 </p>
 
-## Notebook: a02_GeneraDetecciones
+### a02_GeneraDetecciones
 
-A la hora de procesar las imágenes el primer paso es generar las detecciones. Para ello hemos decidido hacer uso de un
-modelo ya entrenado. Se trata de Megadetector, un modelo de detección de objetos desarrollado por Microsoft disponible
+A la hora de procesar las imágenes el primer paso es generar las detecciones. Para ello hemos decidido hacer uso de
+Megadetector, un modelo de detección de objetos desarrollado por Microsoft disponible
 en su repositorio [CameraTraps](https://github.com/microsoft/CameraTraps).
 
-Para este notebook, tenemos dos modos de aportarle los datos de entrada.
+Para hacer funcionar el notebook de forma correcta, deberemos indicar:
 
-La primera es indicarle la ruta de un fichero CSV, del que tomará las rutas de las imágenes de un dataset y la ruta raíz
-de dicho dataset, en nuestro caso los ficheros CSV, por defecto se encuentran
-en [data](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/data).
+- Localización del dataset, indicada en la variable _dataset_dir_relative_.
+- Localización del fichero CSV de donde se obtendrán las rutas de las imágenes, indicada en la variable _
+  csv_file_relative_.
+- Localización donde se guardarán los ficheros JSON con los resultados, indicada en la variable
+  _output_json_path_relative_.
+- Localización del modelo Megadector, indicada en la variable _model_relative_.
 
-La segunda forma es indicando un directorio de entrada de donde tomará las imágenes a las que le aplicará el modelo de
-detecciones entrenado de MegaDetector. (Por defecto hemos creado la
-carpeta [input](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/input) para que tome las imágenes).
+De forma predeterminada, los ficheros CSV serán tomados desde la
+carpeta [TFG-DeteccionFototrampeo/data](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/data).
 
-Una vez obtenidos los resultados, genera un fichero JSON con los datos de cada detección encontrada en cada una de las
-imágenes. Se generan tanto un JSON global que contiene todos los resultados de la ejecución, así como un fichero JSON
-por cada imagen de forma individual.
+Una vez obtenidos los resultados, se generará un fichero JSON con los datos de cada detección encontrada en cada una de
+las imágenes. Se generan tanto un JSON global que contiene todos los resultados de la ejecución, así como un fichero
+JSON por cada imagen de forma individual, con el siguiente formato:
+
+~~~
+{
+  "file": "/Users/carlos/WORKSPACE/DATASETs/emptyNonEmptyDataset/jabali/WILDBOAR_ZOO_1_4/1_20210115 (500).JPG",
+  "max_detection_conf": 0.999,
+  "detections": [
+  {
+  "category": "1",
+  "conf": 0.999,
+  "bbox": [
+    0.4826,
+    0.5632,
+    0.08033,
+    0.0982
+  ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ }
+}
+~~~
 
 Todos estos resultados son guardados en la
-carpeta [output_json](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json), para los ficheros de
-resultados globales, hemos creado una carpeta dentro de la anteriormente mencionada, a modo de historial, se trata
-de [registry](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json/registry).
+carpeta [TFG-DeteccionFototrampeo/output_json](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json)
+,
+para los ficheros de resultados globales, hemos creado una carpeta dentro de la anteriormente mencionada, a modo de
+historial, se trata
+de [TFG-DeteccionFototrampeo/registry](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json/registry)
+.
+
+Adicionalmente, hemos implementado una forma alternativa de aportar la entrada a MegaDetector. Se trata de indicar
+directamente la imagen o carpeta con varias imágenes, de las cuales se quiere generar las detecciones. (Por defecto
+hemos creado la
+carpeta [TFG-DeteccionFototrampeo/input](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/input) para que
+tome las imágenes).
+
+### b01_GeneraMascaras
+
+Crearemos imágenes binarias donde los píxeles de valor 255 corresponderán a los píxeles de las regiones de interés, en
+este caso, los bounding boxes de las detecciones ya calculadas. Por otro lado, los píxeles de valor 0, no representarán
+interés alguno. A estas imágenes las denominaremos _Máscaras_ y por defecto se guardarán en la
+carpeta [TFG-DeteccionFototrampeo/output_mask](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_mask)
+.
+
+<p align="center" >
+  <img src="./resources/5_20210219 (134) (2021_04_15 06_16_22 utc)_mask.png" height="250" />
+</p>
+
+Para hacer funcionar el notebook de forma correcta, deberemos indicar:
+
+- Localización de los ficheros JSON con detecciones, indicada en la variable _output_json_path_relative_.
+- Localización de la carpeta donde se guardarán las máscaras, indicada en la variable _output_mask_path_relative_.
+
+Por defecto, se tomarán los ficheros JSON de la
+carpeta [TFG-DeteccionFototrampeo/output_json](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json)
+.
+
+### c01_AplicaMascaras
+
+Una vez generadas las máscaras, deberemos aplicarlas a las imágenes originales, con el fin de tener en las regiones de
+interés, los valores de los píxeles reales. El resultado de este proceso será una nueva imagen donde tendremos un fondo
+negro y los píxeles de la imagen original en las regiones de interés. Estos resultados serán guardados por defecto en la
+carpeta [TFG-DeteccionFototrampeo/output_masked](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_masked)
+.
+
+<p align="center">
+  <img src="./resources/5_20210219 (134) (2021_04_15 06_16_22 utc).png" height="250"/>
+</p>
+
+Para hacer funcionar el notebook de forma correcta, deberemos indicar:
+
+- Localización de los ficheros JSON, indicada en la variable _output_json_path_relative_.
+- Localización de las máscaras, indicada en la variable _output_mask_path_relative_.
+- Localización de la carpeta donde se guardarán las imágenes enmascaradas, indicada en la variable
+  _output_masked_path_relative_.
+
+### d01_AjustaImagenes
+
+Comprobando las imágenes resultantes, observamos que en muchas de ellas, las zonas de interés conformaban un porcentaje
+de píxeles de la imagen muy pequeño. Por lo que en fases futuras podría existir un desaprovechamiento de la información.
+Decidimos realizar una serie de ajustes previos a las imágenes antes de aportarlas como entrada al entrenamiento de la
+CNN.
+
+<p align="center">
+  <img src="./resources/593a4df5-23d2-11e8-a6a3-ec086b02610b.png" height="250" align="left" />
+  <img src="./resources/593a4df5-23d2-11e8-a6a3-ec086b02610b 2.png" height="250" align="right" />
+</p>
+
+<p align="center">
+  <img src="https://ibvm.es/wp-content/uploads/2020/06/babysitter-background-white-1.png" height="1" width="200" />
+</p>
+<p align="center">
+
+Ajustes realizados:
+
+- Quitar los bordes negros, ajustando las detecciones a los límites de la imagen.
+- Centrando las detecciones, cambiar la proporción de la imagen a cuadrada, añadiendo el número de píxeles necesarios
+  alrededor (píxeles de valor 0).
+
+<p align="center">
+  <img src="./resources/5_20210219 (134) (2021_04_15 06_16_22 utc) 2.png" height="250" />
+</p>
+
+### a03_EntrenaClasificador
+
+~~~
+Entrenamiento CNN AÚN EN DESARROLLO
+~~~
 
 ___
-SIN ACTUALIZAR
-___
 
-### Notebook: b01_GeneraMascaras
-
-Módulo creado para generar máscaras con las regiones de interés de las imágenes dadas. En este caso tomaremos como
-regiones de interés los bounding boxes de las detecciones, por tanto, partiremos de los ficheros JSON generados en el
-anterior notebook, que se encuentran en la
-carpeta [output_json](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json), por defecto.
-
-Como salida tendremos imágenes binarias, las cuales han sido guardadas con valores 0 y 255. Estas imágenes las usaremos
-como máscara, por defecto hemos asignado que se guarden en la
-carpeta [output_mask](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_mask), con el nombre de la
-imagen original añadiendo la terminación __mask_
-
-#### Notebook: c01_AplicaMascaras
-
-En este módulo combinaremos los resultados de los dos notebooks anteriores. Es decir, aplicaremos las máscaras a las
-imágenes originales, con el fin de obtener imágenes con el fondo negro y la zona correspondiente a las detecciones,
-manteniendo el valor de los píxeles originales.
-
-Tomaremos como entrada un fichero JSON, por defecto tomamos como origen la
-carpeta [output_json](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_json). De estos ficheros
-obtenemos tanto la ruta al fichero de la imagen original, para tomar el valor de los píxeles, como los datos de las
-coordenadas de los bounding boxes de las detecciones.
-
-También necesitaremos una segunda entrada, que será la ruta al fichero de la máscara generada con el notebook
-b01_GeneraMascaras, por lo que antes de ejecutar este módulo se ha debido de lanzar el anterior.
-
-Por último, deberemos indicar la ruta destino donde serán guardados los resultados. En este caso por defecto hemos
-asignado la carpeta [output_masked](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_masked), donde
-se guardarán ficheros de imagen con las características anteriormente mencionadas.
+# Notebooks adicionales
 
 ### Notebook: b02_GeneraRecortes
 
