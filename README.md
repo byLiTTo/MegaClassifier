@@ -149,7 +149,7 @@ Megadetector, un modelo de detección de objetos desarrollado por Microsoft disp
 en su repositorio [CameraTraps](https://github.com/microsoft/CameraTraps).
 
 <p align="center">
-  <img src="./resources/5_20210219 (134) (2021_04_15 06_16_22 utc).JPG" height="250"/>
+  <img src="./resources/5_20210219 (134) (2021_04_15 06_16_22 UTC) copia.JPG" height="250"/>
 </p>
 
 Para hacer funcionar el notebook de forma correcta, deberemos indicar:
@@ -337,7 +337,3 @@ De forma predeterminada, la carpeta destino donde se guardarán las imágenes ge
 será [TFG-DeteccionFototrampeo/output_img](https://github.com/byLiTTo/TFG-DeteccionFototrampeo/tree/main/output_img).
 
 ___
-
-<p align="center">
-  <img src="http://www.uhu.es/etsi/webMasteres/master_ingquimica/img/logo/etsi_logo.png" height="400" />
-</p>
