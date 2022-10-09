@@ -339,5 +339,5 @@ será [TFG-DeteccionFototrampeo/output_img](https://github.com/byLiTTo/TFG-Detec
 ___
 
 <p align="center">
-  <img src="http://www.uhu.es/etsi/wp-content/uploads/2017/12/Logo_Esti_Espuelas.png" height="400" />
+  <img src="http://www.uhu.es/etsi/webMasteres/master_ingquimica/img/logo/etsi_logo.png" height="400" />
 </p>
