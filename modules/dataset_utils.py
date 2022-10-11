@@ -1,7 +1,7 @@
+import math
 import os
 import platform
 
-import math
 import numpy as np
 import pandas as pd
 import tensorflow as tf
@@ -155,7 +155,15 @@ class DatasetUtils:
         :param labels: The labels for the images
         :return: The image is being resized to 500x500 pixels and the labels are being returned.
         """
-        return tf.image.resize(image_file, (500, 500), antialias=True), labels
+        return tf.image.resize(image_file, (227, 227), antialias=True), labels
+
+    @staticmethod
+    def resize_224(image_file, labels):
+        return tf.image.resize(image_file, (224, 224), antialias=True), labels
+
+    @staticmethod
+    def resize_448(image_file, labels):
+        return tf.image.resize(image_file, (448, 448), antialias=True), labels
 
     @staticmethod
     def normalize_images(image, label):
@@ -168,4 +176,4 @@ class DatasetUtils:
         """
         return tf.cast(image, tf.float32) / 255.0, label
 
-#%%
+# %%
