@@ -2,9 +2,11 @@ import math
 import os
 import platform
 
+import cv2
 import numpy as np
 import pandas as pd
 import tensorflow as tf
+from PIL import Image
 from sklearn.utils import shuffle
 
 ########################################################################################################################
@@ -132,6 +134,26 @@ class DatasetUtils:
         return new_file_names, labels
 
     @staticmethod
+    def save_dataset(file_path, labels, output_path):
+        for image_path, label in zip(file_path, labels):
+            image_path = image_path + '.png'
+            name, ext = os.path.splitext(os.path.basename(image_path).lower())
+            if label == 0:
+                if platform.system() == 'Windows':
+                    output_fn = (output_path + '\\' + 'VACIA' + '\\' + name + ext)
+                else:
+                    output_fn = (output_path + '/' + 'VACIA' + '/' + name + ext)
+                image = Image.open(image_path)
+                cv2.imwrite(output_fn, np.array(image))
+            else:
+                if platform.system() == 'Windows':
+                    output_fn = (output_path + '\\' + 'ANIMAL' + '\\' + name + ext)
+                else:
+                    output_fn = (output_path + '/' + 'ANIMAL' + '/' + name + ext)
+                image = Image.open(image_path)
+                cv2.imwrite(output_fn, np.array(image))
+
+    @staticmethod
     def load_image(image_file, labels):
         """
         It takes an image file and a label, reads the image file, decodes it, and converts it to a float32
@@ -155,15 +177,15 @@ class DatasetUtils:
         :param labels: The labels for the images
         :return: The image is being resized to 500x500 pixels and the labels are being returned.
         """
-        return tf.image.resize(image_file, (227, 227), antialias=True), labels
+        return tf.image.resize(image_file, (227, 227)), labels
 
     @staticmethod
     def resize_224(image_file, labels):
-        return tf.image.resize(image_file, (224, 224), antialias=True), labels
+        return tf.image.resize(image_file, (224, 224)), labels
 
     @staticmethod
     def resize_448(image_file, labels):
-        return tf.image.resize(image_file, (448, 448), antialias=True), labels
+        return tf.image.resize(image_file, (448, 448)), labels
 
     @staticmethod
     def normalize_images(image, label):

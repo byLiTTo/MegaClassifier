@@ -155,7 +155,7 @@ class EfficientNet(nn.Module):
         
         
         import torch
-        >>> from efficientnet.model import EfficientNet
+        >>> from efficientnet.LeNet import EfficientNet
         >>> inputs = torch.rand(1, 3, 224, 224)
         >>> model = EfficientNet.from_pretrained('efficientnet-b0')
         >>> model.eval()
@@ -240,7 +240,7 @@ class EfficientNet(nn.Module):
             with reduction levels i in [1, 2, 3, 4, 5].
             Example:
                 >>> import torch
-                >>> from efficientnet.model import EfficientNet
+                >>> from efficientnet.LeNet import EfficientNet
                 >>> inputs = torch.rand(1, 3, 224, 224)
                 >>> model = EfficientNet.from_pretrained('efficientnet-b0')
                 >>> endpoints = model.extract_endpoints(inputs)
