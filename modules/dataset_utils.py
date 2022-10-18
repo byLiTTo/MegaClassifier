@@ -127,10 +127,10 @@ class DatasetUtils:
         new_file_names = []
         if platform.system() == 'Windows':
             for fn in file_names:
-                new_file_names.append(location + fn.replace('/', '\\'))
+                new_file_names.append(location + fn.replace('/', '\\') + '.png')
         else:
             for fn in file_names:
-                new_file_names.append(location + fn.replace('\\', '/'))
+                new_file_names.append(location + fn.replace('\\', '/') + '.png')
         return new_file_names, labels
 
     @staticmethod
