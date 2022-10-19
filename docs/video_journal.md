@@ -10,3 +10,7 @@ Se realizaban antes de reuniones para que todos los miembros tuvieramos una idea
 ## Explicación Jueves 28 de Julio de 2022
 
 [![Watch the video](https://img.youtube.com/vi/E95r3Feg8yg/0.jpg)](https://youtu.be/E95r3Feg8yg)
+
+## Explicación de Miércoles 19 de Octubre de 2022
+
+[![Watch the video](https://img.youtube.com/vi/8AJAaWcMC_E/0.jpg)](https://youtu.be/8AJAaWcMC_E)
