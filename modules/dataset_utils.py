@@ -88,7 +88,8 @@ class DatasetUtils:
         :param csv_file: the path to the csv file
         :return: The file name and the label
         """
-        df = pd.read_csv(csv_file, sep=';')
+        df = pd.read_csv(csv_file, sep=';', encoding='latin-1')
+        #df = pd.read_csv(csv_file, sep=';', encoding='utf-8')
         return df['file_name'].values, df['label'].values
 
     @staticmethod
@@ -127,10 +128,10 @@ class DatasetUtils:
         new_file_names = []
         if platform.system() == 'Windows':
             for fn in file_names:
-                new_file_names.append(location + fn.replace('/', '\\') + '.png')
+                new_file_names.append(location + fn.replace('/', '\\'))
         else:
             for fn in file_names:
-                new_file_names.append(location + fn.replace('\\', '/') + '.png')
+                new_file_names.append(location + fn.replace('\\', '/'))
         return new_file_names, labels
 
     @staticmethod
