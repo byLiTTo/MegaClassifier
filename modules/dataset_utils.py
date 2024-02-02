@@ -15,13 +15,11 @@ from sklearn.utils import shuffle
 # os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 print('')
-print(
-    '=======================================================================================================================================')
+print('===============================================================================================================')
 print('TensorFlow version:', tf.__version__)
 # print('Is GPU available? tf.test.is_gpu_available:', tf.test.is_gpu_available())
 print('Is GPU available? tf.test.is_gpu_available:', tf.config.list_physical_devices('GPU'))
-print(
-    '=======================================================================================================================================')
+print('===============================================================================================================')
 print('')
 
 
@@ -89,7 +87,7 @@ class DatasetUtils:
         :return: The file name and the label
         """
         df = pd.read_csv(csv_file, sep=';', encoding='latin-1')
-        #df = pd.read_csv(csv_file, sep=';', encoding='utf-8')
+        # df = pd.read_csv(csv_file, sep=';', encoding='utf-8')
         return df['file_name'].values, df['label'].values
 
     @staticmethod
@@ -130,6 +128,7 @@ class DatasetUtils:
             for fn in file_names:
                 new_file_names.append(location + fn.replace('/', '\\'))
         else:
+            print("macOS")
             for fn in file_names:
                 new_file_names.append(location + fn.replace('\\', '/'))
         return new_file_names, labels
@@ -143,6 +142,7 @@ class DatasetUtils:
                 if platform.system() == 'Windows':
                     output_fn = (output_path + '\\' + 'VACIA' + '\\' + name + ext)
                 else:
+                    print("macOS")
                     output_fn = (output_path + '/' + 'VACIA' + '/' + name + ext)
                 image = Image.open(image_path)
                 cv2.imwrite(output_fn, np.array(image))
@@ -150,6 +150,7 @@ class DatasetUtils:
                 if platform.system() == 'Windows':
                     output_fn = (output_path + '\\' + 'ANIMAL' + '\\' + name + ext)
                 else:
+                    print("macOS")
                     output_fn = (output_path + '/' + 'ANIMAL' + '/' + name + ext)
                 image = Image.open(image_path)
                 cv2.imwrite(output_fn, np.array(image))
@@ -195,7 +196,7 @@ class DatasetUtils:
 
         :param image: The image to be normalized
         :param label: The label of the image
-        :return: The image and label are being returned.
+        :return: The image normalized to the range [0, 1].
         """
         return tf.cast(image, tf.float32) / 255.0, label
 
