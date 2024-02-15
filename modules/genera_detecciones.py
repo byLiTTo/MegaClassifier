@@ -405,7 +405,7 @@ def main():
         if args.image_dir:
             image_file_names = PathUtils.find_images(args.image_dir, args.recursive)
         else:
-            file_names, labels = DatasetUtils.load_csv(args.csv_file)
+            file_names, labels = DatasetUtils.load_csv(args.csv_file, 'utf-8')
             file_names, labels = DatasetUtils.convert_to_abspath(args.dataset_dir, file_names, labels)
             image_file_names = file_names
 

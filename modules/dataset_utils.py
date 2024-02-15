@@ -36,58 +36,80 @@ class DatasetUtils:
         """
         It takes in the empty and animal dataframes, the number of samples to use, the percentage of the data to use for
         training, and the percentage of the data to use for testing. It then shuffles the data, splits it into training,
-        validation, and test sets, and returns the three dataframes
+        validation, and test sets, and returns the three dataframes and the full set.
 
         :param empty: the list of empty images
         :param animals: the list of all the animal images
         :param samples: the number of samples to use from the empty and animal datasets
         :param per_train: percentage of the data that will be used for training
         :param per_test: The percentage of the data that will be used for testing
-        :return: a tuple of three dataframes, train, validation and test.
+        :return: a tuple of four dataframes, train, validation and test.
         """
-        df = pd.DataFrame(shuffle(empty[:samples], random_state=42))
-        train_empty, validation_empty, test_empty = np.split(df.sample(frac=1, random_state=42),
-                                                             [int(per_train * len(df)),
-                                                              int((per_train + per_test) * len(df))])
 
-        df = pd.DataFrame(shuffle(animals[:(math.trunc(len(animals) * (samples / len(empty))))], random_state=42))
-        train_animals, validation_animals, test_animals = np.split(df.sample(frac=1, random_state=42),
-                                                                   [int(per_train * len(df)),
-                                                                    int((per_train + per_test) * len(df))])
+        empty_cropped = shuffle(empty, random_state=42)[:samples]
+        empty_train_len = int(per_train * len(empty_cropped))
+        empty_validation_len = int((per_train + per_test) * len(empty_cropped))
 
-        aux = [["file_name", "label"]]
+        empty_train, empty_validation, empty_test = np.split(
+            empty_cropped,
+            [empty_train_len, empty_validation_len]
+        )
 
-        train = pd.concat([pd.DataFrame(aux), shuffle(pd.concat([train_empty, train_animals]), random_state=42)])
-        validation = pd.concat(
-            [pd.DataFrame(aux), shuffle(pd.concat([validation_empty, validation_animals]), random_state=42)])
-        test = pd.concat([pd.DataFrame(aux), shuffle(pd.concat([test_empty, test_animals]), random_state=42)])
+        animals_len = math.trunc(len(animals) * (samples / len(empty)))
 
-        return train, validation, test
+        animals_cropped = shuffle(animals, random_state=42)[:animals_len]
+        animals_train_len = int(per_train * len(animals_cropped))
+        animals_validation_len = int((per_train + per_test) * len(animals_cropped))
+
+        animals_train, animals_validation, animals_test = np.split(
+            animals_cropped,
+            [animals_train_len, animals_validation_len]
+        )
+
+        train = pd.DataFrame(
+            shuffle(np.concatenate((empty_train, animals_train), axis=0), random_state=42),
+            columns=['file_name', 'label']
+        )
+
+        validation = pd.DataFrame(
+            shuffle(np.concatenate((empty_validation, animals_validation), axis=0), random_state=42),
+            columns=['file_name', 'label']
+        )
+
+        test = pd.DataFrame(
+            shuffle(np.concatenate((empty_test, animals_test), axis=0), random_state=42),
+            columns=['file_name', 'label']
+        )
+
+        full = np.concatenate((train.to_numpy(), validation.to_numpy(), test.to_numpy()), axis=0)
+
+        return full, train, validation, test
 
     @staticmethod
-    def load_dataset(csv_file, location):
+    def load_dataset(csv_file, location, encoding):
         """
         It takes a csv file and a location and returns the file names and labels
 
         :param csv_file: The path to the csv file containing the file names and labels
         :param location: The location of the dataset
+        :param encoding: The encoding of the csv file
         :return: The file names and labels are being returned.
         """
-        file_names, labels = DatasetUtils.load_csv(csv_file)
+        file_names, labels = DatasetUtils.load_csv(csv_file, encoding)
         file_names, labels = DatasetUtils.reset_path(file_names, labels)
         file_names, labels = DatasetUtils.convert_to_abspath(location, file_names, labels)
         return file_names, labels
 
     @staticmethod
-    def load_csv(csv_file):
+    def load_csv(csv_file, encoding):
         """
         It reads a csv file and returns the file names and labels
 
         :param csv_file: the path to the csv file
+        :param encoding: The encoding of the csv file
         :return: The file name and the label
         """
-        df = pd.read_csv(csv_file, sep=';', encoding='latin-1')
-        # df = pd.read_csv(csv_file, sep=';', encoding='utf-8')
+        df = pd.read_csv(csv_file, sep=';', encoding=encoding)
         return df['file_name'].values, df['label'].values
 
     @staticmethod
@@ -199,5 +221,3 @@ class DatasetUtils:
         :return: The image normalized to the range [0, 1].
         """
         return tf.cast(image, tf.float32) / 255.0, label
-
-# %%
