@@ -92,7 +92,7 @@ def dataset_to_csv(
             os.makedirs(os.path.dirname(csv_path))
 
         dataset.to_csv(csv_path, index=index, sep=sep)
-        print(f"The dataset has been successfully saved to {csv_path}.")
+        print(f"The dataset has been successfully saved to {csv_path}")
     except PermissionError:
         print("You do not have permission to save the file.")
     except Exception as e:

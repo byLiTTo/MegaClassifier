@@ -1,0 +1,891 @@
+{
+ "images": [
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/leporido/conejo_Paco_Carro_JC/PICT0646 (2).JPG",
+   "max_detection_conf": 0.876,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.876,
+     "bbox": [
+      0.02199,
+      0.8093,
+      0.3319,
+      0.1493
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/leporido/Conejo_PNC_2014_JC/c8663IM000121.JPG",
+   "max_detection_conf": 0.921,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.921,
+     "bbox": [
+      0.688,
+      0.3893,
+      0.1369,
+      0.2213
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vaca/cow_CaltechCameraTrap/585c030e-23d2-11e8-a6a3-ec086b02610b.jpg",
+   "max_detection_conf": 0.964,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.964,
+     "bbox": [
+      0.307,
+      0.02057,
+      0.6919,
+      0.9766
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vaca/vaca_Paco_Carro_JC/PICT0042.JPG",
+   "max_detection_conf": 0.818,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.749,
+     "bbox": [
+      0.169,
+      0.5453,
+      0.08299,
+      0.07999
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.818,
+     "bbox": [
+      0.407,
+      0.2786,
+      0.439,
+      0.4173
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vaca/COW_ZOO_5_6_7_9/21_20210418 (1498).JPG",
+   "max_detection_conf": 0.961,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.918,
+     "bbox": [
+      0.498,
+      0.5551,
+      0.1239,
+      0.1316
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.961,
+     "bbox": [
+      0.794,
+      0.09252,
+      0.206,
+      0.8843
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/jabali/jabali_PNM_2013-O_ISAAC/f27560IMAG0113.JPG",
+   "max_detection_conf": 0.974,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.974,
+     "bbox": [
+      0.226,
+      0.592,
+      0.324,
+      0.2973
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/jabali/WILDBOAR_ZOO_5_6_7_9/20_20210219 (2902) (2021_04_15 06_16_22 UTC).JPG",
+   "max_detection_conf": 0.958,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.958,
+     "bbox": [
+      0.7559,
+      0.3683,
+      0.148,
+      0.3807
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/jabali/WILDBOAR_ZOO_5_6_7_9/1_20210319 (7).JPG",
+   "max_detection_conf": 0.857,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.83,
+     "bbox": [
+      0.444,
+      0.5195,
+      0.061,
+      0.1067
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.851,
+     "bbox": [
+      0.517,
+      0.5907,
+      0.046,
+      0.06227
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.857,
+     "bbox": [
+      0.442,
+      0.5889,
+      0.045,
+      0.06405
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/jabali/jabali_Paco_Carro_camarasliron_4_2_PASADAS_POR_LA_RED_JC/MDGC0675.JPG",
+   "max_detection_conf": 0.947,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.947,
+     "bbox": [
+      0.5009,
+      0.5213,
+      0.207,
+      0.2813
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/jabali/WILDBOAR_ZOO_1_4/22_20210115 (801).JPG",
+   "max_detection_conf": 0.935,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.935,
+     "bbox": [
+      0.579,
+      0.5106,
+      0.156,
+      0.1939
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/jabali/WILDBOAR_ZOO_1_4/37_20210115 (2245).JPG",
+   "max_detection_conf": 0.746,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.66,
+     "bbox": [
+      0.1889,
+      0.3647,
+      0.09,
+      0.1281
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.746,
+     "bbox": [
+      0.06899,
+      0.3807,
+      0.07299,
+      0.1334
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/cervidae/2_Ciervo_Paco_Carro_camarasliron_4_2_PASADAS_POR_LA_RED_JC/PICT0080.JPG",
+   "max_detection_conf": 0.79,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.79,
+     "bbox": [
+      0.188,
+      0.5306,
+      0.1159,
+      0.1106
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/cervidae/ciervo_PNM_2013-O_ISAAC/f11190IM000199.JPG",
+   "max_detection_conf": 0.913,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.196,
+     "bbox": [
+      0.52,
+      0.03999,
+      0.119,
+      0.444
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.56,
+     "bbox": [
+      0.521,
+      0.044,
+      0.1169,
+      0.4413
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.892,
+     "bbox": [
+      0.5919,
+      0.2,
+      0.1899,
+      0.2813
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.913,
+     "bbox": [
+      0.812,
+      0.292,
+      0.1879,
+      0.4066
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/cervidae/Ciervo_PNC_2012_JC/a14725IM000641.JPG",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/cervidae/Ciervo_PNC_2012_JC/a34265IM000500.JPG",
+   "max_detection_conf": 0.736,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.736,
+     "bbox": [
+      0.74,
+      0.2146,
+      0.2599,
+      0.4359
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/cervidae/2_ciervo_alumno_2_TH/34_20201024 (2381).JPG",
+   "max_detection_conf": 0.916,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.916,
+     "bbox": [
+      0.004,
+      0.1797,
+      0.2579,
+      0.4163
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/cervidae/ciervo_simone_2/34_20201024 (5494).JPG",
+   "max_detection_conf": 0.97,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.97,
+     "bbox": [
+      0.3379,
+      0.1138,
+      0.3869,
+      0.5907
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/cervidae/ciervo_simone_2/37_20201024 (1156).JPG",
+   "max_detection_conf": 0.96,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.748,
+     "bbox": [
+      0.2709,
+      0.5053,
+      0.023,
+      0.04982
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.96,
+     "bbox": [
+      0.473,
+      0.4857,
+      0.1059,
+      0.1832
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/cervidae/CERVIDREDORFALLOWDEER_ZOO_1_4/34_20201024 (2742).JPG",
+   "max_detection_conf": 0.918,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.918,
+     "bbox": [
+      0.002,
+      0.2046,
+      0.444,
+      0.4697
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/cervidae/CERVIDREDORFALLOWDEER_ZOO_1_4/17_20201225 (61).JPG",
+   "max_detection_conf": 0.984,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.984,
+     "bbox": [
+      0.5339,
+      0.379,
+      0.263,
+      0.5978
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/cervidae/CERVIDREDORFALLOWDEER_ZOO_1_4/20_20201024 (741).JPG",
+   "max_detection_conf": 0.95,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.95,
+     "bbox": [
+      0,
+      0.258,
+      0.228,
+      0.4893
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/cervidae/CERVIDREDORFALLOWDEER_ZOO_5_6_7_9/10_20210417 (246).JPG",
+   "max_detection_conf": 0.984,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.984,
+     "bbox": [
+      0.06999,
+      0.4661,
+      0.472,
+      0.5106
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/cervidae/CERVIDREDORFALLOWDEER_ZOO_5_6_7_9/20_20210219 (2099) (2021_04_15 06_16_22 UTC).JPG",
+   "max_detection_conf": 0.964,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.964,
+     "bbox": [
+      0.198,
+      0.2651,
+      0.2189,
+      0.3149
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/cervidae/CERVIDREDORFALLOWDEER_ZOO_5_6_7_9/35_20210218 (2606) (2021_04_15 06_16_22 UTC).JPG",
+   "max_detection_conf": 0.971,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.971,
+     "bbox": [
+      0,
+      0.1957,
+      0.2259,
+      0.7793
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/SnampshotEnonkishu/ENO_S1_D06_R1_IMAG5237.JPG",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/vacia_alumno_AM_2/25_20201024 (312).JPG",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/empty_SnapshotMountainZebra/MTZ_S1_D05_R1_IMAG2029.JPG",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/empty_SnapshotMountainZebra/MTZ_S1_D06_R1_IMAG0865.JPG",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/empty_SnapshotMountainZebra/MTZ_S1_C06_R3_IMAG2525.JPG",
+   "max_detection_conf": 0.203,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.203,
+     "bbox": [
+      0.0009999,
+      0.6746,
+      0.215,
+      0.07466
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/empty_SnapshotMountainZebra/MTZ_S1_D06_R1_IMAG1583.JPG",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/vacias_PNC_2014_ISAAC/c11233IMAG0016.JPG",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/vacias_PNM_2013-O_ISAAC/f7213IMAG0066.JPG",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/empty_IslandConservationCameraTraps/dominicanrepublic_cam11618mayo2017_20170410_092515_img_0069.jpg",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/empty_IslandConservationCameraTraps/dominicanrepublic_cam1826junio2015_20150505_130939_img_3077.jpg",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/empty_IslandConservationCameraTraps/ecuador1_cam1612_20150209_051159_img_1446.jpg",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/empty_IslandConservationCameraTraps/dominicanrepublic_cam0926julio2015_20150630_185725_img_0015.jpg",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/NOANIMAL_ZOO_5_6_7_9/50_20210408 (6876).JPG",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/NOANIMAL_ZOO_5_6_7_9/50_20210417 (25294).JPG",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/NOANIMAL_ZOO_5_6_7_9/24_20210615 (7263).JPG",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/NOANIMAL_ZOO_5_6_7_9/20_20210618 (3959).JPG",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/NOANIMAL_ZOO_1_4/28_20201019 (329).JPG",
+   "max_detection_conf": 0.794,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.794,
+     "bbox": [
+      0.264,
+      0.5142,
+      0.086,
+      0.1014
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/NOANIMAL_ZOO_1_4/34_20210115 (1643).JPG",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/vacia_javi_2_JC/27_20201023 (4595).JPG",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/vacia/vacia_alumno_2_2_TH_JC/27_20201023 (5918).JPG",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/caballo/HORSE_ZOO_1_4/15_20201117 (7287).JPG",
+   "max_detection_conf": 0.969,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.969,
+     "bbox": [
+      0.083,
+      0.6103,
+      0.397,
+      0.3665
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/garduna/garduna_vac\u00edas_humanos_PNC_2012_ME/a43103IMAG0017.JPG",
+   "max_detection_conf": 0.438,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.438,
+     "bbox": [
+      0.237,
+      0.4333,
+      0.1829,
+      0.5666
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/garduna/Garduna_PNM_2013-0_ME/f14844IM000051.JPG",
+   "max_detection_conf": 0.959,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.959,
+     "bbox": [
+      0.389,
+      0.6386,
+      0.2939,
+      0.3026
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/micromamiferos/rat_IslandConservationCameraTraps/palau_cam6a12132018_20180914_224626_rcnx0468.jpg",
+   "max_detection_conf": 0.721,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.721,
+     "bbox": [
+      0.789,
+      0.2645,
+      0.2109,
+      0.219
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/tejon/Tejon_PEPE_IREC_JC/IMAG0423_(5).JPG",
+   "max_detection_conf": 0.958,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.958,
+     "bbox": [
+      0.6399,
+      0.5173,
+      0.28,
+      0.2866
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/humanovehiculo/humano_vehiculo_PNM_2013-O_ISAAC/f8130IM000003.JPG",
+   "max_detection_conf": 0.88,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.88,
+     "bbox": [
+      0,
+      0.001333,
+      0.479,
+      0.9333
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/humanovehiculo/humano_vehiculo_PNC_2014_ISAAC/c12199IMAG0129.JPG",
+   "max_detection_conf": 0.367,
+   "detections": [
+    {
+     "category": "2",
+     "conf": 0.367,
+     "bbox": [
+      0.82,
+      0.3066,
+      0.08699,
+      0.2426
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/zorro/zorro_Leo_Otra_fauna_PASADA_POR_LA_RED_JC/Otrafauna (675).JPG",
+   "max_detection_conf": 0.967,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.102,
+     "bbox": [
+      0,
+      0.932,
+      0.28,
+      0.068
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.967,
+     "bbox": [
+      0.611,
+      0.3693,
+      0.3619,
+      0.2746
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/ave/bird_CaltechCameraTrap/58ce4024-23d2-11e8-a6a3-ec086b02610b.jpg",
+   "max_detection_conf": 0.892,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.892,
+     "bbox": [
+      0.367,
+      0.7777,
+      0.1389,
+      0.1097
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/ave/bird_CaltechCameraTrap/5976a214-23d2-11e8-a6a3-ec086b02610b.jpg",
+   "max_detection_conf": 0.963,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.963,
+     "bbox": [
+      0.508,
+      0.7242,
+      0.321,
+      0.2565
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/ave/Chicken_ena24/6426.jpg",
+   "max_detection_conf": 0.906,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.906,
+     "bbox": [
+      0.0009999,
+      0.7188,
+      0.238,
+      0.2508
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/ave/OTHERSPECIES_ZOO_5_6_7_9/38_20210618 (1691).JPG",
+   "max_detection_conf": 0.118,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.118,
+     "bbox": [
+      0.5609,
+      0.3861,
+      0.064,
+      0.1779
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/ave/ave_ave_WellingtonCameraTraps_SS/050816133858011bs101.JPG",
+   "max_detection_conf": 0.937,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.937,
+     "bbox": [
+      0.532,
+      0.5719,
+      0.092,
+      0.1773
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/lince/Lince_a_Linces2_Leo_JC/Lince58 (22).JPG",
+   "max_detection_conf": 0.964,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.964,
+     "bbox": [
+      0.396,
+      0.4226,
+      0.3059,
+      0.2706
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/lince/Lince_a_Linces2_Leo_JC/lince130 (306).JPG",
+   "max_detection_conf": 0.882,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.882,
+     "bbox": [
+      0.2559,
+      0.4359,
+      0.193,
+      0.1939
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/dataset/emptyNonEmptyDatasetCROP/lince/linces_fecha_Linces2_Leo_JC/3_Lince_flecha_Linces2_Leo_JC/lince103 (371).JPG",
+   "max_detection_conf": 0.932,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.617,
+     "bbox": [
+      0,
+      0.4964,
+      0.08699,
+      0.3665
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.903,
+     "bbox": [
+      0,
+      0.1708,
+      0.275,
+      0.7811
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.932,
+     "bbox": [
+      0.2789,
+      0.5836,
+      0.2029,
+      0.3362
+     ]
+    }
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ },
+ "info": {
+  "detection_initial_time": "2024-09-11 18:43:33",
+  "detection_completion_time": "2024-09-11 18:46:05",
+  "format_version": "1.2",
+  "detector": "md_v5b.0.0.pt",
+  "detector_metadata": {
+   "megadetector_version": "v5b.0.0",
+   "typical_detection_threshold": 0.2,
+   "conservative_detection_threshold": 0.05
+  }
+ }
+}
