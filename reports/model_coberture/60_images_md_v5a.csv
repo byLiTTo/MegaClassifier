@@ -1,43 +1,85 @@
 file_name;label;threshold;detector_label;false_positive;false_negative;time_inference
-\leporido\Conejo_PNC_2014_JC\c8663IM000121.JPG;1;0.02;1;0;0;2.73
-\vaca\cow_CaltechCameraTrap\585c030e-23d2-11e8-a6a3-ec086b02610b.jpg;1;0.02;1;0;0;2.66
-\vaca\COW_ZOO_5_6_7_9\21_20210418 (1498).JPG;1;0.02;1;0;0;2.28
-\jabali\jabali_PNM_2013-O_ISAAC\f27560IMAG0113.JPG;1;0.02;1;0;0;2.65
-\jabali\WILDBOAR_ZOO_5_6_7_9\1_20210319 (7).JPG;1;0.02;1;0;0;2.27
-\jabali\WILDBOAR_ZOO_1_4\37_20210115 (2245).JPG;1;0.02;1;0;0;2.34
-\cervidae\ciervo_PNM_2013-O_ISAAC\f11190IM000199.JPG;1;0.02;1;0;0;3.01
-\cervidae\Ciervo_PNC_2012_JC\a14725IM000641.JPG;1;0.02;0;0;1;2.81
-\cervidae\2_ciervo_alumno_2_TH\34_20201024 (2381).JPG;1;0.02;1;0;0;2.35
-\cervidae\ciervo_simone_2\34_20201024 (5494).JPG;1;0.02;1;0;0;2.34
-\cervidae\ciervo_simone_2\37_20201024 (1156).JPG;1;0.02;1;0;0;2.31
-\cervidae\CERVIDREDORFALLOWDEER_ZOO_1_4\34_20201024 (2742).JPG;1;0.02;1;0;0;2.28
-\cervidae\CERVIDREDORFALLOWDEER_ZOO_1_4\17_20201225 (61).JPG;1;0.02;1;0;0;2.26
-\cervidae\CERVIDREDORFALLOWDEER_ZOO_1_4\20_20201024 (741).JPG;1;0.02;1;0;0;2.28
-\cervidae\CERVIDREDORFALLOWDEER_ZOO_5_6_7_9\20_20210219 (2099) (2021_04_15 06_16_22 UTC).JPG;1;0.02;1;0;0;2.33
-\cervidae\CERVIDREDORFALLOWDEER_ZOO_5_6_7_9\35_20210218 (2606) (2021_04_15 06_16_22 UTC).JPG;1;0.02;1;0;0;2.24
-\vacia\vacia_alumno_AM_2\25_20201024 (312).JPG;0;0.02;0;0;0;2.34
-\vacia\empty_SnapshotMountainZebra\MTZ_S1_D06_R1_IMAG0865.JPG;0;0.02;0;0;0;2.66
-\vacia\empty_SnapshotMountainZebra\MTZ_S1_C06_R3_IMAG2525.JPG;0;0.02;0;0;0;2.62
-\vacia\vacias_PNC_2014_ISAAC\c11233IMAG0016.JPG;0;0.02;0;0;0;2.68
-\vacia\vacias_PNM_2013-O_ISAAC\f7213IMAG0066.JPG;0;0.02;0;0;0;2.62
-\vacia\empty_IslandConservationCameraTraps\dominicanrepublic_cam11618mayo2017_20170410_092515_img_0069.jpg;0;0.02;0;0;0;2.37
-\vacia\empty_IslandConservationCameraTraps\dominicanrepublic_cam1826junio2015_20150505_130939_img_3077.jpg;0;0.02;0;0;0;2.51
-\vacia\empty_IslandConservationCameraTraps\dominicanrepublic_cam0926julio2015_20150630_185725_img_0015.jpg;0;0.02;1;1;0;2.31
-\vacia\NOANIMAL_ZOO_5_6_7_9\50_20210408 (6876).JPG;0;0.02;1;1;0;2.26
-\vacia\NOANIMAL_ZOO_5_6_7_9\50_20210417 (25294).JPG;0;0.02;0;0;0;2.25
-\vacia\NOANIMAL_ZOO_5_6_7_9\24_20210615 (7263).JPG;0;0.02;0;0;0;2.31
-\vacia\NOANIMAL_ZOO_1_4\28_20201019 (329).JPG;0;0.02;1;1;0;2.36
-\vacia\NOANIMAL_ZOO_1_4\34_20210115 (1643).JPG;0;0.02;0;0;0;2.26
-\vacia\vacia_javi_2_JC\27_20201023 (4595).JPG;0;0.02;1;1;0;2.26
-\caballo\HORSE_ZOO_1_4\15_20201117 (7287).JPG;1;0.02;1;0;0;2.27
-\garduna\garduna_vacías_humanos_PNC_2012_ME\a43103IMAG0017.JPG;1;0.02;1;0;0;2.63
-\micromamiferos\rat_IslandConservationCameraTraps\palau_cam6a12132018_20180914_224626_rcnx0468.jpg;1;0.02;1;0;0;2.64
-\tejon\Tejon_PEPE_IREC_JC\IMAG0423_(5).JPG;1;0.02;1;0;0;2.6
-\humanovehiculo\humano_vehiculo_PNM_2013-O_ISAAC\f8130IM000003.JPG;1;0.02;1;0;0;2.75
-\humanovehiculo\humano_vehiculo_PNC_2014_ISAAC\c12199IMAG0129.JPG;1;0.02;1;0;0;2.67
-\zorro\zorro_Leo_Otra_fauna_PASADA_POR_LA_RED_JC\Otrafauna (675).JPG;1;0.02;1;0;0;2.69
-\ave\bird_CaltechCameraTrap\58ce4024-23d2-11e8-a6a3-ec086b02610b.jpg;1;0.02;1;0;0;2.68
-\ave\bird_CaltechCameraTrap\5976a214-23d2-11e8-a6a3-ec086b02610b.jpg;1;0.02;1;0;0;2.83
-\ave\OTHERSPECIES_ZOO_5_6_7_9\38_20210618 (1691).JPG;1;0.02;1;0;0;2.32
-\lince\Lince_a_Linces2_Leo_JC\Lince58 (22).JPG;1;0.02;1;0;0;2.68
-\lince\Lince_a_Linces2_Leo_JC\lince130 (306).JPG;1;0.02;1;0;0;2.52
+vacia/empty_islandconservationcameratraps/dominicanrepublic_cam11618mayo2017_20170410_092515_img_0069.jpg;0;0.02;0;0;0;2.42
+vacia/noanimal_zoo_1_4/28_20201019_329_.jpg;0;0.02;1;1;0;2.31
+jabali/jabali_pnm_2013-o_isaac/f27560imag0113.jpg;1;0.02;1;0;0;2.62
+jabali/wildboar_zoo_1_4/37_20210115_2245_.jpg;1;0.02;1;0;0;2.31
+vacia/noanimal_zoo_5_6_7_9/50_20210408_6876_.jpg;0;0.02;1;1;0;2.33
+lince/lince_a_linces2_leo_jc/lince58_22_.jpg;1;0.02;1;0;0;2.8
+zorro/zorro_leo_otra_fauna_pasada_por_la_red_jc/otrafauna_675_.jpg;1;0.02;1;0;0;2.6
+vacia/empty_islandconservationcameratraps/dominicanrepublic_cam1826junio2015_20150505_130939_img_3077.jpg;0;0.02;0;0;0;2.26
+cervidae/cervidredorfallowdeer_zoo_1_4/34_20201024_2742_.jpg;1;0.02;1;0;0;2.24
+micromamiferos/rat_islandconservationcameratraps/palau_cam6a12132018_20180914_224626_rcnx0468.jpg;1;0.02;1;0;0;2.6
+jabali/wildboar_zoo_5_6_7_9/1_20210319_7_.jpg;1;0.02;1;0;0;2.31
+humanovehiculo/humano_vehiculo_pnm_2013-o_isaac/f8130im000003.jpg;1;0.02;1;0;0;2.6
+vacia/vacia_javi_2_jc/27_20201023_4595_.jpg;0;0.02;1;1;0;2.26
+vacia/empty_snapshotmountainzebra/mtz_s1_c06_r3_imag2525.jpg;0;0.02;0;0;0;2.59
+caballo/horse_zoo_1_4/15_20201117_7287_.jpg;1;0.02;1;0;0;2.51
+vacia/vacias_pnm_2013-o_isaac/f7213imag0066.jpg;0;0.02;0;0;0;2.71
+tejon/tejon_pepe_irec_jc/imag0423__5_.jpg;1;0.02;1;0;0;3.14
+ave/bird_caltechcameratrap/5976a214-23d2-11e8-a6a3-ec086b02610b.jpg;1;0.02;1;0;0;2.76
+vaca/cow_zoo_5_6_7_9/21_20210418_1498_.jpg;1;0.02;1;0;0;2.43
+cervidae/cervidredorfallowdeer_zoo_1_4/20_20201024_741_.jpg;1;0.02;1;0;0;2.3
+vacia/noanimal_zoo_1_4/34_20210115_1643_.jpg;0;0.02;0;0;0;2.31
+cervidae/cervidredorfallowdeer_zoo_5_6_7_9/20_20210219_2099__2021_04_1506_16_22utc_.jpg;1;0.02;1;0;0;2.95
+leporido/conejo_pnc_2014_jc/c8663im000121.jpg;1;0.02;1;0;0;2.69
+vacia/vacia_alumno_am_2/25_20201024_312_.jpg;0;0.02;0;0;0;2.42
+lince/lince_a_linces2_leo_jc/lince130_306_.jpg;1;0.02;1;0;0;2.33
+cervidae/ciervo_simone_2/37_20201024_1156_.jpg;1;0.02;1;0;0;2.38
+cervidae/2_ciervo_alumno_2_th/34_20201024_2381_.jpg;1;0.02;1;0;0;2.82
+cervidae/ciervo_simone_2/34_20201024_5494_.jpg;1;0.02;1;0;0;2.47
+humanovehiculo/humano_vehiculo_pnc_2014_isaac/c12199imag0129.jpg;1;0.02;1;0;0;2.75
+vacia/noanimal_zoo_5_6_7_9/50_20210417_25294_.jpg;0;0.02;0;0;0;2.3
+cervidae/ciervo_pnc_2012_jc/a14725im000641.jpg;1;0.02;0;0;1;2.62
+vaca/cow_caltechcameratrap/585c030e-23d2-11e8-a6a3-ec086b02610b.jpg;1;0.02;1;0;0;2.63
+cervidae/cervidredorfallowdeer_zoo_1_4/17_20201225_61_.jpg;1;0.02;1;0;0;2.27
+vacia/noanimal_zoo_5_6_7_9/24_20210615_7263_.jpg;0;0.02;0;0;0;2.26
+ave/otherspecies_zoo_5_6_7_9/38_20210618_1691_.jpg;1;0.02;1;0;0;2.26
+vacia/empty_islandconservationcameratraps/dominicanrepublic_cam0926julio2015_20150630_185725_img_0015.jpg;0;0.02;1;1;0;2.22
+garduna/garduna_vacias_humanos_pnc_2012_me/a43103imag0017.jpg;1;0.02;1;0;0;2.58
+vacia/empty_snapshotmountainzebra/mtz_s1_d06_r1_imag0865.jpg;0;0.02;0;0;0;2.64
+ave/bird_caltechcameratrap/58ce4024-23d2-11e8-a6a3-ec086b02610b.jpg;1;0.02;1;0;0;2.6
+vacia/vacias_pnc_2014_isaac/c11233imag0016.jpg;0;0.02;0;0;0;2.6
+cervidae/cervidredorfallowdeer_zoo_5_6_7_9/35_20210218_2606__2021_04_1506_16_22utc_.jpg;1;0.02;1;0;0;2.24
+cervidae/ciervo_pnm_2013-o_isaac/f11190im000199.jpg;1;0.02;1;0;0;2.68
+vacia/empty_islandconservationcameratraps/dominicanrepublic_cam11618mayo2017_20170410_092515_img_0069.jpg;0;0.01;0;0;0;2.26
+vacia/noanimal_zoo_1_4/28_20201019_329_.jpg;0;0.01;1;1;0;2.25
+jabali/jabali_pnm_2013-o_isaac/f27560imag0113.jpg;1;0.01;1;0;0;2.6
+jabali/wildboar_zoo_1_4/37_20210115_2245_.jpg;1;0.01;1;0;0;2.24
+vacia/noanimal_zoo_5_6_7_9/50_20210408_6876_.jpg;0;0.01;1;1;0;2.24
+lince/lince_a_linces2_leo_jc/lince58_22_.jpg;1;0.01;1;0;0;2.64
+zorro/zorro_leo_otra_fauna_pasada_por_la_red_jc/otrafauna_675_.jpg;1;0.01;1;0;0;2.57
+vacia/empty_islandconservationcameratraps/dominicanrepublic_cam1826junio2015_20150505_130939_img_3077.jpg;0;0.01;0;0;0;2.29
+cervidae/cervidredorfallowdeer_zoo_1_4/34_20201024_2742_.jpg;1;0.01;1;0;0;2.46
+micromamiferos/rat_islandconservationcameratraps/palau_cam6a12132018_20180914_224626_rcnx0468.jpg;1;0.01;1;0;0;2.7
+jabali/wildboar_zoo_5_6_7_9/1_20210319_7_.jpg;1;0.01;1;0;0;2.36
+humanovehiculo/humano_vehiculo_pnm_2013-o_isaac/f8130im000003.jpg;1;0.01;1;0;0;2.59
+vacia/vacia_javi_2_jc/27_20201023_4595_.jpg;0;0.01;1;1;0;2.18
+vacia/empty_snapshotmountainzebra/mtz_s1_c06_r3_imag2525.jpg;0;0.01;0;0;0;2.63
+caballo/horse_zoo_1_4/15_20201117_7287_.jpg;1;0.01;1;0;0;2.28
+vacia/vacias_pnm_2013-o_isaac/f7213imag0066.jpg;0;0.01;0;0;0;2.62
+tejon/tejon_pepe_irec_jc/imag0423__5_.jpg;1;0.01;1;0;0;2.6
+ave/bird_caltechcameratrap/5976a214-23d2-11e8-a6a3-ec086b02610b.jpg;1;0.01;1;0;0;2.64
+vaca/cow_zoo_5_6_7_9/21_20210418_1498_.jpg;1;0.01;1;0;0;2.38
+cervidae/cervidredorfallowdeer_zoo_1_4/20_20201024_741_.jpg;1;0.01;1;0;0;2.23
+vacia/noanimal_zoo_1_4/34_20210115_1643_.jpg;0;0.01;1;1;0;2.24
+cervidae/cervidredorfallowdeer_zoo_5_6_7_9/20_20210219_2099__2021_04_1506_16_22utc_.jpg;1;0.01;1;0;0;2.32
+leporido/conejo_pnc_2014_jc/c8663im000121.jpg;1;0.01;1;0;0;2.6
+vacia/vacia_alumno_am_2/25_20201024_312_.jpg;0;0.01;0;0;0;2.24
+lince/lince_a_linces2_leo_jc/lince130_306_.jpg;1;0.01;1;0;0;2.31
+cervidae/ciervo_simone_2/37_20201024_1156_.jpg;1;0.01;1;0;0;2.24
+cervidae/2_ciervo_alumno_2_th/34_20201024_2381_.jpg;1;0.01;1;0;0;2.25
+cervidae/ciervo_simone_2/34_20201024_5494_.jpg;1;0.01;1;0;0;2.23
+humanovehiculo/humano_vehiculo_pnc_2014_isaac/c12199imag0129.jpg;1;0.01;1;0;0;2.63
+vacia/noanimal_zoo_5_6_7_9/50_20210417_25294_.jpg;0;0.01;0;0;0;2.23
+cervidae/ciervo_pnc_2012_jc/a14725im000641.jpg;1;0.01;1;0;0;2.64
+vaca/cow_caltechcameratrap/585c030e-23d2-11e8-a6a3-ec086b02610b.jpg;1;0.01;1;0;0;2.58
+cervidae/cervidredorfallowdeer_zoo_1_4/17_20201225_61_.jpg;1;0.01;1;0;0;2.29
+vacia/noanimal_zoo_5_6_7_9/24_20210615_7263_.jpg;0;0.01;0;0;0;2.28
+ave/otherspecies_zoo_5_6_7_9/38_20210618_1691_.jpg;1;0.01;1;0;0;2.25
+vacia/empty_islandconservationcameratraps/dominicanrepublic_cam0926julio2015_20150630_185725_img_0015.jpg;0;0.01;1;1;0;2.24
+garduna/garduna_vacias_humanos_pnc_2012_me/a43103imag0017.jpg;1;0.01;1;0;0;2.57
+vacia/empty_snapshotmountainzebra/mtz_s1_d06_r1_imag0865.jpg;0;0.01;0;0;0;2.68
+ave/bird_caltechcameratrap/58ce4024-23d2-11e8-a6a3-ec086b02610b.jpg;1;0.01;1;0;0;2.58
+vacia/vacias_pnc_2014_isaac/c11233imag0016.jpg;0;0.01;0;0;0;2.64
+cervidae/cervidredorfallowdeer_zoo_5_6_7_9/35_20210218_2606__2021_04_1506_16_22utc_.jpg;1;0.01;1;0;0;2.23
+cervidae/ciervo_pnm_2013-o_isaac/f11190im000199.jpg;1;0.01;1;0;0;2.58

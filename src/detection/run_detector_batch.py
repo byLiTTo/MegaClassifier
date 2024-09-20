@@ -331,8 +331,8 @@ def process_image(im_file, detector, confidence_threshold, image=None, quiet=Fal
     """
 
     if not quiet:
+        start_time = time.time()
         print("Processing image {}".format(im_file))
-
     if image is None:
         try:
             image = viz_utils.load_image(im_file)
@@ -343,7 +343,6 @@ def process_image(im_file, detector, confidence_threshold, image=None, quiet=Fal
             return result
 
     try:
-        start_time = time.time()
         result_aux = detector.generate_detections_one_image(
             image, im_file, detection_threshold=confidence_threshold
         )
