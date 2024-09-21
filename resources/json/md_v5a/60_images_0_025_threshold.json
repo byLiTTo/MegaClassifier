@@ -3,13 +3,13 @@
   {
    "file": "vacia/empty_islandconservationcameratraps/dominicanrepublic_cam11618mayo2017_20170410_092515_img_0069.jpg",
    "max_detection_conf": 0.0,
-   "time_inference": 2.42,
+   "time_inference": 3.25,
    "detections": []
   },
   {
    "file": "vacia/noanimal_zoo_1_4/28_20201019_329_.jpg",
    "max_detection_conf": 0.652,
-   "time_inference": 2.31,
+   "time_inference": 2.75,
    "detections": [
     {
      "category": "1",
@@ -36,7 +36,7 @@
   {
    "file": "jabali/jabali_pnm_2013-o_isaac/f27560imag0113.jpg",
    "max_detection_conf": 0.968,
-   "time_inference": 2.62,
+   "time_inference": 3.18,
    "detections": [
     {
      "category": "1",
@@ -53,7 +53,7 @@
   {
    "file": "jabali/wildboar_zoo_1_4/37_20210115_2245_.jpg",
    "max_detection_conf": 0.729,
-   "time_inference": 2.31,
+   "time_inference": 2.85,
    "detections": [
     {
      "category": "1",
@@ -80,7 +80,7 @@
   {
    "file": "vacia/noanimal_zoo_5_6_7_9/50_20210408_6876_.jpg",
    "max_detection_conf": 0.0796,
-   "time_inference": 2.33,
+   "time_inference": 2.6,
    "detections": [
     {
      "category": "1",
@@ -97,7 +97,7 @@
   {
    "file": "lince/lince_a_linces2_leo_jc/lince58_22_.jpg",
    "max_detection_conf": 0.958,
-   "time_inference": 2.8,
+   "time_inference": 3.09,
    "detections": [
     {
      "category": "1",
@@ -114,7 +114,7 @@
   {
    "file": "leporido/conejo_paco_carro_jc/pict0646_2_.jpg",
    "max_detection_conf": 0.931,
-   "time_inference": 2.85,
+   "time_inference": 2.98,
    "detections": [
     {
      "category": "1",
@@ -131,18 +131,8 @@
   {
    "file": "zorro/zorro_leo_otra_fauna_pasada_por_la_red_jc/otrafauna_675_.jpg",
    "max_detection_conf": 0.957,
-   "time_inference": 2.6,
+   "time_inference": 3.08,
    "detections": [
-    {
-     "category": "1",
-     "conf": 0.0227,
-     "bbox": [
-      0.1519,
-      0.9333,
-      0.127,
-      0.06666
-     ]
-    },
     {
      "category": "1",
      "conf": 0.162,
@@ -168,13 +158,13 @@
   {
    "file": "vacia/empty_islandconservationcameratraps/dominicanrepublic_cam1826junio2015_20150505_130939_img_3077.jpg",
    "max_detection_conf": 0.0,
-   "time_inference": 2.26,
+   "time_inference": 3.1,
    "detections": []
   },
   {
    "file": "cervidae/cervidredorfallowdeer_zoo_1_4/34_20201024_2742_.jpg",
    "max_detection_conf": 0.913,
-   "time_inference": 2.24,
+   "time_inference": 2.68,
    "detections": [
     {
      "category": "1",
@@ -201,7 +191,7 @@
   {
    "file": "micromamiferos/rat_islandconservationcameratraps/palau_cam6a12132018_20180914_224626_rcnx0468.jpg",
    "max_detection_conf": 0.927,
-   "time_inference": 2.6,
+   "time_inference": 3.07,
    "detections": [
     {
      "category": "1",
@@ -218,7 +208,7 @@
   {
    "file": "jabali/wildboar_zoo_1_4/22_20210115_801_.jpg",
    "max_detection_conf": 0.925,
-   "time_inference": 2.24,
+   "time_inference": 2.49,
    "detections": [
     {
      "category": "1",
@@ -235,7 +225,7 @@
   {
    "file": "jabali/wildboar_zoo_5_6_7_9/1_20210319_7_.jpg",
    "max_detection_conf": 0.851,
-   "time_inference": 2.31,
+   "time_inference": 2.48,
    "detections": [
     {
      "category": "1",
@@ -272,13 +262,13 @@
   {
    "file": "vacia/empty_snapshotmountainzebra/mtz_s1_d05_r1_imag2029.jpg",
    "max_detection_conf": 0.0,
-   "time_inference": 2.69,
+   "time_inference": 2.85,
    "detections": []
   },
   {
    "file": "humanovehiculo/humano_vehiculo_pnm_2013-o_isaac/f8130im000003.jpg",
    "max_detection_conf": 0.834,
-   "time_inference": 2.6,
+   "time_inference": 2.84,
    "detections": [
     {
      "category": "1",
@@ -304,25 +294,14 @@
   },
   {
    "file": "vacia/vacia_javi_2_jc/27_20201023_4595_.jpg",
-   "max_detection_conf": 0.0219,
-   "time_inference": 2.26,
-   "detections": [
-    {
-     "category": "1",
-     "conf": 0.0219,
-     "bbox": [
-      0.593,
-      0.516,
-      0.134,
-      0.1637
-     ]
-    }
-   ]
+   "max_detection_conf": 0.0,
+   "time_inference": 2.49,
+   "detections": []
   },
   {
    "file": "vacia/snampshotenonkishu/eno_s1_d06_r1_imag5237.jpg",
    "max_detection_conf": 0.129,
-   "time_inference": 2.71,
+   "time_inference": 3.02,
    "detections": [
     {
      "category": "1",
@@ -339,13 +318,13 @@
   {
    "file": "vacia/empty_snapshotmountainzebra/mtz_s1_d06_r1_imag1583.jpg",
    "max_detection_conf": 0.0,
-   "time_inference": 2.61,
+   "time_inference": 2.83,
    "detections": []
   },
   {
    "file": "vaca/vaca_paco_carro_jc/pict0042.jpg",
    "max_detection_conf": 0.819,
-   "time_inference": 2.65,
+   "time_inference": 2.81,
    "detections": [
     {
      "category": "1",
@@ -392,13 +371,13 @@
   {
    "file": "vacia/empty_snapshotmountainzebra/mtz_s1_c06_r3_imag2525.jpg",
    "max_detection_conf": 0.0,
-   "time_inference": 2.59,
+   "time_inference": 2.87,
    "detections": []
   },
   {
    "file": "caballo/horse_zoo_1_4/15_20201117_7287_.jpg",
    "max_detection_conf": 0.961,
-   "time_inference": 2.51,
+   "time_inference": 2.49,
    "detections": [
     {
      "category": "1",
@@ -415,13 +394,13 @@
   {
    "file": "vacia/vacias_pnm_2013-o_isaac/f7213imag0066.jpg",
    "max_detection_conf": 0.0,
-   "time_inference": 2.71,
+   "time_inference": 2.94,
    "detections": []
   },
   {
    "file": "tejon/tejon_pepe_irec_jc/imag0423__5_.jpg",
    "max_detection_conf": 0.909,
-   "time_inference": 3.14,
+   "time_inference": 2.89,
    "detections": [
     {
      "category": "1",
@@ -438,7 +417,7 @@
   {
    "file": "ave/bird_caltechcameratrap/5976a214-23d2-11e8-a6a3-ec086b02610b.jpg",
    "max_detection_conf": 0.942,
-   "time_inference": 2.76,
+   "time_inference": 2.82,
    "detections": [
     {
      "category": "1",
@@ -455,7 +434,7 @@
   {
    "file": "cervidae/2_ciervo_paco_carro_camarasliron_4_2_pasadas_por_la_red_jc/pict0080.jpg",
    "max_detection_conf": 0.818,
-   "time_inference": 2.8,
+   "time_inference": 2.88,
    "detections": [
     {
      "category": "1",
@@ -532,7 +511,7 @@
   {
    "file": "vaca/cow_zoo_5_6_7_9/21_20210418_1498_.jpg",
    "max_detection_conf": 0.954,
-   "time_inference": 2.43,
+   "time_inference": 2.47,
    "detections": [
     {
      "category": "1",
@@ -559,13 +538,13 @@
   {
    "file": "vacia/empty_islandconservationcameratraps/ecuador1_cam1612_20150209_051159_img_1446.jpg",
    "max_detection_conf": 0.0,
-   "time_inference": 2.42,
+   "time_inference": 2.61,
    "detections": []
   },
   {
    "file": "cervidae/cervidredorfallowdeer_zoo_1_4/20_20201024_741_.jpg",
    "max_detection_conf": 0.96,
-   "time_inference": 2.3,
+   "time_inference": 2.5,
    "detections": [
     {
      "category": "1",
@@ -582,13 +561,13 @@
   {
    "file": "vacia/noanimal_zoo_1_4/34_20210115_1643_.jpg",
    "max_detection_conf": 0.0,
-   "time_inference": 2.31,
+   "time_inference": 2.47,
    "detections": []
   },
   {
    "file": "cervidae/cervidredorfallowdeer_zoo_5_6_7_9/20_20210219_2099__2021_04_1506_16_22utc_.jpg",
    "max_detection_conf": 0.971,
-   "time_inference": 2.95,
+   "time_inference": 2.75,
    "detections": [
     {
      "category": "1",
@@ -605,7 +584,7 @@
   {
    "file": "jabali/jabali_paco_carro_camarasliron_4_2_pasadas_por_la_red_jc/mdgc0675.jpg",
    "max_detection_conf": 0.943,
-   "time_inference": 2.7,
+   "time_inference": 3.13,
    "detections": [
     {
      "category": "1",
@@ -622,13 +601,13 @@
   {
    "file": "vacia/noanimal_zoo_5_6_7_9/20_20210618_3959_.jpg",
    "max_detection_conf": 0.0,
-   "time_inference": 2.35,
+   "time_inference": 2.88,
    "detections": []
   },
   {
    "file": "leporido/conejo_pnc_2014_jc/c8663im000121.jpg",
    "max_detection_conf": 0.918,
-   "time_inference": 2.69,
+   "time_inference": 3.13,
    "detections": [
     {
      "category": "1",
@@ -645,7 +624,7 @@
   {
    "file": "garduna/garduna_pnm_2013-0_me/f14844im000051.jpg",
    "max_detection_conf": 0.95,
-   "time_inference": 3.2,
+   "time_inference": 3.22,
    "detections": [
     {
      "category": "1",
@@ -662,13 +641,13 @@
   {
    "file": "vacia/vacia_alumno_am_2/25_20201024_312_.jpg",
    "max_detection_conf": 0.0,
-   "time_inference": 2.42,
+   "time_inference": 2.86,
    "detections": []
   },
   {
    "file": "lince/lince_a_linces2_leo_jc/lince130_306_.jpg",
    "max_detection_conf": 0.78,
-   "time_inference": 2.33,
+   "time_inference": 2.63,
    "detections": [
     {
      "category": "1",
@@ -685,7 +664,7 @@
   {
    "file": "cervidae/cervidredorfallowdeer_zoo_5_6_7_9/10_20210417_246_.jpg",
    "max_detection_conf": 0.975,
-   "time_inference": 2.33,
+   "time_inference": 3.94,
    "detections": [
     {
      "category": "1",
@@ -702,7 +681,7 @@
   {
    "file": "cervidae/ciervo_pnc_2012_jc/a34265im000500.jpg",
    "max_detection_conf": 0.705,
-   "time_inference": 2.7,
+   "time_inference": 3.87,
    "detections": [
     {
      "category": "1",
@@ -719,7 +698,7 @@
   {
    "file": "cervidae/ciervo_simone_2/37_20201024_1156_.jpg",
    "max_detection_conf": 0.947,
-   "time_inference": 2.38,
+   "time_inference": 3.24,
    "detections": [
     {
      "category": "1",
@@ -776,7 +755,7 @@
   {
    "file": "cervidae/2_ciervo_alumno_2_th/34_20201024_2381_.jpg",
    "max_detection_conf": 0.923,
-   "time_inference": 2.82,
+   "time_inference": 3.53,
    "detections": [
     {
      "category": "1",
@@ -793,7 +772,7 @@
   {
    "file": "cervidae/ciervo_simone_2/34_20201024_5494_.jpg",
    "max_detection_conf": 0.945,
-   "time_inference": 2.47,
+   "time_inference": 2.72,
    "detections": [
     {
      "category": "1",
@@ -810,13 +789,13 @@
   {
    "file": "vacia/vacia_alumno_2_2_th_jc/27_20201023_5918_.jpg",
    "max_detection_conf": 0.0,
-   "time_inference": 2.54,
+   "time_inference": 2.6,
    "detections": []
   },
   {
    "file": "humanovehiculo/humano_vehiculo_pnc_2014_isaac/c12199imag0129.jpg",
    "max_detection_conf": 0.672,
-   "time_inference": 2.75,
+   "time_inference": 3.09,
    "detections": [
     {
      "category": "2",
@@ -833,13 +812,13 @@
   {
    "file": "vacia/noanimal_zoo_5_6_7_9/50_20210417_25294_.jpg",
    "max_detection_conf": 0.0,
-   "time_inference": 2.3,
+   "time_inference": 2.6,
    "detections": []
   },
   {
    "file": "ave/ave_ave_wellingtoncameratraps_ss/050816133858011bs101.jpg",
    "max_detection_conf": 0.944,
-   "time_inference": 2.57,
+   "time_inference": 3.05,
    "detections": [
     {
      "category": "1",
@@ -856,13 +835,13 @@
   {
    "file": "cervidae/ciervo_pnc_2012_jc/a14725im000641.jpg",
    "max_detection_conf": 0.0,
-   "time_inference": 2.62,
+   "time_inference": 3.24,
    "detections": []
   },
   {
    "file": "vaca/cow_caltechcameratrap/585c030e-23d2-11e8-a6a3-ec086b02610b.jpg",
    "max_detection_conf": 0.977,
-   "time_inference": 2.63,
+   "time_inference": 3.26,
    "detections": [
     {
      "category": "1",
@@ -879,7 +858,7 @@
   {
    "file": "cervidae/cervidredorfallowdeer_zoo_1_4/17_20201225_61_.jpg",
    "max_detection_conf": 0.98,
-   "time_inference": 2.27,
+   "time_inference": 2.61,
    "detections": [
     {
      "category": "1",
@@ -896,7 +875,7 @@
   {
    "file": "ave/chicken_ena24/6426.jpg",
    "max_detection_conf": 0.942,
-   "time_inference": 2.26,
+   "time_inference": 2.51,
    "detections": [
     {
      "category": "1",
@@ -933,13 +912,13 @@
   {
    "file": "vacia/noanimal_zoo_5_6_7_9/24_20210615_7263_.jpg",
    "max_detection_conf": 0.0,
-   "time_inference": 2.26,
+   "time_inference": 2.54,
    "detections": []
   },
   {
    "file": "ave/otherspecies_zoo_5_6_7_9/38_20210618_1691_.jpg",
    "max_detection_conf": 0.207,
-   "time_inference": 2.26,
+   "time_inference": 2.53,
    "detections": [
     {
      "category": "1",
@@ -956,7 +935,7 @@
   {
    "file": "vacia/empty_islandconservationcameratraps/dominicanrepublic_cam0926julio2015_20150630_185725_img_0015.jpg",
    "max_detection_conf": 0.0522,
-   "time_inference": 2.22,
+   "time_inference": 2.55,
    "detections": [
     {
      "category": "1",
@@ -973,7 +952,7 @@
   {
    "file": "garduna/garduna_vacias_humanos_pnc_2012_me/a43103imag0017.jpg",
    "max_detection_conf": 0.894,
-   "time_inference": 2.58,
+   "time_inference": 2.96,
    "detections": [
     {
      "category": "1",
@@ -990,7 +969,7 @@
   {
    "file": "jabali/wildboar_zoo_5_6_7_9/20_20210219_2902__2021_04_1506_16_22utc_.jpg",
    "max_detection_conf": 0.947,
-   "time_inference": 2.3,
+   "time_inference": 2.54,
    "detections": [
     {
      "category": "1",
@@ -1007,13 +986,13 @@
   {
    "file": "vacia/empty_snapshotmountainzebra/mtz_s1_d06_r1_imag0865.jpg",
    "max_detection_conf": 0.0,
-   "time_inference": 2.64,
+   "time_inference": 2.92,
    "detections": []
   },
   {
    "file": "ave/bird_caltechcameratrap/58ce4024-23d2-11e8-a6a3-ec086b02610b.jpg",
    "max_detection_conf": 0.919,
-   "time_inference": 2.6,
+   "time_inference": 2.95,
    "detections": [
     {
      "category": "1",
@@ -1050,13 +1029,13 @@
   {
    "file": "vacia/vacias_pnc_2014_isaac/c11233imag0016.jpg",
    "max_detection_conf": 0.0,
-   "time_inference": 2.6,
+   "time_inference": 3.02,
    "detections": []
   },
   {
    "file": "cervidae/cervidredorfallowdeer_zoo_5_6_7_9/35_20210218_2606__2021_04_1506_16_22utc_.jpg",
    "max_detection_conf": 0.965,
-   "time_inference": 2.24,
+   "time_inference": 2.76,
    "detections": [
     {
      "category": "1",
@@ -1073,7 +1052,7 @@
   {
    "file": "lince/linces_fecha_linces2_leo_jc/3_lince_flecha_linces2_leo_jc/lince103_371_.jpg",
    "max_detection_conf": 0.925,
-   "time_inference": 2.26,
+   "time_inference": 2.68,
    "detections": [
     {
      "category": "1",
@@ -1110,7 +1089,7 @@
   {
    "file": "cervidae/ciervo_pnm_2013-o_isaac/f11190im000199.jpg",
    "max_detection_conf": 0.913,
-   "time_inference": 2.68,
+   "time_inference": 3.02,
    "detections": [
     {
      "category": "1",
@@ -1161,11 +1140,11 @@
   "3": "vehicle"
  },
  "info": {
-  "detection_initial_time": "2024-09-20 22:11:45",
-  "detection_completion_time": "2024-09-20 22:14:19",
+  "detection_initial_time": "2024-09-21 10:52:58",
+  "detection_completion_time": "2024-09-21 10:55:54",
   "format_version": "1.2",
   "detector": "md_v5a.0.0.pt",
-  "detector_threshold": 0.02,
+  "detector_threshold": 0.025,
   "detector_metadata": {
    "megadetector_version": "v5a.0.0",
    "typical_detection_threshold": 0.2,
