@@ -9,14 +9,15 @@ Core rendering functions shared across visualization scripts
 from io import BytesIO
 from typing import Union
 import time
+import os
 
 import matplotlib.pyplot as plt
 import numpy as np
 import requests
 from PIL import Image, ImageFile, ImageFont, ImageDraw
 
-from src.data_management.annotations import annotation_constants
-from src.data_management.annotations.annotation_constants import (
+from src.data.data_management.annotations import annotation_constants
+from src.data.data_management.annotations.annotation_constants import (
     detector_bbox_category_id_to_name,
 )  # here id is int
 
@@ -369,8 +370,8 @@ def render_detection_bounding_boxes(
     image,
     label_map={},
     classification_label_map={},
-    confidence_threshold=0.8,
-    thickness=4,
+    confidence_threshold=0.0,
+    thickness=0,
     expansion=0,
     classification_confidence_threshold=0.3,
     max_classifications=3,
@@ -635,26 +636,11 @@ def draw_bounding_box_on_image(
         top = min(top, im_height - 1)
         bottom = min(bottom, im_height - 1)
 
-    # draw.line(
-    #     [(left, top), (left, bottom), (right, bottom), (right, top), (left, top)],
-    #     width=thickness,
-    #     fill=color,
-    # )
-
-    # Create a mask for the area outside the bounding box
-    mask = Image.new("L", image.size, 0)
-    draw_mask = ImageDraw.Draw(mask)
-    draw_mask.rectangle([(left, top), (right, bottom)], fill=255)
-
-    # Create an image with the color fill
-    fill_image = Image.new(
-        "RGB",
-        image.size,
+    draw.line(
+        [(left, top), (left, bottom), (right, bottom), (right, top), (left, top)],
+        width=thickness,
+        fill=color,
     )
-
-    # Composite the original image with the fill image using the mask
-    # image.paste(fill_image, mask=mask)
-    image.paste(mask)
 
     # try:
     #     font = ImageFont.truetype("arial.ttf", label_font_size)
@@ -849,4 +835,73 @@ def draw_bounding_boxes_on_file(
         confidence_threshold=confidence_threshold,
     )
 
+    os.makedirs(output_file[: -len(os.path.basename(output_file))], exist_ok=True)
+
     image.save(output_file)
+
+
+def draw_masks_on_file(input_file, output_file, detections):
+    image = open_image(input_file)
+
+    mask = render_detection_masks(detections, image)
+
+    os.makedirs(output_file[: -len(os.path.basename(output_file))], exist_ok=True)
+
+    mask.save(output_file)
+
+
+def render_detection_masks(detections, image, confidence_threshold=0.0) -> Image:
+    display_boxes = []
+
+    for detection in detections:
+        score = detection["conf"]
+        if score >= confidence_threshold:
+            x1, y1, w_box, h_box = detection["bbox"]
+            display_boxes.append([y1, x1, y1 + h_box, x1 + w_box])
+
+    display_boxes = np.array(display_boxes)
+
+    return draw_masks_on_image(image, display_boxes)
+
+
+def draw_masks_on_image(image, boxes) -> Image:
+    boxes_shape = boxes.shape
+    # if not boxes_shape:
+    #     return
+    # if len(boxes_shape) != 2 or boxes_shape[1] != 4:
+    #     # print('Input must be of size [N, 4], but is ' + str(boxes_shape))
+    #     return  # no object detection on this image, return
+    black_image = Image.new("RGB", image.size, "black")
+    for i in range(boxes_shape[0]):
+        draw_mask_on_image(
+            black_image, boxes[i, 0], boxes[i, 1], boxes[i, 2], boxes[i, 3]
+        )
+    return black_image
+
+
+def draw_mask_on_image(image, ymin, xmin, ymax, xmax, use_normalized_coordinates=True):
+    draw = ImageDraw.Draw(image)
+    im_width, im_height = image.size
+    if use_normalized_coordinates:
+        (left, right, top, bottom) = (
+            xmin * im_width,
+            xmax * im_width,
+            ymin * im_height,
+            ymax * im_height,
+        )
+    else:
+        (left, right, top, bottom) = (xmin, xmax, ymin, ymax)
+
+    draw.rectangle([(left, top), (right, bottom)], fill="white")
+
+
+def apply_mask_on_file(input_file, output_file, detections):
+    image = open_image(input_file)
+
+    mask = render_detection_masks(detections, image)
+
+    masked_image = Image.composite(image, mask, mask.convert("L"))
+
+    os.makedirs(output_file[: -len(os.path.basename(output_file))], exist_ok=True)
+
+    masked_image.save(output_file)

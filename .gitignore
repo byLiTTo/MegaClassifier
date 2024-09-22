@@ -6,3 +6,15 @@
 /data/external
 /models
 /dataset
+/src/visualization/__pycache__
+/src/visualization/__pycache__
+/src/data_management/annotations/__pycache__
+/src/data/data_management/annotations/__pycache__
+/src/data_management/annotations/__pycache__
+/resources/padding/emptyNonEmptyDatasetCropped
+/resources/masked/emptyNonEmptyDatasetCropped
+/resources/mask/emptyNonEmptyDatasetCropped
+/resources/fit/emptyNonEmptyDatasetCropped
+/resources/bounding_boxes/emptyNonEmptyDatasetCropped
+/src/visualization/__pycache__
+/src/data_management/annotations/__pycache__
