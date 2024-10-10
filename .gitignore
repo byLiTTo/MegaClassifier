@@ -18,3 +18,8 @@
 /resources/bounding_boxes/emptyNonEmptyDatasetCropped
 /src/visualization/__pycache__
 /src/data_management/annotations/__pycache__
+/resources/bounding_boxes/datasetFiltered
+/resources/fit/datasetFiltered
+/resources/mask/datasetFiltered
+/resources/masked/datasetFiltered
+/resources/padding/datasetFiltered
