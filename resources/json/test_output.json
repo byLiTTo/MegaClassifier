@@ -100,7 +100,7 @@
   "3": "vehicle"
  },
  "info": {
-  "detection_completion_time": "2024-11-06 20:04:35",
+  "detection_completion_time": "2024-11-10 13:05:50",
   "format_version": "1.2",
   "detector": "md_v5a.0.0.pt",
   "detector_metadata": {
