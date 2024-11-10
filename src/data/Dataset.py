@@ -111,8 +111,8 @@ def crop_dataset(dataset: pd.DataFrame, number_of_samples: int) -> pd.DataFrame:
         pd.DataFrame: The dataset without the dropped samples.
     """
 
-    empty = shuffle(dataset[dataset["label"] == 0], random_state=42)
-    animals = shuffle(dataset[dataset["label"] == 1], random_state=42)
+    empty = shuffle(dataset[dataset["binary_label"] == 0], random_state=42)
+    animals = shuffle(dataset[dataset["binary_label"] == 1], random_state=42)
 
     empty_crop = empty[:number_of_samples]
 
@@ -165,8 +165,8 @@ def split_dataset(
                 "The dataset must contain the 'label' and 'file_name' columns."
             )
 
-        empty = shuffle(dataset[dataset["label"] == 0], random_state=42)
-        animals = shuffle(dataset[dataset["label"] == 1], random_state=42)
+        empty = shuffle(dataset[dataset["binary_label"] == 0], random_state=42)
+        animals = shuffle(dataset[dataset["binary_label"] == 1], random_state=42)
 
         num_samples = len(empty["file_name"].values)
         num_train = math.floor(num_samples * percentaje_train)

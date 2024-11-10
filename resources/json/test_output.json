@@ -1,0 +1,112 @@
+{
+ "images": [
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/resources/test_images/snapshot_camdeboo_CDB_S1_A05_A05_R2_CDB_S1_A05_R2_IMAG0084.JPG",
+   "max_detection_conf": 0.966,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.00694,
+     "bbox": [
+      0.5351,
+      0.4814,
+      0.02237,
+      0.02899
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.0734,
+     "bbox": [
+      0.5389,
+      0.461,
+      0.03896,
+      0.054
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.866,
+     "bbox": [
+      0.7901,
+      0.5285,
+      0.03935,
+      0.0445
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.936,
+     "bbox": [
+      0.1894,
+      0.3429,
+      0.09645,
+      0.112
+     ]
+    },
+    {
+     "category": "1",
+     "conf": 0.966,
+     "bbox": [
+      0.3692,
+      0.3979,
+      0.2064,
+      0.2129
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/resources/test_images/idaho_camera_traps_loc_0062_loc_0062_im_004678.jpg",
+   "max_detection_conf": 0.0,
+   "detections": []
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/resources/test_images/island_conservation_camera_traps_palau_cam10a_cam10a12122018_palau_cam10a12122018_20181108_174532_rcnx1035.jpg",
+   "max_detection_conf": 0.852,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.852,
+     "bbox": [
+      0.353,
+      0.45,
+      0.09667,
+      0.1472
+     ]
+    }
+   ]
+  },
+  {
+   "file": "/Users/carlos/WORKSPACE/MegaClassifier/resources/test_images/snapshot_karoo_KAR_S1_E03_E03_R1_KAR_S1_E03_R1_IMAG0440.JPG",
+   "max_detection_conf": 0.913,
+   "detections": [
+    {
+     "category": "1",
+     "conf": 0.913,
+     "bbox": [
+      0.6003,
+      0.08499,
+      0.1952,
+      0.549
+     ]
+    }
+   ]
+  }
+ ],
+ "detection_categories": {
+  "1": "animal",
+  "2": "person",
+  "3": "vehicle"
+ },
+ "info": {
+  "detection_completion_time": "2024-11-06 20:04:35",
+  "format_version": "1.2",
+  "detector": "md_v5a.0.0.pt",
+  "detector_metadata": {
+   "megadetector_version": "v5a.0.0",
+   "typical_detection_threshold": 0.2,
+   "conservative_detection_threshold": 0.05
+  }
+ }
+}
