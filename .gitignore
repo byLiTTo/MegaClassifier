@@ -51,3 +51,5 @@
 /data/interim/masked_images
 /resources/bounding_boxes
 /resources/mask
+/data/interim/fit_images
+/data/interim/padded_images
