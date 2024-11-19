@@ -48,3 +48,6 @@
 /data/raw
 /src/data/__pycache__
 /src/data/__pycache__
+/data/interim/masked_images
+/resources/bounding_boxes
+/resources/mask
