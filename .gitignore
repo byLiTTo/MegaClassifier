@@ -53,3 +53,4 @@
 /resources/mask
 /data/interim/fit_images
 /data/interim/padded_images
+src/data/__pycache__/Dataset.cpython-38.pyc
