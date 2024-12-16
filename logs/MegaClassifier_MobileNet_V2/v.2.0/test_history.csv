@@ -1,0 +1,2 @@
+test_loss,test_accuracy,test_binary_accuracy,test_presision,test_recall,test_auc,test_tp,test_fp,test_tn,test_fn
+0.013861481100320816,0.99510258436203,0.99510258436203,0.9968242645263672,0.9957701563835144,0.999682605266571,2825.0,9.0,1442.0,12.0
