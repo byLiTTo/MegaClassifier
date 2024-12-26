@@ -58,3 +58,5 @@ src/data/__pycache__/Dataset.cpython-38.pyc
 /src/data/__pycache__
 /data/processed/emptyOriginal_animalFit_dataset
 /data/processed/original_dataset
+/data/processed/original
+/data/processed/preprocessed_megadetector
