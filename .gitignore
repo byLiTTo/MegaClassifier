@@ -60,3 +60,4 @@ src/data/__pycache__/Dataset.cpython-38.pyc
 /data/processed/original_dataset
 /data/processed/original
 /data/processed/preprocessed_megadetector
+/src/data/__pycache__
