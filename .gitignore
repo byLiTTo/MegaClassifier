@@ -63,3 +63,4 @@ src/data/__pycache__/Dataset.cpython-38.pyc
 /src/data/__pycache__
 /data/processed/preprocessed_megadetector_0_003
 /data/processed/preprocessed_padding_megadetector_0_003
+/data/interim
