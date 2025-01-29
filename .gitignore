@@ -64,3 +64,4 @@ src/data/__pycache__/Dataset.cpython-38.pyc
 /data/processed/preprocessed_megadetector_0_003
 /data/processed/preprocessed_padding_megadetector_0_003
 /data/interim
+/resources/masked_images
