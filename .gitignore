@@ -66,3 +66,4 @@ src/data/__pycache__/Dataset.cpython-38.pyc
 /data/interim
 /resources/masked_images
 /resources/bbox_images/0_003_threshold
+/resources/fit_images/0_003_threshold
