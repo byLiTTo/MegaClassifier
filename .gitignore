@@ -65,3 +65,4 @@ src/data/__pycache__/Dataset.cpython-38.pyc
 /data/processed/preprocessed_padding_megadetector_0_003
 /data/interim
 /resources/masked_images
+/resources/bbox_images/0_003_threshold
