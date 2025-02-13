@@ -74,4 +74,4 @@ settings.py
 *.img
 
 # Archivos de datos
-data/external/CameraTraps
+data/
