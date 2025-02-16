@@ -63,3 +63,53 @@ def create_bar_chart(data_labels, data_values, x_title="", y_title="", title="",
                          template="seaborn", )
 
     return figure
+
+
+def create_heatmap_chart(conf_matrix, x_data, y_data, conf_matrix_text, title="", x_title="", y_title="", width=600,
+                         height=600) -> go.Figure:
+    """
+    Creates a heatmap chart based on the provided data and configuration.
+
+    This function generates a heatmap chart using Plotly's `go.Heatmap` based on the
+    specified confusion matrix, axis data, and additional parameters. The chart is
+    highly customizable, allowing users to define titles, axis labels, and layout
+    dimensions.
+
+    Args:
+        conf_matrix: The 2D list or array representing the values to be displayed in the heatmap.
+        x_data: A list of labels for the x-axis of the heatmap.
+        y_data: A list of labels for the y-axis of the heatmap.
+        conf_matrix_text: A 2D list of text annotations to be displayed over the heatmap cells.
+        title: The title of the heatmap chart. Defaults to an empty string.
+        x_title: The label for the x-axis. Defaults to an empty string.
+        y_title: The label for the y-axis. Defaults to an empty string.
+        width: The width of the heatmap chart in pixels. Defaults to 600.
+        height: The height of the heatmap chart in pixels. Defaults to 600.
+
+    Returns:
+        go.Figure: A Plotly figure object containing the heatmap chart.
+    """
+    fig = go.Figure(
+        data=go.Heatmap(
+            z=conf_matrix,
+            x=x_data,
+            y=y_data,
+            text=conf_matrix_text,
+            texttemplate="%{text}",
+            colorscale="Blues",
+            showscale=True,
+        )
+    )
+
+    fig.update_layout(
+        title=title,
+        xaxis_title=x_title,
+        yaxis_title=y_title,
+        xaxis=dict(tickmode="array", tickvals=[0, 1], ticktext=x_data),
+        yaxis=dict(tickmode="array", tickvals=[0, 1], ticktext=y_data),
+        template="seaborn",
+        width=width,
+        height=height,
+    )
+
+    return fig
