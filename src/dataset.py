@@ -1,6 +1,7 @@
 from typing import Dict
 
 import pandas as pd
+from sklearn.model_selection import train_test_split
 
 
 def drop_class_from_dataset(dataset_original: pd.DataFrame, class_name: str) -> pd.DataFrame:
@@ -204,3 +205,55 @@ def remove_spanish_n(file_name: str) -> str:
     """
     custom_map = {"ñ": "n", "Ñ": "N"}
     return remove_character(file_name, custom_map)
+
+
+def split_dataset(dataset: pd.DataFrame, train_percentage: float, validation_percentage: float,
+                  test_percentage: float) -> pd.DataFrame:
+    """
+    Splits a dataset into training, validation, and testing subsets based on the specified percentages.
+
+    This function divides the provided dataset into three distinct subsets, ensuring that the class distribution
+    (stratified by the "label" column) is maintained across the subsets. The resulting subsets are labeled with
+    a new column "subset," containing values "train," "validation," or "test," to indicate their respective roles.
+    The sum of the percentages provided for training, validation, and testing must equal 1.0.
+
+    Args:
+        dataset (pd.DataFrame): The input dataset to be split. Must contain a "label" column for stratification.
+        train_percentage (float): The proportion of the dataset to be assigned to the training subset. Should be
+            a value between 0.0 and 1.0.
+        validation_percentage (float): The proportion of the dataset to be assigned to the validation subset.
+            Should be a value between 0.0 and 1.0.
+        test_percentage (float): The proportion of the dataset to be assigned to the testing subset. Should be
+            a value between 0.0 and 1.0.
+
+    Returns:
+        pd.DataFrame: A single DataFrame containing all three subsets, with an additional "subset" column
+            indicating which subset each sample belongs to.
+    """
+    assert (
+            train_percentage + validation_percentage + test_percentage == 1
+    ), "The sum of the three percentage values must be equal to 1.0."
+
+    train_size = train_percentage / (train_percentage + validation_percentage)
+    validation_size = validation_percentage / (train_percentage + validation_percentage)
+
+    train_temp, test = train_test_split(
+        dataset,
+        test_size=test_percentage,
+        stratify=dataset["label"],
+        random_state=42
+    )
+
+    train, validation = train_test_split(
+        train_temp,
+        test_size=validation_size,
+        stratify=train_temp["label"],
+        random_state=42
+    )
+
+    train["subset"] = "train"
+    validation["subset"] = "validation"
+    test["subset"] = "test"
+
+    final_dataset = pd.concat([train, validation, test], ignore_index=True)
+    return final_dataset
