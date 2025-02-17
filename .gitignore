@@ -77,3 +77,7 @@ settings.py
 data/
 resources/mask
 resources/masked_images
+/resources/bounding_boxes/0_003
+/resources/bounding_boxes/0_05
+/resources/bounding_boxes/0_1
+/resources/bounding_boxes/0_2
