@@ -75,4 +75,5 @@ settings.py
 
 # Archivos de datos
 data/
-/resources/mask
+resources/mask
+resources/masked_images
