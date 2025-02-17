@@ -75,3 +75,4 @@ settings.py
 
 # Archivos de datos
 data/
+/resources/mask
