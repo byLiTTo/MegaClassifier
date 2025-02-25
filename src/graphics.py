@@ -1,3 +1,4 @@
+import pandas as pd
 import plotly.graph_objects as go
 
 
@@ -113,3 +114,117 @@ def create_heatmap_chart(conf_matrix, x_data, y_data, conf_matrix_text, title=""
     )
 
     return fig
+
+
+def create_roc_curve_chart(model_name, fpr, tpr, roc_auc):
+    fig = go.Figure()
+
+    fig.add_trace(
+        go.Scatter(
+            x=fpr, y=tpr, mode="lines", name=f"{model_name} (AUC = {roc_auc:.4f})"
+        )
+    )
+
+    fig.add_trace(
+        go.Scatter(
+            x=[0, 1],
+            y=[0, 1],
+            mode="lines",
+            name="Random Classifier (AUC = 0.5000",
+            line=dict(dash="dash"),
+        )
+    )
+
+    fig.update_layout(
+        title=f"ROC Curve {model_name}",
+        xaxis_title="False Positive Rate",
+        yaxis_title="True Positive Rate",
+        legend_title="Curves",
+        template="seaborn",
+        width=700,
+        height=500,
+        xaxis=dict(
+            tickmode="linear",
+            tick0=0,
+            dtick=0.1,
+        ),
+    )
+
+    return fig
+
+
+def create_confusion_matrix_chart(conf_matrix, model_name):
+    return create_heatmap_chart(
+        conf_matrix=conf_matrix,
+        conf_matrix_text=[[str(value) for value in row] for row in conf_matrix],
+        x_data=['Empty', 'Animal'],
+        y_data=['Empty', 'Animal'],
+        title=f"{model_name} (Subset: test)",
+        x_title=f"Model",
+        y_title="Dataset",
+
+    )
+
+
+def create_training_accuracy_chart(history_path, model_name):
+    history_df = pd.read_csv(history_path, sep=";")
+
+    fig_accu = go.Figure()
+    fig_accu.add_trace(go.Scatter(
+        x=list(range(1, len(history_df['accuracy']) + 1)),
+        y=history_df['accuracy'],
+        mode='lines+markers',
+        name='Training Accuracy',
+        line=dict(width=2)
+    ))
+
+    fig_accu.add_trace(go.Scatter(
+        x=list(range(1, len(history_df['val_accuracy']) + 1)),
+        y=history_df['val_accuracy'],
+        mode='lines+markers',
+        name='Validation Accuracy',
+        line=dict(width=2)
+    ))
+
+    fig_accu.update_layout(
+        title=f"Accuracy - {model_name}",
+        xaxis_title="Epochs",
+        yaxis_title="Accuracy",
+        template="seaborn",
+        width=700,
+        height=500
+    )
+
+    return fig_accu
+
+
+def create_training_loss_chart(history_path, model_name):
+    history_df = pd.read_csv(history_path, sep=";")
+
+    fig_loss = go.Figure()
+    fig_loss.add_trace(go.Scatter(
+        x=list(range(1, len(history_df['loss']) + 1)),
+        y=history_df['loss'],
+        mode='lines+markers',
+        name='Training Loss',
+        line=dict(width=2)
+    ))
+
+    fig_loss.add_trace(go.Scatter(
+        x=list(range(1, len(history_df['val_loss']) + 1)),
+        y=history_df['val_loss'],
+        mode='lines+markers',
+        name='Validation Loss',
+        line=dict(width=2)
+    ))
+
+    fig_loss.update_layout(
+        title=f"Loss - {model_name}",
+        xaxis_title="Epochs",
+        yaxis_title="Loss",
+        template="seaborn",
+        width=700,
+        height=500
+    )
+
+    return fig_loss
