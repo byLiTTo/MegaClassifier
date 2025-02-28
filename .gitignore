@@ -60,7 +60,6 @@ settings.py
 *.pb
 *.tflite
 *.onnx
-*.csv
 *.tsv
 *.json
 *.xlsx
