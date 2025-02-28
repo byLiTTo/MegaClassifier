@@ -2,8 +2,15 @@ import pandas as pd
 import plotly.graph_objects as go
 
 
-def create_pie_chart(data_labels, data_values, title, width=1000, height=600, show_values=False,
-                     text_position="inside") -> go.Figure:
+def create_pie_chart(
+    data_labels,
+    data_values,
+    title,
+    width=1000,
+    height=600,
+    show_values=False,
+    text_position="inside",
+) -> go.Figure:
     """
     Creates a pie chart using Plotly with customizable options such as dimensions, title, and value display.
 
@@ -21,17 +28,39 @@ def create_pie_chart(data_labels, data_values, title, width=1000, height=600, sh
         plotly.graph_objs._figure.Figure: A Plotly figure object representing the pie chart.
 
     """
-    figure = go.Figure(data=[
-        go.Pie(labels=data_labels, values=data_values, hole=0.3, text=data_values if show_values else None,
-               textposition=text_position)])
+    figure = go.Figure(
+        data=[
+            go.Pie(
+                labels=data_labels,
+                values=data_values,
+                hole=0.3,
+                text=data_values if show_values else None,
+                textposition=text_position,
+            )
+        ]
+    )
 
-    figure.update_layout(title=title, width=width, height=height, template="seaborn", )
+    figure.update_layout(
+        title=title,
+        width=width,
+        height=height,
+        template="seaborn",
+    )
 
     return figure
 
 
-def create_bar_chart(data_labels, data_values, x_title="", y_title="", title="", width=1000, height=600,
-                     show_values=False, text_position="auto") -> go.Figure:
+def create_bar_chart(
+    data_labels,
+    data_values,
+    x_title="",
+    y_title="",
+    title="",
+    width=1000,
+    height=600,
+    show_values=False,
+    text_position="auto",
+) -> go.Figure:
     """
     Creates a bar chart visualization using input data and plotly.
 
@@ -57,17 +86,39 @@ def create_bar_chart(data_labels, data_values, x_title="", y_title="", title="",
         ValueError: If lengths of `data_labels` and `data_values` do not match.
     """
     figure = go.Figure(
-        data=[go.Bar(x=data_labels, y=data_values, text=data_values if show_values else None,
-                     textposition=text_position)], )
+        data=[
+            go.Bar(
+                x=data_labels,
+                y=data_values,
+                text=data_values if show_values else None,
+                textposition=text_position,
+            )
+        ],
+    )
 
-    figure.update_layout(title=title, xaxis_title=x_title, yaxis_title=y_title, width=width, height=height,
-                         template="seaborn", )
+    figure.update_layout(
+        title=title,
+        xaxis_title=x_title,
+        yaxis_title=y_title,
+        width=width,
+        height=height,
+        template="seaborn",
+    )
 
     return figure
 
 
-def create_heatmap_chart(conf_matrix, x_data, y_data, conf_matrix_text, title="", x_title="", y_title="", width=600,
-                         height=600) -> go.Figure:
+def create_heatmap_chart(
+    conf_matrix,
+    x_data,
+    y_data,
+    conf_matrix_text,
+    title="",
+    x_title="",
+    y_title="",
+    width=600,
+    height=600,
+) -> go.Figure:
     """
     Creates a heatmap chart based on the provided data and configuration.
 
@@ -153,16 +204,15 @@ def create_roc_curve_chart(model_name, fpr, tpr, roc_auc):
     return fig
 
 
-def create_confusion_matrix_chart(conf_matrix, model_name):
+def create_confusion_matrix_chart(conf_matrix, conf_matrix_text, model_name):
     return create_heatmap_chart(
         conf_matrix=conf_matrix,
-        conf_matrix_text=[[str(value) for value in row] for row in conf_matrix],
-        x_data=['Empty', 'Animal'],
-        y_data=['Empty', 'Animal'],
+        conf_matrix_text=conf_matrix_text,
+        x_data=["Empty", "Animal"],
+        y_data=["Empty", "Animal"],
         title=f"{model_name} (Subset: test)",
-        x_title=f"Model",
+        x_title="Model",
         y_title="Dataset",
-
     )
 
 
@@ -170,21 +220,25 @@ def create_training_accuracy_chart(history_path, model_name):
     history_df = pd.read_csv(history_path, sep=";")
 
     fig_accu = go.Figure()
-    fig_accu.add_trace(go.Scatter(
-        x=list(range(1, len(history_df['accuracy']) + 1)),
-        y=history_df['accuracy'],
-        mode='lines+markers',
-        name='Training Accuracy',
-        line=dict(width=2)
-    ))
+    fig_accu.add_trace(
+        go.Scatter(
+            x=list(range(1, len(history_df["accuracy"]) + 1)),
+            y=history_df["accuracy"],
+            mode="lines+markers",
+            name="Training Accuracy",
+            line=dict(width=2),
+        )
+    )
 
-    fig_accu.add_trace(go.Scatter(
-        x=list(range(1, len(history_df['val_accuracy']) + 1)),
-        y=history_df['val_accuracy'],
-        mode='lines+markers',
-        name='Validation Accuracy',
-        line=dict(width=2)
-    ))
+    fig_accu.add_trace(
+        go.Scatter(
+            x=list(range(1, len(history_df["val_accuracy"]) + 1)),
+            y=history_df["val_accuracy"],
+            mode="lines+markers",
+            name="Validation Accuracy",
+            line=dict(width=2),
+        )
+    )
 
     fig_accu.update_layout(
         title=f"Accuracy - {model_name}",
@@ -192,7 +246,7 @@ def create_training_accuracy_chart(history_path, model_name):
         yaxis_title="Accuracy",
         template="seaborn",
         width=700,
-        height=500
+        height=500,
     )
 
     return fig_accu
@@ -202,21 +256,25 @@ def create_training_loss_chart(history_path, model_name):
     history_df = pd.read_csv(history_path, sep=";")
 
     fig_loss = go.Figure()
-    fig_loss.add_trace(go.Scatter(
-        x=list(range(1, len(history_df['loss']) + 1)),
-        y=history_df['loss'],
-        mode='lines+markers',
-        name='Training Loss',
-        line=dict(width=2)
-    ))
+    fig_loss.add_trace(
+        go.Scatter(
+            x=list(range(1, len(history_df["loss"]) + 1)),
+            y=history_df["loss"],
+            mode="lines+markers",
+            name="Training Loss",
+            line=dict(width=2),
+        )
+    )
 
-    fig_loss.add_trace(go.Scatter(
-        x=list(range(1, len(history_df['val_loss']) + 1)),
-        y=history_df['val_loss'],
-        mode='lines+markers',
-        name='Validation Loss',
-        line=dict(width=2)
-    ))
+    fig_loss.add_trace(
+        go.Scatter(
+            x=list(range(1, len(history_df["val_loss"]) + 1)),
+            y=history_df["val_loss"],
+            mode="lines+markers",
+            name="Validation Loss",
+            line=dict(width=2),
+        )
+    )
 
     fig_loss.update_layout(
         title=f"Loss - {model_name}",
@@ -224,7 +282,7 @@ def create_training_loss_chart(history_path, model_name):
         yaxis_title="Loss",
         template="seaborn",
         width=700,
-        height=500
+        height=500,
     )
 
     return fig_loss
