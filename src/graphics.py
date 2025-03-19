@@ -216,7 +216,7 @@ def create_confusion_matrix_chart(conf_matrix, conf_matrix_text, model_name):
     )
 
 
-def create_training_accuracy_chart(history_path, model_name):
+def create_training_accuracy_chart(history_path, title):
     history_df = pd.read_csv(history_path, sep=";")
 
     fig_accu = go.Figure()
@@ -225,7 +225,7 @@ def create_training_accuracy_chart(history_path, model_name):
             x=list(range(1, len(history_df["accuracy"]) + 1)),
             y=history_df["accuracy"],
             mode="lines+markers",
-            name="Training Accuracy",
+            name="Train",
             line=dict(width=2),
         )
     )
@@ -235,13 +235,13 @@ def create_training_accuracy_chart(history_path, model_name):
             x=list(range(1, len(history_df["val_accuracy"]) + 1)),
             y=history_df["val_accuracy"],
             mode="lines+markers",
-            name="Validation Accuracy",
+            name="Validation",
             line=dict(width=2),
         )
     )
 
     fig_accu.update_layout(
-        title=f"Accuracy - {model_name}",
+        title=title,
         xaxis_title="Epochs",
         yaxis_title="Accuracy",
         template="seaborn",
@@ -252,7 +252,7 @@ def create_training_accuracy_chart(history_path, model_name):
     return fig_accu
 
 
-def create_training_loss_chart(history_path, model_name):
+def create_training_loss_chart(history_path, title):
     history_df = pd.read_csv(history_path, sep=";")
 
     fig_loss = go.Figure()
@@ -261,7 +261,7 @@ def create_training_loss_chart(history_path, model_name):
             x=list(range(1, len(history_df["loss"]) + 1)),
             y=history_df["loss"],
             mode="lines+markers",
-            name="Training Loss",
+            name="Train",
             line=dict(width=2),
         )
     )
@@ -271,13 +271,13 @@ def create_training_loss_chart(history_path, model_name):
             x=list(range(1, len(history_df["val_loss"]) + 1)),
             y=history_df["val_loss"],
             mode="lines+markers",
-            name="Validation Loss",
+            name="Validation",
             line=dict(width=2),
         )
     )
 
     fig_loss.update_layout(
-        title=f"Loss - {model_name}",
+        title=title,
         xaxis_title="Epochs",
         yaxis_title="Loss",
         template="seaborn",
