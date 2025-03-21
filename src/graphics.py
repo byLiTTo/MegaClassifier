@@ -169,10 +169,10 @@ def create_heatmap_chart(
 
 def create_roc_curve_chart(model_name, fpr, tpr, roc_auc):
     fig = go.Figure()
-
+    version = model_name.split(" ")[1]
     fig.add_trace(
         go.Scatter(
-            x=fpr, y=tpr, mode="lines", name=f"{model_name} (AUC = {roc_auc:.4f})"
+            x=fpr, y=tpr, mode="lines", name=f"(AUC = {roc_auc:.4f})"
         )
     )
 
@@ -181,7 +181,7 @@ def create_roc_curve_chart(model_name, fpr, tpr, roc_auc):
             x=[0, 1],
             y=[0, 1],
             mode="lines",
-            name="Random Classifier (AUC = 0.5000",
+            name="(AUC = 0.5000)",
             line=dict(dash="dash"),
         )
     )
@@ -208,8 +208,8 @@ def create_confusion_matrix_chart(conf_matrix, conf_matrix_text, model_name):
     return create_heatmap_chart(
         conf_matrix=conf_matrix,
         conf_matrix_text=conf_matrix_text,
-        x_data=["Empty", "Animal"],
-        y_data=["Empty", "Animal"],
+        x_data=["Animal","Empty"],
+        y_data=["Animal", "Empty"],
         title=f"{model_name} (Subset: test)",
         x_title="Model",
         y_title="Dataset",
