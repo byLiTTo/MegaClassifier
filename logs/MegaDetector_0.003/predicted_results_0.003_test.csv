@@ -1,0 +1,2 @@
+accuracy_predict;precision_predict;recall_predict;specificity_predict;f1_score_predict
+0.8019132057862809;0.7700462082087524;0.9989421720733427;0.416551724137931;0.8696853415195702
