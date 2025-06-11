@@ -1,0 +1,10 @@
+name: MegaClassifier
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - ruff
+  - pip:
+    - python-dotenv
+    - -e .
