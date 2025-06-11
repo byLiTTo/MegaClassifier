@@ -1,11 +1,12 @@
 import importlib.metadata as importlib_metadata
+
 try:
     # This will read version from pyproject.toml
-    __version__ = importlib_metadata.version(__package__ or  __name__)
+    __version__ = importlib_metadata.version(__package__ or __name__)
 except importlib_metadata.PackageNotFoundError:
     # Fallback if the package is not installed
     __version__ = "development"
 
 from .data import *
-from .model import *
+from .models import *
 from .utils import *
