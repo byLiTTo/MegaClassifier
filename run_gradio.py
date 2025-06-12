@@ -6,13 +6,13 @@ import gradio as gr
 with gr.Blocks() as demo:
     gr.Markdown("# MegaClassifier")
     with gr.Row():
-        det_drop = gr.Dropdown(
+        model_dropdown = gr.Dropdown(
             ["None", "MegaDetectorV5"],
-            label="Detection model",
-            info="Will add more detection models!",
-            value="None",  # Default
+            label="Model",
+            info="Select the model to use",
+            value="None",
         )
-        det_version = gr.Dropdown(
+        model_version_dropdown = gr.Dropdown(
             ["None"],
             label="Model version",
             info="Select the version of the model",
@@ -20,20 +20,16 @@ with gr.Blocks() as demo:
         )
 
     with gr.Column():
-        load_but = gr.Button("Load Models!")
-        load_out = gr.Text("NO MODEL LOADED!!", label="Loaded models:")
+        load_but = gr.Button("Load Model")
+        load_out = gr.Text("NO MODEL LOADED", label="Loaded model:")
 
-    def update_ui_elements(det_model):
-        if det_model == "MegaDetectorV5":
-            return gr.Dropdown(
-                choices=["a", "b"], interactive=True, label="Model version", value="a"
-            ), gr.update(visible=True)
+    def update_version_dropdown(dropdown):
+        if dropdown == "MegaDetectorV5":
+            return gr.update(choices=["a", "b"], value="a", visible=True, interactive=True)
         else:
-            return gr.Dropdown(
-                choices=["None"], interactive=True, label="Model version", value="None"
-            ), gr.update(value="None", visible=False)
+            return gr.update(choices=["None"], value="None", visible=False, interactive=False)
 
-    det_drop.change(update_ui_elements, det_drop, [det_version])
+    model_dropdown.change(update_version_dropdown, model_dropdown, [model_version_dropdown])
 
     with gr.Tab("Single Image Process"):
         with gr.Row():
@@ -43,7 +39,8 @@ with gr.Blocks() as demo:
                     0, 1, label="Detection Confidence Threshold", value=0.2
                 )
             sgl_out = gr.Image()
-        sgl_but = gr.Button("Detect Animals!")
+        sgl_but = gr.Button("Detect Animals")
+
 
 if __name__ == "__main__":
     demo.launch(share=True)
