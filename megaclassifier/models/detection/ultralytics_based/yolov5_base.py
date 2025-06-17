@@ -7,7 +7,7 @@ import supervision as sv
 import torch
 from torch.hub import load_state_dict_from_url
 
-from yolov5.utils.general import non_max_suppression, scale_boxes
+from yolov5.utils.general import non_max_suppression, scale_coords
 
 from ..base_detector import BaseDetector
 from ....data import transforms as pw_trans
@@ -125,8 +125,8 @@ class YOLOV5Base(BaseDetector):
             .cpu()
             .numpy()
         )
-        # preds[:, :4] = scale_coords([self.IMAGE_SIZE] * 2, preds[:, :4], img_size).round()
-        preds[:, :4] = scale_boxes([self.IMAGE_SIZE] * 2, preds[:, :4], img_size).round()
+        preds[:, :4] = scale_coords([self.IMAGE_SIZE] * 2, preds[:, :4], img_size).round()
+        # preds[:, :4] = scale_boxes([self.IMAGE_SIZE] * 2, preds[:, :4], img_size).round()
         res = self.results_generation(preds, img_path, id_strip)
 
         normalized_coords = [

@@ -8,3 +8,10 @@ dependencies:
   - pip:
     - python-dotenv
     - -e .
+    - tomlkit
+    - gradio
+    - supervision
+    - commitizen
+    - -r yolov5/requirements.txt
+variables:
+  PYTHONPATH: ./yolov5
