@@ -1,5 +1,7 @@
 import gradio as gr
 import torch
+import numpy as np
+import supervision as sv
 
 from MegaClassifier.models import detection as detection_models
 
@@ -16,6 +18,11 @@ VERSIONS = {
 # Initializing the model
 model = None
 
+# Initializing a supervision box annotator for visualizing detections
+dot_annotator = sv.DotAnnotator(radius=3)
+box_annotator = sv.BoxAnnotator(thickness=2)
+lab_annotator = sv.LabelAnnotator(text_color=sv.Color.BLACK, text_thickness=2, text_scale=1)
+
 
 def load_model(model_name, version):
     global model
@@ -28,6 +35,25 @@ def load_model(model_name, version):
         model = None
         return ""
     return f"{model_name}.{version}"
+
+
+def single_image_detection(input_img, det_conf_thres, img_index=None):
+    input_img = np.array(input_img)
+    annotator = box_annotator
+
+    results = model.single_image_detection(input_img, img_path=img_index, det_conf_thres=det_conf_thres)
+
+    labels = results["labels"]
+    annotated_img = lab_annotator.annotate(
+        scene=annotator.annotate(
+            scene=input_img,
+            detections=results["detections"],
+        ),
+        detections=results["detections"],
+        labels=labels,
+    )
+
+    return annotated_img
 
 
 # Building Gradio UI
@@ -51,6 +77,7 @@ with gr.Blocks() as demo:
             load_out = gr.Text("", label="Loaded model:")
         load_but = gr.Button("LOAD")
 
+
     def update_version_dropdown(dropdown):
         if dropdown == MODELS[1]:
             return [
@@ -73,6 +100,7 @@ with gr.Blocks() as demo:
                 gr.Slider(0, 1, label="Detection Confidence Threshold", value=0.2),
             ]
 
+
     with gr.Tab("Single Image Process"):
         with gr.Row():
             with gr.Column():
@@ -91,6 +119,7 @@ with gr.Blocks() as demo:
         inputs=[model_dropdown, model_version_dropdown],
         outputs=load_out,
     )
+    image_button.click(single_image_detection, inputs=[image_input, threshold_slider], outputs=image_output)
 
 if __name__ == "__main__":
     demo.launch(share=True)
